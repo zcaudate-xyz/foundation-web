@@ -31,6 +31,115 @@
      fraction}]
   (var chartRef (r/ref))
   (var palette (base-palette/designPalette design))
+  (k/LOG! history)
+  (r/watch [dataPrice
+            dataVolume
+            height
+            design]
+    (var precision
+         (data-swap/position-to-fdecimal
+          (or (k/get-in history [0 "p_start"])
+              510000)))
+    (var chart
+         (lw/createChart
+          (r/curr chartRef)
+          {:width (. (r/curr chartRef)
+                     clientWidth)
+           :height height}))
+    (var handleResize
+         (fn []
+           (. chart (applyOptions
+                     {:width (. (r/curr chartRef)
+                                clientWidth)
+                      :height (. (r/curr chartRef)
+                                 clientHeight)}))))
+    (. chart (timeScale) (fitContent))
+    (var volumeSeries (. chart (addHistogramSeries
+                                {:color (c/toRGB
+                                         (base-palette/getColorRaw
+                                          palette
+                                          "neutral"
+                                          "mix"
+                                          "background"
+                                          5))
+                                 :title "Volume"
+                                 :priceScaleId "left"})))
+    (. volumeSeries (setData dataVolume))
+    (. volumeSeries (applyOptions
+                     {:priceFormat
+                      {:precision 0
+                       :minMove 1}}))
+    (var priceSeries (. chart (addCandlestickSeries
+                               {#_#_:color (:? (== prediction "no")
+                                           (c/toRGB
+                                            (base-palette/getColorRaw
+                                             palette
+                                             "error"
+                                             "flatten"))
+                                           (c/toRGB
+                                            (base-palette/getColorRaw
+                                             palette
+                                             "primary"
+                                             "flatten")))
+                                :title "Price"
+                                :priceScaleId "right"})))
+    (. priceSeries (setData dataPrice))
+    (. priceSeries (applyOptions
+                    {:priceFormat
+                     {:type "price"
+                      :precision precision
+                      :minMove (/ 1 (k/pow 10 precision))}}))
+    
+    (. chart (applyOptions
+              {:layout {:background {:color (base-palette/getColorRaw
+                                             palette
+                                             "background"
+                                             "sharpen")}
+                        :textColor (base-palette/getColorRaw
+                                    palette
+                                    "neutral"
+                                    "sharpen")
+                        :fontSize 9}
+               :grid {:horzLines {:visible false}
+                      :vertLines {:style 4
+                                  :color (base-palette/getColorRaw
+                                          palette
+                                          "background"
+                                          "flatten")}}
+               :leftPriceScale
+               {:visible false
+                :scaleMargins {:top 0.8
+                               :bottom 0}}
+               
+               :rightPriceScale
+               {:visible true
+                #_#_:scaleMargins {:top 0.02
+                                   :bottom 0}}
+               :timeScale {:visible true
+                           :timeVisible true
+                           :secondsVisible true
+                           :lockVisibleTimeRangeOnResize true}}))
+    (. window (addEventListener "resize" handleResize))
+    (return (fn []
+              (. window (removeEventListener
+                         "resize" handleResize))
+              (. chart (remove)))))
+  (return [:% n/View
+           {:ref chartRef
+            :style {:margin -5}}]))
+
+(defn.js GraphSwapLine
+  [#{design
+     history
+     dataPrice
+     dataVolume
+     height
+     prediction
+     decimal
+     allotment
+     fraction}]
+  (var chartRef (r/ref))
+  (var palette (base-palette/designPalette design))
   (r/watch [dataPrice
             dataVolume
             height
@@ -130,13 +239,7 @@
               (. window (removeEventListener
                          "resize" handleResize))
               (. chart (remove)))))
-  (return #_[:% n/View
-           {:style {:padding 10
-                    :backgroundColor (base-palette/getColorRaw
-                                      palette
-                                      "background"
-                                      "sharpen")}}]
-          [:% n/View
+  (return [:% n/View
            {:ref chartRef
             :style {:margin -5}}]))
 
