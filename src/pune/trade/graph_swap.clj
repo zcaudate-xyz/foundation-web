@@ -36,9 +36,10 @@
             height
             design]
     (var precision
-         (data-swap/position-to-fdecimal
-          (or (k/get-in history [0 "p_start"])
-              510000)))
+         (k/min (data-swap/position-to-fdecimal
+                 (or (k/get-in history [0 "p_start"])
+                     510000))
+                6))
     (var chart
          (lw/createChart
           (r/curr chartRef)
@@ -85,7 +86,8 @@
                                              "primary"
                                              "flatten")))
                                 :title "Price"
-                                :priceScaleId "right"})))
+                                :priceScaleId "right"
+                                :lineWidth 1})))
     (. priceSeries (setData dataPrice))
     (. priceSeries (applyOptions
                     {:priceFormat

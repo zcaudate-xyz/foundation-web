@@ -197,7 +197,7 @@
         :variant {:bg   {:key  "background"
                          :tone "darken"
                          :ratio 1}}
-        :autoFocus true
+        #_#_:autoFocus true
         :styleContainer {#_#_:flex nil
                          :borderWidth 0
                          :width  130
