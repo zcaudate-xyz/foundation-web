@@ -93,7 +93,8 @@
                     {:priceFormat
                      {:type "price"
                       :precision precision
-                      :minMove (/ 1 (k/pow 10 precision))}}))
+                      :minMove (/ 1 (k/pow 10 precision))}
+                     :lineWidth 1.5}))
     
     (. chart (applyOptions
               {:layout {:background {:color (base-palette/getColorRaw
@@ -103,7 +104,8 @@
                         :textColor (base-palette/getColorRaw
                                     palette
                                     "neutral"
-                                    "sharpen")}
+                                    "sharpen")
+                        :fontSize 9}
                :grid {:horzLines {:visible false}
                       :vertLines {:style 4
                                   :color (base-palette/getColorRaw

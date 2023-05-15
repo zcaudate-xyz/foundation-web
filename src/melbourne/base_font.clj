@@ -9,51 +9,61 @@
    :export [MODULE]})
 
 (def.js fontH1
-  {:fontSize 30
+  {:fontFamily "Lato-Bold"
+   :fontSize 30
    :fontWeight "900"})
 
 (def.js fontH2
-  {:fontSize 24
+  {:fontFamily "Lato-Bold"
+   :fontSize 24
    :fontWeight "900"})
 
 (def.js fontH3
-  {:fontSize 20
+  {:fontFamily "Lato-Bold"
+   :fontSize 20
    :fontWeight "900"})
 
 (def.js fontH4
-  {:fontSize 16
+  {:fontFamily "Lato-Bold"
+   :fontSize 16
    :fontWeight "900"})
 
 (def.js fontH5
-  {:fontSize 14
+  {:fontFamily "Lato-Bold"
+   :fontSize 14
    :fontWeight "700"})
 
 (def.js fontH6
-  {:fontSize 12
+  {:fontFamily "Lato-Bold"
+   :fontSize 12
    :fontWeight "700"})
 
 (def.js fontP
-  {:fontSize 12
+  {:fontFamily "Lato"
+   :fontSize 12
    :fontWeight "400"})
 
 (def.js fontText
-  {:fontSize 11
+  {:fontFamily "Lato"
+   :fontSize 11
    :fontWeight "400"})
 
 (def.js fontItalic
-  {:fontSize 11
+  {:fontFamily "Lato"
+   :fontSize 11
    :fontWeight "400"
    :fontVariant "italic"})
 
 (def.js fontBold
-  {:fontSize 11
+  {:fontFamily "Lato-Bold"
+   :fontSize 11
    :fontWeight "800"})
 
 (def.js fontCaption
   (j/assign
    {:fontSize 11
     :fontWeight "500"}
-   (n/PlatformSelect {:ios {:fontFamily "Courier"}
+   (n/PlatformSelect {:ios     {:fontFamily "Courier"}
                       :default {:fontFamily "monospace"}})))
 
 (def.js FontStyle

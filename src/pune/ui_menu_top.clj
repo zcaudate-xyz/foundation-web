@@ -88,7 +88,7 @@
          :setValue setRouteKey
          :allowNotFound true
          :style {:width 120
-                 :fontWeight "600"
+                 :fontWeight "900"
                  :fontSize 12.5
                  :borderRadius 1}
          :format (fn:> [s] (k/capitalize (text/tag-string s)))

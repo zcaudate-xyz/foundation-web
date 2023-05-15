@@ -101,7 +101,8 @@
                         :textColor (base-palette/getColorRaw
                                     palette
                                     "neutral"
-                                    "sharpen")}
+                                    "sharpen")
+                        :fontSize 9}
                :grid {:horzLines {:visible false}
                       :vertLines {:style 4
                                   :color (base-palette/getColorRaw

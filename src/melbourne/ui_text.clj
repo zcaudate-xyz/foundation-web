@@ -75,7 +75,8 @@
                           :tone "flatten"}}
                     fontOverride
                     variant)
-          :style [fontStyle
+          :style [{:fontFamily "Lato"}
+                  fontStyle
                   (:.. (j/arrayify style))]
           (:.. rprops)]}]))))
 
