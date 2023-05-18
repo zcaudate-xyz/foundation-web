@@ -31,7 +31,6 @@
      fraction}]
   (var chartRef (r/ref))
   (var palette (base-palette/designPalette design))
-  (k/LOG! history)
   (r/watch [dataPrice
             dataVolume
             height

@@ -18,7 +18,7 @@
    :locrian    (/ 7 8)})
 
 (def.js PaletteBase
-  {:lightNeutral   "#333" 
+  {:lightNeutral   "#222"
    :lightError     "#9c1f1f"
    :lightWarn      "#ffffe0"
    :darkNeutral    "#eee"
@@ -28,10 +28,12 @@
 (def.js PalettePrimary
   {:purple   {:lightPrimary   "#5f4abd"
               :darkPrimary    "#aa97fc"}
-   :blue     {:lightPrimary   "#2c5d94"
-              :darkPrimary    "#6c9fd9"}
-   :default  {:lightPrimary   "#378E75" #_"#18785d"
-              :darkPrimary    "#38e8b6"}
+   :indigo   {:lightPrimary   "#3F33BD"
+              :darkPrimary    "#837AE6"}
+   :blue     {:lightPrimary   "#1A5D9E"
+              :darkPrimary    "#409EFF"}
+   :default  {:lightPrimary   "#378E75" #_"#23C67E"  #_"#18785d"
+              :darkPrimary    "#38e8b6" #_"#35DB92"}
    :green    {:lightPrimary   "#3D9735"
               :darkPrimary    "#5DDE51" #_"7fdb63"}})
 

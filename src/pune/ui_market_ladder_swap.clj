@@ -70,9 +70,9 @@
                                 :padding 2
                                 :paddingHorizontal 5}
                      :variant {:bg  {:key "primary"
-                                     :mix "background"
-                                     :ratio 4}
-                               :fg  {:key "neutral"}}
+                                     #_#_:mix "background"
+                                     #_#_:ratio 4}
+                               :fg  {:key "background"}}
                      :template (or (k/to-fixed (* 0.001 amount)
                                                1)
                                    "")}]}]})))
@@ -121,7 +121,9 @@
             (lineFn "ask"))]
     [:% ui-section/SectionSeparator
      {:design design
-      :variant {:fg {:key "neutral"}}
+      :variant {:fg {:key "background"
+                     :mix "primary"
+                     :ratio 2}}
       :style {:marginVertical 3}}]
     [:% n/View
      {:style {:minHeight 60
