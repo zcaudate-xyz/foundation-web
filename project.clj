@@ -5,7 +5,8 @@
 (defproject xyz.zcaudate/foundation-web "4.0.4"
   :description "web libraries for foundation"
   :url "https://www.github.com/zcaudate/foundation-web"
-  
+  :license  {:name "MIT License"
+             :url  "http://opensource.org/licenses/MIT"}
   :aliases
   {"publish"     ["exec" "-ep" "(use 'code.doc)     (deploy-template :all) (publish :all)"]
    "incomplete"  ["exec" "-ep" "(use 'code.manage)  (incomplete :all) (System/exit 0)"]

@@ -1,17 +1,40 @@
-name: Trigger CI
+name: Run Web Tests
 
 on: [push, repository_dispatch, workflow_dispatch]
 
 jobs:
 
-  trigger-ci:
+  build-web:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/zcaudate-xyz/infra-foundation-clean:main
       
     steps:
-      - name: Notify CI
-        uses: peter-evans/repository-dispatch@v2
+      - name: Write SSH keys
+        shell: bash
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.GH_PRIVATE_COMMIT_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H github.com > ~/.ssh/known_hosts
+      
+      - name: Checkout base repository
+        uses: actions/checkout@v3
         with:
+          repository: zcaudate-xyz/foundation-base
+          path: foundation-base
           token: ${{ secrets.GH_TOKEN }}
-          repository: zcaudate/foundation-ci
-          event-type: web-changed
-          client-payload: '{"repo": "${{ github.repository.id }}", "ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "comment": "${{ github.payload.comment }}"}'
+        
+      - name: Installing base jars
+        run: |
+          cd foundation-base && lein install
+          
+      - name: Checkout web repository
+        uses: actions/checkout@v3
+        with:
+          repository: zcaudate-xyz/foundation-web
+          path: foundation-web
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: push web code
+        run: |
+          cd foundation-web && git config --global --add safe.directory '*' && lein push-web-code
