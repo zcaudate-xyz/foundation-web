@@ -13,7 +13,7 @@
 
 (def +readme+
   {:type :readme.md
-   :main ["* XYZ Components"]})
+   :main ["* Foundation Web - Pune and Melbourne"]})
 
 (def +expo-makefile+
   {:type  :makefile
@@ -60,13 +60,13 @@
                 "git config --global user.name github-actions"
                 "git config --global user.email github-actions@github.com"
                 "cd web-build && git init && git add -A && git commit -m 'deploying to gh-pages'"
-                "git remote add origin git@github.com:zcaudate/foundation.web.git"
+                "git remote add origin git@github.com:zcaudate-xyz/foundation.web.git"
                 "git push origin HEAD:gh-pages --force")}]}}]]})
   
 (def.make WEB-INDEX
   {:tag      "web-index"
    :build    ".build/web-index"
-   :github   {:repo   "zcaudate/foundation.web"
+   :github   {:repo   "zcaudate-xyz/foundation.web"
               :private true
               :description "Web Index"}
    :sections {:common [+readme+
