@@ -66,7 +66,7 @@
 (def.make WEB-INDEX
   {:tag      "web-index"
    :build    ".build/web-index"
-   :github   {:repo   "zcaudate-xyz/foundation.web"
+   :github   {:repo   "zcaudate-xyz/demo.foundation-web"
               :private true
               :description "Web Index"}
    :sections {:common [+readme+
