@@ -50,7 +50,7 @@
               {:name "SSH Init"
                :run (str/|
                      "install -m 600 -D /dev/null ~/.ssh/id_rsa"
-                     "echo '${{ secrets.GH_PRIVATE_COMMIT_KEY }}' > ~/.ssh/id_rsa"
+                     "echo '${{ secrets.GH_SSH_PRIVATE_KEY }}' > ~/.ssh/id_rsa"
                      "ssh-keyscan -H www.github.com > ~/.ssh/known_hosts")}
               
               {:name "Deploy gh-pages"
@@ -60,13 +60,13 @@
                 "git config --global user.name github-actions"
                 "git config --global user.email github-actions@github.com"
                 "cd web-build && git init && git add -A && git commit -m 'deploying to gh-pages'"
-                "git remote add origin git@github.com:zcaudate-xyz/foundation.web.git"
+                "git remote add origin git@github.com:zcaudate-xyz/demo.foundation-web.git"
                 "git push origin HEAD:gh-pages --force")}]}}]]})
   
 (def.make WEB-INDEX
   {:tag      "web-index"
    :build    ".build/web-index"
-   :github   {:repo   "zcaudate-xyz/foundation.web"
+   :github   {:repo   "zcaudate-xyz/demo.foundation-web"
               :private true
               :description "Web Index"}
    :sections {:common [+readme+
@@ -106,7 +106,7 @@
                         :main {"main" "node_modules/expo/AppEntry.js",
                                "name" "component-native",
                                "private" true,
-                               "homepage" "/foundation.web"
+                               "homepage" "/demo.foundation-web"
                                "dependencies" {"react" "17.0.2"
                                                "react-dom" "17.0.2"
                                                "react-native" "0.68.1"
