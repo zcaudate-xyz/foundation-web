@@ -7,7 +7,7 @@ jobs:
   build-web:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/zcaudate-xyz/infra-foundation-clean:main
+      image: ghcr.io/zcaudate-xyz/infra-foundation-clean:ci
       
     steps:
       - name: Write SSH keys
