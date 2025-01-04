@@ -2,7 +2,7 @@
 (cemerick.pomegranate.aether/register-wagon-factory!
  "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
  
-(defproject xyz.zcaudate/foundation-web "4.0.4"
+(defproject xyz.zcaudate/foundation-web "4.0.5"
   :description "web libraries for foundation"
   :url "https://www.github.com/zcaudate/foundation-web"
   :license  {:name "MIT License"
@@ -16,36 +16,36 @@
    "push-web-code"  ["run" "-m" "component.task-web-index"]}
   
   :dependencies [[org.clojure/clojure "1.11.1"]
-                 [xyz.zcaudate/code.test           "4.0.4"]
-                 [xyz.zcaudate/code.manage         "4.0.4"]
-                 [xyz.zcaudate/code.java           "4.0.4"]
-                 [xyz.zcaudate/code.maven          "4.0.4"]
-                 [xyz.zcaudate/code.doc            "4.0.4"]
-                 [xyz.zcaudate/code.dev            "4.0.4"]
+                 [xyz.zcaudate/code.test           "4.0.5"]
+                 [xyz.zcaudate/code.manage         "4.0.5"]
+                 [xyz.zcaudate/code.java           "4.0.5"]
+                 [xyz.zcaudate/code.maven          "4.0.5"]
+                 [xyz.zcaudate/code.doc            "4.0.5"]
+                 [xyz.zcaudate/code.dev            "4.0.5"]
                  
-                 [xyz.zcaudate/js.core             "4.0.4"]
-                 [xyz.zcaudate/js.cell             "4.0.4"]
-                 [xyz.zcaudate/js.lib.datetime     "4.0.4"]
-                 [xyz.zcaudate/js.lib.ethereum     "4.0.4"]
-                 [xyz.zcaudate/js.lib.rn           "4.0.4"]
-                 [xyz.zcaudate/js.lib.lw-charts    "4.0.4"]
-                 [xyz.zcaudate/js.lib.valtio       "4.0.4"]
-                 [xyz.zcaudate/js.react            "4.0.4"]
-                 [xyz.zcaudate/js.react-ext        "4.0.4"]
-                 [xyz.zcaudate/js.react-native     "4.0.4"]
+                 [xyz.zcaudate/js.core             "4.0.5"]
+                 [xyz.zcaudate/js.cell             "4.0.5"]
+                 [xyz.zcaudate/js.lib.datetime     "4.0.5"]
+                 [xyz.zcaudate/js.lib.ethereum     "4.0.5"]
+                 [xyz.zcaudate/js.lib.rn           "4.0.5"]
+                 [xyz.zcaudate/js.lib.lw-charts    "4.0.5"]
+                 [xyz.zcaudate/js.lib.valtio       "4.0.5"]
+                 [xyz.zcaudate/js.react            "4.0.5"]
+                 [xyz.zcaudate/js.react-ext        "4.0.5"]
+                 [xyz.zcaudate/js.react-native     "4.0.5"]
                  
-                 [xyz.zcaudate/jvm                 "4.0.4"]
-                 [xyz.zcaudate/net.http            "4.0.4"]
+                 [xyz.zcaudate/jvm                 "4.0.5"]
+                 [xyz.zcaudate/net.http            "4.0.5"]
 
-                 [xyz.zcaudate/rt.basic            "4.0.4"]
+                 [xyz.zcaudate/rt.basic            "4.0.5"]
                  
-                 [xyz.zcaudate/script.css          "4.0.4"]
-                 [xyz.zcaudate/script.sql          "4.0.4"]
-                 [xyz.zcaudate/std.lib             "4.0.4"]
-                 [xyz.zcaudate/std.log             "4.0.4"]
-                 [xyz.zcaudate/std.lang            "4.0.4"]
-                 [xyz.zcaudate/std.text            "4.0.4"]
-                 [xyz.zcaudate/xtalk.lang          "4.0.4"]]
+                 [xyz.zcaudate/script.css          "4.0.5"]
+                 [xyz.zcaudate/script.sql          "4.0.5"]
+                 [xyz.zcaudate/std.lib             "4.0.5"]
+                 [xyz.zcaudate/std.log             "4.0.5"]
+                 [xyz.zcaudate/std.lang            "4.0.5"]
+                 [xyz.zcaudate/std.text            "4.0.5"]
+                 [xyz.zcaudate/xtalk.lang          "4.0.5"]]
   :profiles {:dev {:plugins [[lein-ancient "0.6.15"]
                              [lein-exec "0.3.7"]
                              [lein-cljfmt "0.7.0"]
