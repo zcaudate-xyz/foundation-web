@@ -26,7 +26,9 @@
    :darkWarn       "#aaaae0" #_"#61604a"})
 
 (def.js PalettePrimary
-  {:purple   {:lightPrimary   "#5f4abd"
+  {:red      {:lightPrimary   "#6F0303"
+              :darkPrimary    "#ED4040"}
+   :purple   {:lightPrimary   "#5f4abd"
               :darkPrimary    "#aa97fc"}
    :indigo   {:lightPrimary   "#3F33BD"
               :darkPrimary    "#837AE6"}
