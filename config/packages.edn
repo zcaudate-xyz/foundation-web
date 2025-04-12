@@ -1,7 +1,7 @@
-{foundation/melbourne
+{xyz.zcaudate/melbourne
  {:description "blocks for platform building"
   :include [[melbourne :complete]]}
   
- foundation/pune
+ xyz.zcaudate/pune
  {:description "blocks for platform building"
   :include [[pune :complete]]}}
