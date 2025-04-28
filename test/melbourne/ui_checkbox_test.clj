@@ -114,7 +114,7 @@
           :indices indices
           :setIndices setIndices}]]] 
 [:% n/TextDisplay
-       {:content (k/js-encode indices)}]))))
+       {:content (k/json-encode indices)}]))))
 
 ^{:refer melbourne.ui-checkbox/CheckGroup :added "0.1"}
 (fact "creates a group of check boxes"
@@ -150,6 +150,6 @@
           :setValues setValues
           :format (fn:> [s] (+ "  " s))}]]] 
 [:% n/TextDisplay
-       {:content (k/js-encode values)}])))
+       {:content (k/json-encode values)}])))
 
   (def.js MODULE (!:module)))

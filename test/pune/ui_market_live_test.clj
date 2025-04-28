@@ -67,7 +67,7 @@
                           (. (j/future-delayed [200]
                                (return (. orderLookup [orderId])))
                              (then (fn [data]
-                                     (alert (k/js-encode data)))))))}
+                                     (alert (k/json-encode data)))))))}
                       -/CHART))] 
 [:% n/Row
        {:style {:height 400}}

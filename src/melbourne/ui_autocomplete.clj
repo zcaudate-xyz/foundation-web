@@ -40,7 +40,7 @@
    [:% ui-text/ButtonAccent
     #{design
       {:onPress (fn:> (setSelected entry))
-       :text (k/js-encode entry)}}]))
+       :text (k/json-encode entry)}}]))
 
 (defn.js SelectSingle
   [#{[design
@@ -56,7 +56,7 @@
        [:% ui-text/ButtonAccent
         #{design
           {:onPress (fn:> (setSelected nil))
-           :text (k/js-encode selected)}}]
+           :text (k/json-encode selected)}}]
        [:<>
         [:% ui-input/Input
          {:design {:type "dark"}
@@ -96,7 +96,7 @@
                       (return
                        [:% n/Text
                         {:style {:padding 5}}
-                        (k/js-encode entry)]))))
+                        (k/json-encode entry)]))))
     (return
      [:% n/Enclosed
       {:label "js.react-native.ui-autocomplete/Autocomplete"}

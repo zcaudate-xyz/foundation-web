@@ -86,7 +86,7 @@
         {:fallback [:% slim-table-common/TableDefaultIsLoading #{design}]}
         (r/% routeComponent
              (j/assignNew props (. custom [routeKey])))])
-  #_(r/watch [(k/js-encode display)
+  #_(r/watch [(k/json-encode display)
             routeKey
             displayKey]
      (k/LOG! {:display display

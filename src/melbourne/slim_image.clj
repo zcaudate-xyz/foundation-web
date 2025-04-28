@@ -43,7 +43,7 @@
   (when (k/is-empty? value)
     (:= value {}))
   (when (k/is-string? value)
-    (:= value (k/js-decode value)))
+    (:= value (k/json-decode value)))
   
   
   (:= palette (base-palette/getPalette design palette))

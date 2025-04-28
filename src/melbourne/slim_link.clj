@@ -60,7 +60,7 @@
    (r/% slim-select/FormDropdown
         (j/assignNew {}
                      props
-                     {:key (k/js-encode args)
+                     {:key (k/json-encode args)
                       :data     (. links results)
                       :fieldProps
                       {:valueFn  k/id-fn

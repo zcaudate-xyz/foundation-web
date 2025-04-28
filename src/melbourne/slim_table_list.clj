@@ -409,7 +409,7 @@
                                           {}
                                           nil
                                           "remote"))
-  (r/watch [(k/js-encode args)]
+  (r/watch [(k/json-encode args)]
     (refresh-fn))
   (r/init []
     (refresh-fn)

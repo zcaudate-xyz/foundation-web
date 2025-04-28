@@ -1064,7 +1064,7 @@
          {:design {:type "light"}
           :entry entry
           :custom {:hello {:text "Hello"}}
-          :control {:setShowDetail (fn:> [e] (alert (k/js-encode e)))}
+          :control {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
           :impl {:key "hello"
                  :submit "detail"}}]]
        [:% ui-static/Div
@@ -1074,7 +1074,7 @@
          {:design {:type "dark"}
           :entry entry
           :custom {:hello {:text "Hello"}}
-          :control {:setShowDetail (fn:> [e] (alert (k/js-encode e)))}
+          :control {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
           :impl {:type "control"
                  :key "hello"
                  :submit "detail"}}]]]))))
@@ -1100,7 +1100,7 @@
          {:design {:type "light"}
           :entry entry
           :custom {:hello {:text "Hello"}}
-          :control {:setShowDetail (fn:> [e] (alert (k/js-encode e)))}
+          :control {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
           :impl {:key "hello"
                  :submit "detail"
                  :body [[:% n/Text "PRESS"]]}}]]
@@ -1111,7 +1111,7 @@
          {:design {:type "dark"}
           :entry entry
           :custom {:hello {:text "Hello"}}
-          :control {:setShowDetail (fn:> [e] (alert (k/js-encode e)))}
+          :control {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
           :impl {:type "control_layout"
                  :key "hello"
                  :submit "detail"
@@ -1206,7 +1206,7 @@
            {:design {:type "light"}
             :entry entry
             :custom {:hello {:text "Hello"}}
-            :route {:setShowDetail (fn:> [e] (alert (k/js-encode e)))}
+            :route {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
             :impl {:key "hello"
                    :submit "detail"}}]]
        [:% ui-static/Div
@@ -1216,7 +1216,7 @@
            {:design {:type "dark"}
             :entry entry
             :custom {:hello {:text "Hello"}}
-            :route {:setShowDetail (fn:> [e] (alert (k/js-encode e)))}
+            :route {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
             :impl {:type "route"
                    :key "hello"
                    :submit "detail"}}]]]))))
@@ -1242,7 +1242,7 @@
            {:design {:type "light"}
             :entry entry
             :custom {:hello {:text "Hello"}}
-            :route {:setShowDetail (fn:> [e] (alert (k/js-encode e)))}
+            :route {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
             :impl {:key "hello"
                    :submit "detail"}}]]
        [:% ui-static/Div
@@ -1252,7 +1252,7 @@
            {:design {:type "dark"}
             :entry entry
             :custom {:hello {:text "Hello"}}
-            :route {:setShowDetail (fn:> [e] (alert (k/js-encode e)))}
+            :route {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
             :impl {:type "route"
                    :key "hello"
                    :submit "detail"}}]]]))))
@@ -1277,7 +1277,7 @@
         [:% slim-entry/EntryContentAction
          {:design {:type "light"}
           :entry entry
-          :actions {:print (fn:> [e] (alert (k/js-encode e)))}
+          :actions {:print (fn:> [e] (alert (k/json-encode e)))}
           :impl {:submit "print"
                  :text "HELLO"
                  :submitType "entry"}}]]
@@ -1287,7 +1287,7 @@
         [:% slim-entry/Entry
          {:design {:type "dark"}
           :entry entry
-          :actions {:print (fn:> [e] (alert (k/js-encode e)))}
+          :actions {:print (fn:> [e] (alert (k/json-encode e)))}
           :impl {:type "action"
                  :text "HELLO"
                  :submit "print"
@@ -1314,7 +1314,7 @@
         {:design {:type "light"}
          :style {:flex 1}}
         [:% slim-entry/EntryContentSubmit
-         {:actions {:create (fn:> [data] (alert (k/js-encode data)))}
+         {:actions {:create (fn:> [data] (alert (k/json-encode data)))}
           :form form
           :impl {:submit "create"}}]]
        [:% ui-static/Div
@@ -1322,7 +1322,7 @@
          :style {:flex 1}}
         [:% slim-entry/Entry
          {:design {:type "dark"}
-          :actions {:create (fn:> [data] (alert (k/js-encode data)))}
+          :actions {:create (fn:> [data] (alert (k/json-encode data)))}
           :mini true
           :form form
           :impl {:type "submit"
@@ -1389,7 +1389,7 @@
         {:design {:type "light"}
          :style {:flex 1}}
         [:% slim-entry/EntryLayoutForm
-         {:actions {:create (fn:> [data] (alert (k/js-encode data)))}
+         {:actions {:create (fn:> [data] (alert (k/json-encode data)))}
           :form form
           :impl {:submit "create"
                  :body [[:% slim-entry/EntryContentField
@@ -1413,7 +1413,7 @@
          :style {:flex 1}}
         [:% slim-entry/Entry
          {:design {:type "dark"}
-          :actions {:create (fn:> [data] (alert (k/js-encode data)))}
+          :actions {:create (fn:> [data] (alert (k/json-encode data)))}
           :mini true
           :form form
           :impl {:type "form"

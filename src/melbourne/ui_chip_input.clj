@@ -26,7 +26,7 @@
       setValues
       (:.. rprops)]}]
   (when (k/is-string? values)
-    (:= values (k/js-decode values)))
+    (:= values (k/json-decode values)))
   (when (k/is-empty? values)
     (:= values []))
   (var [showInput setShowInput] (r/local false))

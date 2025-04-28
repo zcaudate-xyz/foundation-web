@@ -355,7 +355,7 @@
 (defn.js FrameMain
   []
   (var [design setDesign] (r/local {:type "dark"}))
-  (var bkey (k/js-encode design))
+  (var bkey (k/json-encode design))
   (var [frameConsole
         setFrameConsole] (r/local false))
   (var [isGuest

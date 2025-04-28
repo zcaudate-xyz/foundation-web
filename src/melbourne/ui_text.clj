@@ -198,7 +198,7 @@
           (:= textProps {})]} props)
   
   (when (k/is-string? image)
-    (:= image (k/js-decode image)))
+    (:= image (k/json-decode image)))
   
   (var imageElem (:? (k/not-empty? image)
                      [:% n/Image

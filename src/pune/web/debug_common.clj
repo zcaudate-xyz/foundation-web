@@ -94,7 +94,7 @@
                  :targetFn
                  (fn:> [_tree branch parents views]
                    (k/get-in views [(k/first parents)
-                                    (k/unpack (k/js-decode (or branch "[null, null]")))]))
+                                    (k/unpack (k/json-decode (or branch "[null, null]")))]))
                  :displayFn -/displayInfo}]
        (:.. rprops)]}]))
 
@@ -119,7 +119,7 @@
                  :initial group
                  :setInitial setGroup
                  :tabsFormat (fn:> [s] (+ " " s " "))
-                 :formatFn k/js-encode}
+                 :formatFn k/json-encode}
                 {:type "list"
                  :initial route
                  :setInitial setRoute

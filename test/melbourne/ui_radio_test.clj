@@ -95,7 +95,7 @@
           :index index
           :setIndex setIndex}]]] 
 [:% n/TextDisplay
-       {:content (k/js-encode index)}]))))
+       {:content (k/json-encode index)}]))))
 
 ^{:refer melbourne.ui-radio/RadioGroup :added "0.1"}
 (fact "creates a group of radio boxes"
@@ -131,7 +131,7 @@
           :setValue setValue
           :format (fn:> [s] (+ "  " s))}]]] 
 [:% n/TextDisplay
-       {:content (k/js-encode value)}])))
+       {:content (k/json-encode value)}])))
 
   (def.js MODULE (!:module))
   )

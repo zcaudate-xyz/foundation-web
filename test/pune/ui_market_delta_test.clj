@@ -44,7 +44,7 @@
          {:title "+1"
           :onPress (fn [] (setValue (+ value 1)))}]]] 
 [:% n/Caption
-       {:text (k/js-encode #{value})
+       {:text (k/json-encode #{value})
         :style {:marginTop 10
                 :zIndex -100}}])))
 

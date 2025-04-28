@@ -253,7 +253,7 @@
     (catch e))
   (when (and (not (r/isValidElement children))
              (not (k/is-string? children)))
-    (:= children (k/js-encode children)))
+    (:= children (k/json-encode children)))
   (var oprops (j/assign rprops
                         #{entry}
                         iprops

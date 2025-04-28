@@ -35,7 +35,7 @@
     []
     (var control (slim/useLocalControl))
     (var actions {:modify (fn:> [e] (j/delayed [100]
-                                      (alert (k/js-encode e))))})
+                                      (alert (k/json-encode e))))})
     (var entry {:id "id-0"})
     (var form (ext-form/makeForm
                (fn:> {:currency "STATS"
@@ -139,7 +139,7 @@
     []
     (var control (slim/useLocalControl))
     (var actions {:create (fn:> [e] (j/delayed [100]
-                                      (alert (k/js-encode e))))})
+                                      (alert (k/json-encode e))))})
     (var form (ext-form/makeForm
                (fn:> {:currency "STATS"
                       :name ""
