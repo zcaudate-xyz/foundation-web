@@ -8,7 +8,9 @@
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.helper-color :as c]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [xt.lang.common-string :as text]
              [melbourne.ui-static :as ui-static]
              [melbourne.base-palette :as base-palette]]
@@ -16,20 +18,20 @@
 
 (defn-.js getProps
   [entry propsInput]
-  (cond (k/fn? propsInput)
+  (cond (xtl/is-function? propsInput)
         (return (propsInput entry))
 
         :else (return propsInput)))
 
 (defn-.js getField
   [entry field]
-  (cond (k/nil? field)
+  (cond (xtl/nil? field)
         (return nil)
         
-        (k/fn? field)
+        (xtl/is-function? field)
         (return (field entry))
         
-        :else (return (k/get-in entry (k/arrayify field)))))
+        :else (return (xtd/get-in entry (xtd/arrayify field)))))
 
 (defn.js ContentTitle
   "creates the content title"

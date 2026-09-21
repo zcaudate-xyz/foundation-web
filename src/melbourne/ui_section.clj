@@ -16,7 +16,8 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-button :as ui-button]
              [melbourne.ui-text :as ui-text]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 ;;
@@ -149,7 +150,7 @@
      onPress}]
   (return
    [:<>
-    (:? (k/not-empty? textButton)
+    (:? (xtd/not-empty? textButton)
         [:% ui-text/ButtonMinor
          #{onPress
            design

@@ -17,7 +17,7 @@
              [melbourne.ui-static :as ui-static]
              [pune.ui-code-resend :as ui-code-resend]
              [melbourne.base-validators :as validators]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 ^{:refer pune.ui-code-resend/CodeResendButton :added "0.1"}
@@ -55,7 +55,7 @@
                                       (return (j/future-delayed [300]
                                                (return
                                                 {:status "ok"
-                                                 :updated (k/now-ms)}))))}}}]
+                                                 :updated (xt/x:now-ms)}))))}}}]
         [:% n/PortalSink
          {:name sink0Id
           :style {:height 80}}]]

@@ -16,7 +16,7 @@
              [melbourne.ui-toggle-button :as ui-toggle-button]
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-text :as ui-text]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js SubMenuToggle

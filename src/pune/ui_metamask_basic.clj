@@ -13,7 +13,9 @@
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [js.core :as j]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (h/template-entries [l/tmpl-entry {:type :fragment
@@ -150,16 +152,16 @@
   (var [accounts setAccounts] (r/local {}))
   (var setTable (r/const
                  (fn [arr]
-                   (var accounts (k/arr-juxt (or arr [])
+                   (var accounts (xtd/arr-juxt (or arr [])
                                              (fn [s]
                                                (return (+ "0x" (j/toUpperCase (j/substring s 2)))))
-                                             k/T))
+                                             xtl/T))
                    (setAccounts accounts)
                    (when onChange (onChange accounts)))))
   (var requestFn
        (r/const (fn:>
                   (. (-/request {:method "eth_requestAccounts"} setTable)
-                     (catch k/identity)))))
+                     (catch xtl/identity)))))
   (r/init []
     (requestFn)
     (-/on "accountsChanged" setTable)
@@ -167,7 +169,7 @@
      (fn []
        (-/removeListener "accountsChanged" setTable))))
   (r/watch [accounts]
-    (when (k/nil? accounts)
+    (when (xtl/nil? accounts)
       (j/future-delayed [1000]
         (requestFn))))
   (return #{accounts
@@ -184,7 +186,7 @@
          requestFn}
        (-/useEnsureConnected onChange))
   (return
-   (:? (k/is-empty? accounts)
+   (:? (xtd/is-empty? accounts)
        (or fallback
            [:% n/Row
             [:% ui-text/ButtonAccent
@@ -202,11 +204,11 @@
                      (. (-/request {:method "eth_chainId"} )
                         (then (fn [res]
                                 (setChainId res)))
-                        (catch k/identity))))
+                        (catch xtl/identity))))
                  1000))
   (r/init []
     (. (-/request {:method "eth_chainId"} setChainId)
-       (catch k/identity))
+       (catch xtl/identity))
     (-/on "chainChanged" setChainId)
     (return
      (fn []
@@ -226,7 +228,7 @@
   (var [visible setVisible] (r/local false))
   (r/init []
     (. (-/request {:method "eth_chainId"} setId)
-       (catch k/identity))
+       (catch xtl/identity))
     (-/on "chainChanged" setId)
     (setVisible true)
     (return
@@ -258,7 +260,7 @@
          requestFn}
        (-/useEnsureConnected onChange))
   (return
-   (:? (k/is-empty? accounts)
+   (:? (xtd/is-empty? accounts)
        (:? fallbackLink
            (r/% fallbackLink
                 (j/assign #{design} fallbackProps))
@@ -268,7 +270,7 @@
               :text  "Link Site"
               :onPress requestFn}]])
        
-       (k/arr-some addresses (fn:> [addr] (. accounts [addr])))
+       (xtd/arr-some addresses (fn:> [addr] (. accounts [addr])))
        (or children [:% n/View])
        
        :else
@@ -286,7 +288,7 @@
               {:design design
                :style {:fontSize 8}
                :numberOfLines 1}
-              (k/first addresses)]]]))))
+              (xtd/first addresses)]]]))))
 
 (def.js MODULE (!:module))
 

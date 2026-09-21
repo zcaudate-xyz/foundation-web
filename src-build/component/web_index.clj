@@ -16,7 +16,7 @@
              [js.react :as r]
              [js.react-native :as n :include [:fn]]
              [js.lib.rn-expo :as x :include [:lib]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [xt.event.base-box :as base-box]
              [component.web-melbourne :as web-melbourne]
              [component.web-pune-frame :as web-pune-frame]]

@@ -12,7 +12,9 @@
              [melbourne.ui-group :as ui-group]
              [melbourne.ui-toggle-button :as ui-toggle-button]
              [melbourne.base-palette :as base-palette]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js DropdownIndexedModal
@@ -114,7 +116,7 @@
        styleMenu
        styleMenuItem
        itemTransformations
-       (:= format k/identity)
+       (:= format xtl/identity)
        (:.. rprops)]}]
    (var [visible setVisible] (r/local (fn:> false)))
    (var hostRef (r/ref))
@@ -184,10 +186,10 @@
                                    value
                                    setValue}))
    (r/watch [value index data]
-     (when (and (k/is-empty? value)
-                (k/not-nil? index)
-                (k/not-empty? data))
-       (setValue ((or valueFn k/identity)
+     (when (and (xtd/is-empty? value)
+                (xtl/not-nil? index)
+                (xtd/not-empty? data))
+       (setValue ((or valueFn xtl/identity)
                   (. data [index])))))
    (return [:% -/DropdownIndexed
             #{[setIndex

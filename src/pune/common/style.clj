@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[xt.lang.base-lib :as k]]
+   :require [[xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (def.js MODULE (!:module))

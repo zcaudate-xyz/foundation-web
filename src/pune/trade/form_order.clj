@@ -22,7 +22,11 @@
              [melbourne.ui-section :as ui-section]
              [melbourne.slim :as slim]
              [iberia.table.common-display :as common-display]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]
+             [xt.lang.common-sort-by :as xtsort]]
    :export [MODULE]})
 
 (def.js styleLargeDigit
@@ -218,9 +222,9 @@
 
 (defn.js getOdds
   [allotment rate]
-  (when (and (k/is-number? allotment)
-             (k/is-number? rate))
-    (var lcm (k/lcm (- allotment rate) rate))
+  (when (and (xtl/is-number? allotment)
+             (xtl/is-number? rate))
+    (var lcm (xtm/lcm (- allotment rate) rate))
     (var under (/ lcm (- allotment rate)))
     (var over  (/ lcm rate))
     (return
@@ -229,9 +233,9 @@
 
 (defn.js getMoneyLine
   [allotment rate]
-  (when (and (k/is-number? allotment)
-             (k/is-number? rate))
-    (var lcm (k/lcm (- allotment rate) rate))
+  (when (and (xtl/is-number? allotment)
+             (xtl/is-number? rate))
+    (var lcm (xtm/lcm (- allotment rate) rate))
     (var under (/ lcm (- allotment rate)))
     (var over  (/ lcm rate))
     (return
@@ -278,7 +282,7 @@
                       (== rate rate-hi-bid)))
 
   (var offerText (:? (== trade "buy")
-                     (:? (k/nil? rate-lo-ask)
+                     (:? (xtl/nil? rate-lo-ask)
                          "No Offers"
                          (+ "@ "
                             (j/toFixed (* fraction rate-lo-ask)
@@ -286,7 +290,7 @@
                             " (" (j/toFixed (* fraction (- rate rate-lo-ask))
                                             decimal)
                             ")"))
-                     (:? (k/nil? rate-hi-bid)
+                     (:? (xtl/nil? rate-hi-bid)
                          "No Offers"
                          (+ "@ "
                             (j/toFixed (* fraction rate-hi-bid)
@@ -335,7 +339,7 @@
 
 (defn.js get-rake-fee
   [entry trade spend amount fraction]
-  (var rake (k/get-in entry ["book" 0 "rake" 0]))
+  (var rake (xtd/get-in entry ["book" 0 "rake" 0]))
   (var #{buy-type buy-value
          sell-type sell-value} (or rake {}))
   (var fee 0)
@@ -433,9 +437,9 @@
   [#{design
      contracts
      control}]
-  (var contractLu (k/arr-juxt (or contracts [])
-                              (k/key-fn "prediction")
-                              k/identity))
+  (var contractLu (xtd/arr-juxt (or contracts [])
+                              (xtd/key-fn "prediction")
+                              xtl/identity))
   
   (var #{currencyId
          prediction
@@ -449,7 +453,7 @@
                    "primary"))
   (var fg {:key fgColor
            :tone "flatten"})
-  (var #{balance spend} (or (k/get-in contractLu [prediction])
+  (var #{balance spend} (or (xtd/get-in contractLu [prediction])
                             {}))
   (var avgCost (:? (and balance spend)
                    (/ spend balance)))
@@ -585,14 +589,14 @@
                     {:type "fill"}
                     {:style {:fontFamily "monospace"
                              }
-                     :template (k/get-in asset ["balance"])}]}
+                     :template (xtd/get-in asset ["balance"])}]}
             {:type "h"
              :style {:alignItems "center"}
              :body [{:type "bold"
                      :template "E"}
                     {:type "fill"}
                     {:style {:fontFamily "monospace"}
-                     :template (k/get-in asset ["escrow"])}]}]})))
+                     :template (xtd/get-in asset ["escrow"])}]}]})))
 
 ;;
 ;; Contract
@@ -615,14 +619,14 @@
   (var staticProps #{design
                      {:variant {:fg {:key fgColor
                                      :tone "flatten"}}}})
-  (var contractLu (k/arr-juxt (or contracts [])
-                              (k/key-fn "prediction")
-                              k/identity))
-  (var yesContracts (or (k/get-in contractLu ["yes" "balance"])
+  (var contractLu (xtd/arr-juxt (or contracts [])
+                              (xtd/key-fn "prediction")
+                              xtl/identity))
+  (var yesContracts (or (xtd/get-in contractLu ["yes" "balance"])
                         0))
-  (var yesEscrow (or (k/get-in contractLu ["yes" "escrow"])
+  (var yesEscrow (or (xtd/get-in contractLu ["yes" "escrow"])
                      0))
-  (var yesOrderEscrow (k/arr-foldl orders
+  (var yesOrderEscrow (xtd/arr-foldl orders
                                      (fn:> [acc order]
                                        (:? (and (== (. order ["prediction"]) "yes")
                                                 (== (. order ["trade"]) "buy"))
@@ -635,11 +639,11 @@
                                            :else
                                            acc))
                                      0))
-  (var noContracts (or (k/get-in contractLu ["no" "balance"])
+  (var noContracts (or (xtd/get-in contractLu ["no" "balance"])
                        0))
-  (var noEscrow    (or (k/get-in contractLu ["no" "escrow"])
+  (var noEscrow    (or (xtd/get-in contractLu ["no" "escrow"])
                        0))
-  (var noOrderEscrow (k/arr-foldl orders
+  (var noOrderEscrow (xtd/arr-foldl orders
                                   (fn:> [acc order]
                                     (:? (and (== (. order ["prediction"]) "no")
                                              (== (. order ["trade"]) "buy"))
@@ -742,7 +746,7 @@
              :minWidth 100}}
     [:% n/View
      {:style {:margin 6}}
-     (:? (k/not-empty? sell)
+     (:? (xtd/not-empty? sell)
          [:<>
           (r/% ui-section/SectionSeparator staticProps)
           [:% n/Row
@@ -754,7 +758,7 @@
                          [:% ui-text/P #{design} (. e price)]
                          [:% n/Fill]
                          [:% ui-text/P #{design} (. e unfilled)]]))])
-     (:? (k/not-empty? buy)
+     (:? (xtd/not-empty? buy)
          [:<> (r/% ui-section/SectionSeparator staticProps)
           [:% n/Row [:% n/Fill] (r/% ui-text/Bold staticProps "BUYING")]
           (r/% ui-section/SectionSeparator staticProps)
@@ -909,7 +913,7 @@
                   :template (. order id)}
                  {:style {:fontFamily "monospace"
                           :fontSize 9}
-                  :template (k/get-in order ["account" 0 "nickname"])}]})))}))
+                  :template (xtd/get-in order ["account" 0 "nickname"])}]})))}))
 
 (defn.js TradeOrdersView
   [props]
@@ -926,7 +930,7 @@
          setCurrentOrder
          rate-lo-ask
          rate-hi-bid} control)
-  (when (k/is-empty? orders)
+  (when (xtd/is-empty? orders)
     (return (slim/entry
              props
              {:type "h"
@@ -943,15 +947,15 @@
                                      :tone "flatten"}}}})
   (var filtered
        (-> orders
-           (k/arr-filter (fn:> [o] (== prediction (. o ["prediction"]))))
-           (k/arr-group-by (k/key-fn "trade") k/identity)
-           (k/obj-pairs)
-           (k/arr-map (fn:> [[trade arr]]
+           (xtd/arr-filter (fn:> [o] (== prediction (. o ["prediction"]))))
+           (xtd/arr-group-by (xtd/key-fn "trade") xtl/identity)
+           (xtd/obj-pairs)
+           (xtd/arr-map (fn:> [[trade arr]]
                         (:? (== trade "buy")
-                            [trade (k/sort-by arr [(fn:> [o] (- (. o rate))) "time_created"])]
-                            [trade (k/sort-by arr [(fn:> [o] (- (. o rate)))
+                            [trade (xtsort/sort-by arr [(fn:> [o] (- (. o rate))) "time_created"])]
+                            [trade (xtsort/sort-by arr [(fn:> [o] (- (. o rate)))
                                                    "time_created"])])))
-           (k/obj-from-pairs)))
+           (xtd/obj-from-pairs)))
   (var orderFn
        (fn [o]
          (var price (j/toFixed (* (. o rate) fraction)
@@ -1009,7 +1013,7 @@
    (slim/entry
     props
     {:type "v"
-     :body [(:? (k/not-empty?
+     :body [(:? (xtd/not-empty?
                  (. filtered ["sell"]))
                 
                 {:type "v"
@@ -1023,7 +1027,7 @@
                          :style {:marginHorizontal -5
                                  :marginVertical 3}}
                         (:.. (j/map (. filtered ["sell"]) orderFn))]})
-            (:? (k/not-empty?
+            (:? (xtd/not-empty?
                  (. filtered ["buy"]))
                 {:type "v"
                  :body [{:type "h"
@@ -1074,7 +1078,7 @@
                      ui-text/ButtonAccent))
   (var buttonDisabled
        (:? (== trade "sell")
-           (< (- (or (k/get-in balanceContracts [prediction "balance"])
+           (< (- (or (xtd/get-in balanceContracts [prediction "balance"])
                      0)
                  amount)
               0)

@@ -17,7 +17,9 @@
              [melbourne.ui-swiper :as ui-swiper]
              [melbourne.ui-button :as ui-button]
              [melbourne.base-palette :as base-palette]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]]
    :export [MODULE]})
 
 (defn.js selectImage
@@ -79,9 +81,9 @@
   (var subSize (- size (* 2 border)))
   (var #{fgNormal
          bgNormal} (base-palette/designPalette design))
-  (var uri (or (and (k/not-empty? photo)
+  (var uri (or (and (xtd/not-empty? photo)
                     (. photo ["uri"]))
-               (and (k/not-empty? data)
+               (and (xtd/not-empty? data)
                     (or (. data  ["url"])
                         (. data  ["thumbnailUrl"])))))
   (var swipeElem
@@ -114,10 +116,10 @@
                     :style  [{:borderRadius 4 :height subSize :width subSize}]
                     :transformations
                     (fn:> [#{position pressing}]
-                      {:style {:opacity (* (k/mix 1 0.8 pressing)
-                                           (k/mix 1 0 (/ (j/abs position)
+                      {:style {:opacity (* (xtm/mix 1 0.8 pressing)
+                                           (xtm/mix 1 0 (/ (j/abs position)
                                                          (* 2 subSize))))
-                               :transform [{:scale (k/mix 1 2 (/ (j/abs position) subSize))}]}})}
+                               :transform [{:scale (xtm/mix 1 2 (/ (j/abs position) subSize))}]}})}
                    (:.. (j/arrayify inner))]
            (:.. rprops)]}])
   (return

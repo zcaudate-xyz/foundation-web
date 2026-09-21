@@ -13,7 +13,7 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-input :as ui-input]
              [melbourne.base-font :as base-font]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js SelectComponentEmpty
@@ -40,7 +40,7 @@
    [:% ui-text/ButtonAccent
     #{design
       {:onPress (fn:> (setSelected entry))
-       :text (k/json-encode entry)}}]))
+       :text (xt/x:json-encode entry)}}]))
 
 (defn.js SelectSingle
   [#{[design
@@ -56,7 +56,7 @@
        [:% ui-text/ButtonAccent
         #{design
           {:onPress (fn:> (setSelected nil))
-           :text (k/json-encode selected)}}]
+           :text (xt/x:json-encode selected)}}]
        [:<>
         [:% ui-input/Input
          {:design {:type "dark"}
@@ -96,7 +96,7 @@
                       (return
                        [:% n/Text
                         {:style {:padding 5}}
-                        (k/json-encode entry)]))))
+                        (xt/x:json-encode entry)]))))
     (return
      [:% n/Enclosed
       {:label "js.react-native.ui-autocomplete/Autocomplete"}

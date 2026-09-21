@@ -14,7 +14,9 @@
              [js.react :as r :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [xt.event.base-form :as event-form]
              [melbourne.base-font :as base-font]
              [melbourne.base-palette :as base-palette]
@@ -100,7 +102,7 @@
           template
           fieldProps
           minWidth]} props)
-  (var value (k/template-entry entry template props))
+  (var value (xtd/template-entry entry template props))
   (when (and value format)
     (:= value (format value)))
   (var #{[style
@@ -108,7 +110,7 @@
   (return
    [:% -/FormEnclosed
     #{design mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -118,7 +120,7 @@
      (r/% ui-static/Text
           (j/assign #{design variant}
                     {:style [{:fontSize 13}
-                             (:.. (k/arrayify style))]}
+                             (:.. (xtd/arrayify style))]}
                     rprops)
           (j/toString (or value " - ")))]]))
 
@@ -144,7 +146,7 @@
   (return
    [:% -/FormEnclosed
     #{design mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -154,7 +156,7 @@
         :indicatorParams {:focusing {:default {:duration 100}}}
         :highlighted (== (. result ["status"])
                          "errored")
-        :value (j/toString (:? (k/nil? value) "" value))
+        :value (j/toString (:? (xtl/nil? value) "" value))
         :onFocus (fn []
                    (event-form/validate-field form field))
         :onChangeText (fn [v]
@@ -297,7 +299,7 @@
      [:% n/Padding {:style {:width 15}}]
      [:% ui-static/Text
       #{[design
-         :variant (k/get-in design ["variant" "label"])
+         :variant (xtd/get-in design ["variant" "label"])
          :style [base-font/fontH6
                  {:padding 3}
                  (:.. (j/arrayify styleLabel))]]}
@@ -326,7 +328,7 @@
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -367,7 +369,7 @@
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -406,14 +408,14 @@
                                         :fn/type   "field"}
                                        meta)))
   (var #{mainNeutral} (base-palette/designPalette design))
-  (var Component (or (k/get-in fieldProps
+  (var Component (or (xtd/get-in fieldProps
                                ["component"])
                      ui-text/TabsMinor))
   (return 
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide
@@ -452,14 +454,14 @@
                                                      :fn/type   "field"}
                                                     meta)))
   (var #{mainNeutral} (base-palette/designPalette design))
-  (var Component (or (k/get-in fieldProps
+  (var Component (or (xtd/get-in fieldProps
                                ["component"])
                      ui-text/EnumMinor))
   (return 
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -498,7 +500,7 @@
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -536,7 +538,7 @@
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -571,7 +573,7 @@
          (var props (j/assign rprops
                               #{design mini form field 
                                 {:meta (j/assign {} meta rprops.meta)}}))
-         (var style (k/arr-append
+         (var style (xtd/arr-assign
                      [(:.. (j/arrayify rowStyle))]
                      (j/arrayify (. fieldStyle field))))
          (return
@@ -587,7 +589,7 @@
     #{(:.. rprops)}
     (j/map (j/filter (j/arrayify rows) j/identity)
            formElement)
-    (:? (k/not-empty? children)
+    (:? (xtd/not-empty? children)
         [:% n/Padding {:style {:height 16}}])
     children]))
 

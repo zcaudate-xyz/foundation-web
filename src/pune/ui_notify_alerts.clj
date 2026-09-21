@@ -15,7 +15,10 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-text :as ui-text]
              [melbourne.slim-dialog :as slim-dialog]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-trace :as trace]
              [xt.lang.common-string :as text]]
    :export [MODULE]})
 
@@ -29,12 +32,12 @@
                     (. notify source)
                     (or (. notify path)
                         ["alert"])
-                    (k/meta:info)))
+                    (trace/meta:info)))
   (var [visible
         setVisible] (r/local))
-  (var current (or (k/first events) {}))
+  (var current (or (xtd/first events) {}))
   (r/watch [current]
-    (when (k/not-empty? current)
+    (when (xtd/not-empty? current)
       (j/future-delayed [100]
         (setVisible true))))
   (var #{title body submitText cancelText action} current)
@@ -46,7 +49,7 @@
      :body   body
      :submitProps {:text (or submitText "OK")}
      :helperProps {:cancelText (or cancelText "Cancel")
-                   :cancelShow (k/not-nil? cancelText)}
+                   :cancelShow (xtl/not-nil? cancelText)}
      :modalProps  {:transition "none"
                    :effect {:fade 0.1
                             :zoom 0.1}}

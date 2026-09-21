@@ -5,7 +5,7 @@
 
 (l/script :js
   {:runtime :basic
-   :require [[xt.lang.base-lib :as k]
+   :require [[xt.lang.spec-base :as xt]
              [melbourne.base-theme :as base-theme]
              [melbourne.base-palette :as base-palette]]
    :export [MODULE]})

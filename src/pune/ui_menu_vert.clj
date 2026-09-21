@@ -18,7 +18,9 @@
              [melbourne.ui-button :as ui-button]
              [melbourne.ui-toggle-button :as ui-toggle-button]
              [melbourne.ui-static :as ui-static]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js styleMenuButton
@@ -174,7 +176,7 @@
       setRouteKey
       (:= design {})
       (:= items [])]}]
-  (:= items (j/filter items k/identity))
+  (:= items (j/filter items xtl/identity))
   (var [visible setVisible] (r/local false))
   (var itemFn
        (fn [mini]
@@ -201,7 +203,7 @@
                     :flexDirection "row"
                     :justifyContent "space-between"}]}
           (-> items
-              (j/filter (k/key-fn "mini"))
+              (j/filter (xtd/key-fn "mini"))
               (j/map    (itemFn true)))
           [:% -/MainMenuMiniContext
            #{design visible setVisible}

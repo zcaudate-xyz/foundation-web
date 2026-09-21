@@ -12,7 +12,7 @@
              [statslink.full.link-local :as link-local]
              [statslink.full.link-remote :as link-remote]
              [statslink.test.setup-node-debug :as setup-debug]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [xt.lang.common-repl :as repl]]
    :export [MODULE]})
 

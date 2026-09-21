@@ -15,21 +15,23 @@
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js get-entry-data
   "gets the entry data"
   {:added "4.0"}
   [entry getter]
-  (cond (k/fn? getter)
+  (cond (xtl/is-function? getter)
         (return (getter entry))
 
-        (k/nil? getter)
+        (xtl/nil? getter)
         (return entry)
         
         :else
-        (return (k/get-in entry (j/arrayify getter)))))
+        (return (xtd/get-in entry (j/arrayify getter)))))
 
 ;;
 ;; Entry Row
@@ -43,16 +45,16 @@
       column
       style
       (:.. rprops)]}]
-  (var format (or (k/get-in impl ["header"
+  (var format (or (xtd/get-in impl ["header"
                                   "format"])
-                  k/identity))
+                  xtl/identity))
   (var #{[name]} column)
   (return
    (r/% ui-text/H6
         (j/assign
          #{design
            {:style [{:flex 1}
-                    (:.. (k/arrayify style))]}}
+                    (:.. (xtd/arrayify style))]}}
          rprops)
         (format name column))))
 
@@ -76,7 +78,7 @@
        (fn [column]
          (var #{name} column)
          (var #{[style
-                 (:.. rprops)]} (or (k/get-in props [name])
+                 (:.. rprops)]} (or (xtd/get-in props [name])
                                     {}))
          (return
           (r/% Component
@@ -87,8 +89,8 @@
                    column
                    :style [{:paddingVertical 5
                             :paddingHorizontal 10}
-                           (:.. (k/arrayify (. header style)))
-                           (:.. (k/arrayify style))]
+                           (:.. (xtd/arrayify (. header style)))
+                           (:.. (xtd/arrayify style))]
                    :key (. column name)]}
                 rprops)))))
   (return
@@ -97,7 +99,7 @@
        :style [{:flexDirection "row"
                 :margin 5
                 :maxWidth 500}
-               (:.. (k/arrayify style))]]}
+               (:.. (xtd/arrayify style))]]}
     (j/map columns columnFn)]))
 
 ;;
@@ -112,14 +114,14 @@
          entry
          column
          style} props)
-  (var #{[(:= format k/identity)]} column)
+  (var #{[(:= format xtl/identity)]} column)
   (var text (-/get-entry-data entry (. column data)))
   (return
    (r/% ui-text/P
         (j/assignNew
          props
          {:style [{:flex 1}
-                  (:.. (k/arrayify style))]})
+                  (:.. (xtd/arrayify style))]})
         (format text props))))
 
 (defn.js EntryRow
@@ -137,7 +139,7 @@
        (fn [column]
          (var #{name} column)
          (var #{[style
-                 (:.. rprops)]} (or (k/get-in props [name])
+                 (:.. rprops)]} (or (xtd/get-in props [name])
                                     {}))
          (var Component (or (. column component)
                             -/EntryRowText))
@@ -146,11 +148,11 @@
                (j/assign
                 #{[design
                    entry
-                   :style [(:.. (k/arrayify (. header style)))
-                           (:.. (k/arrayify style))]
+                   :style [(:.. (xtd/arrayify (. header style)))
+                           (:.. (xtd/arrayify style))]
                    column
                    :key (. column name)]}
-                (k/get-in props [name]))))))
+                (xtd/get-in props [name]))))))
   (return
    [:% ui-static/Div
     {:design design
@@ -161,7 +163,7 @@
               :alignContent "space-between"
               :justifyContent "space-between"
               :maxWidth 500}
-             (:.. (k/arrayify style))]}
+             (:.. (xtd/arrayify style))]}
     (j/map columns columnFn)]))
 
 ;;
@@ -176,7 +178,7 @@
          entry
          section
          style} props)
-  (var #{[(:= format k/identity)]} section)
+  (var #{[(:= format xtl/identity)]} section)
   (var text (-/get-entry-data entry (. section data)))
   (return
    [:% n/Row
@@ -193,14 +195,14 @@
          entry
          section
          style} props)
-  (var #{[(:= format k/identity)]} section)
+  (var #{[(:= format xtl/identity)]} section)
   (var text (-/get-entry-data entry (. section data)))
   (return
    (r/% ui-text/Avatar
         {:design design
          :text  (format text props)
          :style [{:margin 10}
-                 (:.. (k/arrayify style))]})))
+                 (:.. (xtd/arrayify style))]})))
 
 (defn.js EntryCardBodyPair
   "creates entry body pair"
@@ -212,18 +214,18 @@
          style
          styleTitle
          styleText} props)
-  (var #{[(:= format k/identity)
+  (var #{[(:= format xtl/identity)
           name]} column)
   (var titleProps (j/assignNew
                    props
                    #{design {:style [{:fontWeight "500"}
-                                     (:.. (k/arrayify styleTitle))]}}))
+                                     (:.. (xtd/arrayify styleTitle))]}}))
   
   (var text (-/get-entry-data entry (. column data)))
   (var textProps  (j/assignNew
                    props
                    #{design {:style [{:marginLeft 10}
-                                     (:.. (k/arrayify styleText))]}}))
+                                     (:.. (xtd/arrayify styleText))]}}))
   (return
    [:% n/Row
     {:style {:justifyContent "space-between"}}
@@ -260,7 +262,7 @@
          entry
          section
          style} props)
-  (cond (k/arr? section)
+  (cond (xtl/is-array? section)
         (return
          [:% n/Row
           (-> section 
@@ -272,7 +274,7 @@
                           {:key i}}])))])
         
         :else
-        (do (var #{[(:= format k/identity)]} section)
+        (do (var #{[(:= format xtl/identity)]} section)
             (var text (-/get-entry-data entry (. section data)))
             (return
              (r/% ui-text/P
@@ -280,7 +282,7 @@
                    props
                    #{design
                      {:style [{:flex 1}
-                              (:.. (k/arrayify style))]}})
+                              (:.. (xtd/arrayify style))]}})
                   (format text props))))))
 
 (defn.js EntryCard
@@ -310,7 +312,7 @@
                    entry
                    section]}
                 props
-                (k/get-in props ["props" name]))))))
+                (xtd/get-in props ["props" name]))))))
   (return
    [:% ui-static/Div
     {:design design
@@ -319,7 +321,7 @@
                         :tone "sharpen"}})
      :style [{:flex 1
               :padding 5}
-             (:.. (k/arrayify style))]}
+             (:.. (xtd/arrayify style))]}
     [:% n/Row
      (:? (and avatar
               (not noAvatar))

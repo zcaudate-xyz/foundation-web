@@ -13,7 +13,7 @@
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-section :as ui-section]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js MetamaskUser

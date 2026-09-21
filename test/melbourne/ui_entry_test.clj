@@ -17,7 +17,8 @@
              [melbourne.ui-group :as ui-group]
              [melbourne.ui-static :as ui-static]
              [js.core :as j]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 ^{:refer melbourne.ui-entry/get-entry-data :added "4.0"}
@@ -215,7 +216,7 @@
          {:design {:type "light"}
           :entry entry
           :section {:data  ["currency_id"]
-                    :format k/first}}]]
+                    :format xtd/first}}]]
        [:% ui-static/Div
         {:design {:type "dark"}
          :style {:flex 1}}
@@ -223,7 +224,7 @@
          {:design {:type "dark"}
           :entry entry
           :section {:data  ["currency_id"]
-                    :format k/first}}]]]))))
+                    :format xtd/first}}]]]))))
 
 ^{:refer melbourne.ui-entry/EntryCardBodyPair :added "4.0"}
 (fact "creates entry body pair"

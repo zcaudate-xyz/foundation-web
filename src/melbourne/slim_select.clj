@@ -13,7 +13,8 @@
              [melbourne.ui-picker :as ui-picker]
              [melbourne.ui-picker-basic :as ui-picker-basic]
              [melbourne.ui-dropdown :as ui-dropdown]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js FormPicker
@@ -42,7 +43,7 @@
    [:% slim-common/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       labelHide labelNone
       label
@@ -89,7 +90,7 @@
    [:% slim-common/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       labelHide labelNone
       label
@@ -142,7 +143,7 @@
       mini
       labelHide labelNone
       styleLabel
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       label
       minWidth}
     [:% ui-dropdown/Dropdown

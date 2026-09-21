@@ -16,7 +16,8 @@
              [js.core :as j]
              [melbourne.ui-static :as ui-static]
              [melbourne.slim-sheet :as slim-sheet]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-sort-by :as xtsort]]
    :export [MODULE]})
 
 ^{:refer melbourne.slim-sheet/SheetPagination :added "4.0"}
@@ -404,7 +405,7 @@
         [:% slim-sheet/Sheet
          {:design {:type "light"}
           :impl   {:groups  {:split ["currency_id"]}
-                   :items   {:sort (fn:> [arr] (k/sort-by arr ["balance" "name"]))}
+                   :items   {:sort (fn:> [arr] (xtsort/sort-by arr ["balance" "name"]))}
                    :header  {:format j/toUpperCase}
                    :columns [{:name "name"
                               :template ["name"]}

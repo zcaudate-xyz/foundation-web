@@ -22,7 +22,8 @@
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
              [js.core :as j]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [xt.event.base-route :as event-route]
              [xt.event.base-model :as event-view]]
    :export [MODULE]})
@@ -39,10 +40,10 @@
                                      (return
                                       (j/future-delayed [100]
                                         (return
-                                         (-> (k/arr-range 40)
-                                             (k/arr-map (fn:> [i]
+                                         (-> (xtd/arr-range 40)
+                                             (xtd/arr-map (fn:> [i]
                                                           {:id (+ "id-" i)
-                                                           :balance (k/random)
+                                                           :balance (xt/x:random)
                                                            :escrow  args})))))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"

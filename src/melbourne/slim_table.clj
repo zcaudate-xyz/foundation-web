@@ -25,7 +25,9 @@
              [melbourne.slim-table-common :as slim-table-common]
              [melbourne.slim-table-list :as slim-table-list]
              [melbourne.slim-sheet :as slim-sheet]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-trace :as trace]]
    :export [MODULE]})
 
 ;;
@@ -86,17 +88,17 @@
         {:fallback [:% slim-table-common/TableDefaultIsLoading #{design}]}
         (r/% routeComponent
              (j/assignNew props (. custom [routeKey])))])
-  #_(r/watch [(k/json-encode display)
+  #_(r/watch [(xt/x:json-encode display)
             routeKey
             displayKey]
-     (k/LOG! {:display display
+     (trace/LOG! {:display display
               :routeKey routeKey
               :displayKey displayKey
               :scroll (and (== routeKey "list")
-                           (not= false (k/get-in display ["list" "scroll"])))}))
+                           (not= false (xtd/get-in display ["list" "scroll"])))}))
   (return
    (:? (and (== routeKey "list")
-            (not= false (k/get-in display ["list" "scroll"])))
+            (not= false (xtd/get-in display ["list" "scroll"])))
        [:% ui-static/ScrollView
         #{design}
         routeElem]
@@ -149,12 +151,12 @@
   (var entries (ext-view/listenView
                 (. views [displayKey])
                 "success"))
-  (var embedded (or (k/get-in display ["list" "embedded"])
+  (var embedded (or (xtd/get-in display ["list" "embedded"])
                     {}))
   (return
    [:% n/View
     {:style {:flex 1}}
-    (:? (and (k/is-empty? entries)
+    (:? (and (xtd/is-empty? entries)
              (. control showList))
         [:% n/View
          {:style {:flex 1
@@ -165,7 +167,7 @@
             {:textButton (or (. embedded emptyText)
                              "ADD")
              :onPress (fn:> (. control (setShowCreate true)))}}]])
-    (:? (or (k/not-empty? entries)
+    (:? (or (xtd/not-empty? entries)
             (not (. control showList)))
         (r/% -/Table props))]))
 
@@ -181,12 +183,12 @@
                    (ext-view/listenView
                     (. views [displayKey])
                     "success")))
-  (var embedded (or (k/get-in display ["list" "embedded"])
+  (var embedded (or (xtd/get-in display ["list" "embedded"])
                     {}))
   (return
    [:% n/Row
     {:style {:flex 1}}
-    (:? (and (k/not-empty? entries)
+    (:? (and (xtd/not-empty? entries)
              (. control showList))
         [:% n/View
          {:style {:marginTop 8}}
@@ -198,7 +200,7 @@
              :onPress (fn:> (. control (setShowCreate true)))}}]])
     [:% n/View
      {:style {:flex 1}}
-     (:? (and (k/is-empty? entries)
+     (:? (and (xtd/is-empty? entries)
               (. control showList))
          [:% n/View
           {:style {:flex 1
@@ -209,7 +211,7 @@
              {:textButton (or (. embedded emptyText)
                               "ADD")
               :onPress (fn:> (. control (setShowCreate true)))}}]])
-     (:? (or (k/not-empty? entries)
+     (:? (or (xtd/not-empty? entries)
              (not (. control showList)))
          (r/% -/Table props))]]))
 

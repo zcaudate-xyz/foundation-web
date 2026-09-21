@@ -15,7 +15,7 @@
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.animate :as a]
              [js.react-native.physical-base :as ui-base]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js Delta

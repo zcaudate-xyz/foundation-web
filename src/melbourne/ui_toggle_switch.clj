@@ -15,7 +15,8 @@
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
              [melbourne.base-font :as base-font]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js ToggleSwitch
@@ -29,7 +30,7 @@
       (:= onText "")
       (:= offText "")
       (:.. rprops)]}]
-  (var __variant (k/obj-assign-nested
+  (var __variant (xtd/obj-assign-nested
                   {:fg   {:key "neutral"
                           :tone "sharpen"}
                    :bg   {:key "background"

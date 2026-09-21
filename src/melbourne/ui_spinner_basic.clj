@@ -10,7 +10,7 @@
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
              [melbourne.base-font :as base-font]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js SpinnerBasicControls

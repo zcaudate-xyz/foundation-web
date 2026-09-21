@@ -11,7 +11,7 @@
              [melbourne.ui-toolbar :as ui-toolbar]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-text-dialog :as ui-text-dialog]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js TableToolbar

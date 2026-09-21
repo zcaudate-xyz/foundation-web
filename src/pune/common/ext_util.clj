@@ -6,7 +6,8 @@
 (l/script :js
   {:require [[js.react :as r :include [:fn]]
              [js.core :as j]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]]
    :export [MODULE]})
 
 (defn.js useResendDelay
@@ -17,7 +18,7 @@
   (var #{[(:= delay 45)]} (or opts {}))
   (var [t] (r/useNow 1000))
   (var #{updated} (or resend {}))
-  (return {:disabled (and (k/is-number? updated)
+  (return {:disabled (and (xtl/is-number? updated)
                           (< (- t updated)
                              (* delay 1000)))
            :seconds  (j/max (j/ceil (- delay (/ (- t updated) 1000)))

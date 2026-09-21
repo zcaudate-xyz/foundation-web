@@ -18,7 +18,7 @@
              [js.react-native.animate :as a]
              [js.react-native.physical-base :as ui]
              [pune.ui-metamask-user :as metamask-user]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 ^{:refer pune.ui-metamask-user/MetamaskUser :added "0.1"}

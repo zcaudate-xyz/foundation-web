@@ -14,7 +14,7 @@
              [js.react-native :as n :include [:fn]]
              [js.react-native.helper-color :as c]
              [js.lib.lw-charts :as lw]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [melbourne.base-palette :as base-palette]]
    :export [MODULE]})
 

@@ -21,7 +21,9 @@
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
              [js.core :as j]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-sort-by :as xtsort]
              [xt.event.base-route :as event-route]]
    :export [MODULE]})
 
@@ -489,7 +491,7 @@
                        {:handler (fn:> [showPage display]
                                    (j/future-delayed [200]
                                      (return
-                                      (k/arr-map (k/arr-range display)
+                                      (xtd/arr-map (xtd/arr-range display)
                                                  (fn:> [i]
                                                    {:id   (+ "id-" (+ (* (- showPage 2) display)
                                                                       display
@@ -497,7 +499,7 @@
                                                     :name (+ "name-" (+ (* (- showPage 2) display)
                                                                         display
                                                                         i))
-                                                    :amount (k/random)})))))
+                                                    :amount (xt/x:random)})))))
                         :options {:init false}})})
     (return
      (n/EnclosedCode 
@@ -573,7 +575,7 @@
         [:% slim-table-list/TableListView
          {:design {:type "light"}
           :impl   {:groups  {:split ["currency_id"]}
-                   :items   {:sort (fn:> [arr] (k/sort-by arr [["name" true] "balance"]))}
+                   :items   {:sort (fn:> [arr] (xtsort/sort-by arr [["name" true] "balance"]))}
                    :header  {:format j/toUpperCase}}
           :display {:brief  {:type "v"
                              :body [{:template ["name"]}

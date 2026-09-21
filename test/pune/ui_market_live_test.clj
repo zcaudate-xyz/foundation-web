@@ -18,7 +18,7 @@
              [js.react-native.animate :as a]
              [js.react-native.physical-base :as ui]
              [pune.ui-market-live :as market-live]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (def.js CHART
@@ -67,7 +67,7 @@
                           (. (j/future-delayed [200]
                                (return (. orderLookup [orderId])))
                              (then (fn [data]
-                                     (alert (k/json-encode data)))))))}
+                                     (alert (xt/x:json-encode data)))))))}
                       -/CHART))] 
 [:% n/Row
        {:style {:height 400}}

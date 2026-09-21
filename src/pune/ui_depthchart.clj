@@ -14,7 +14,9 @@
              [js.core :as j]
              [melbourne.base-palette :as base-palette]
              [pune.ui-sparkline :as ui-sparkline]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js get-depth-histogram
@@ -22,11 +24,11 @@
   {:added "0.1"}
   [domain lu step cmp]
   (var out [0])
-  (var i (k/first domain))
-  (while (cmp i (k/last domain))
-    (var x (+ (k/last out)
+  (var i (xtd/first domain))
+  (while (cmp i (xtd/last domain))
+    (var x (+ (xtd/last out)
               (or (. lu [i]) 0)))
-    (x:arr-push out x)
+    (xt/x:arr-push out x)
     (:= i (+ i step)))
   (return out))
 
@@ -35,48 +37,48 @@
   {:added "0.1"}
   [offers]
   (var #{buy sell} offers)
-  (var buy-domain  (:? (k/is-empty? buy)
+  (var buy-domain  (:? (xtd/is-empty? buy)
                          []
-                         [(k/first (k/last buy))
-                          (k/first (k/first buy))]))
-  (var sell-domain (:? (k/is-empty? sell) []
-                       [(k/first (k/last sell))
-                        (k/first (k/first sell))]))
-  (var max-steps  (k/max (:? (k/is-empty? buy-domain)
+                         [(xtd/first (xtd/last buy))
+                          (xtd/first (xtd/first buy))]))
+  (var sell-domain (:? (xtd/is-empty? sell) []
+                       [(xtd/first (xtd/last sell))
+                        (xtd/first (xtd/first sell))]))
+  (var max-steps  (j/max (:? (xtd/is-empty? buy-domain)
                              0
-                             (- (k/second buy-domain)
-                                (k/first buy-domain)))
-                         (:? (k/is-empty? sell-domain)
+                             (- (xtd/second buy-domain)
+                                (xtd/first buy-domain)))
+                         (:? (xtd/is-empty? sell-domain)
                              0
-                             (- (k/second sell-domain)
-                                (k/first sell-domain)))
+                             (- (xtd/second sell-domain)
+                                (xtd/first sell-domain)))
                          10))
-  (var max-depth  (k/max (k/arr-foldl buy
+  (var max-depth  (j/max (xtd/arr-foldl buy
                                       (fn:> [acc [_ vol]]
                                         (+ acc vol))
                                       0)
-                         (k/arr-foldl sell
+                         (xtd/arr-foldl sell
                                       (fn:> [acc [_ vol]]
                                         (+ acc vol))
                                       0)
                          100))
   
-  (var buy-lu  (k/arr-juxt buy  k/first k/second))
-  (var sell-lu (k/arr-juxt sell k/first k/second))
+  (var buy-lu  (xtd/arr-juxt buy  xtd/first xtd/second))
+  (var sell-lu (xtd/arr-juxt sell xtd/first xtd/second))
   (var buy-hist
-       (:? (k/is-empty? buy)
-           (k/arr-repeat 0 max-steps)
-           (-/get-depth-histogram [(k/first buy-domain)
-                                   (+ (k/first buy-domain)
+       (:? (xtd/is-empty? buy)
+           (xtd/arr-repeat 0 max-steps)
+           (-/get-depth-histogram [(xtd/first buy-domain)
+                                   (+ (xtd/first buy-domain)
                                       max-steps)]
-                                  buy-lu 1 k/lte)))
+                                  buy-lu 1 xtl/lte)))
   (var sell-hist
-       (:? (k/is-empty? sell)
-           (k/arr-repeat 0 max-steps)
-           (-/get-depth-histogram [(k/last sell-domain)
-                                   (- (k/last sell-domain)
+       (:? (xtd/is-empty? sell)
+           (xtd/arr-repeat 0 max-steps)
+           (-/get-depth-histogram [(xtd/last sell-domain)
+                                   (- (xtd/last sell-domain)
                                       max-steps)]
-                                  sell-lu -1 k/gte)))
+                                  sell-lu -1 xtl/gte)))
   
   (return #{buy-domain sell-domain max-depth max-steps buy-lu sell-lu
             buy-hist sell-hist}))
@@ -116,7 +118,7 @@
         :width  55
         :maxValue max-depth
         :minValue 1
-        :values (k/arr-reverse sell-hist)]}]
+        :values (xtd/arr-reverse sell-hist)]}]
     [:% ui-sparkline/Sparkline
      #{[:design design
         :variant {:bg {:key "neutral"

@@ -25,7 +25,9 @@
              [melbourne.slim-table-common :as slim-table-common]
              [melbourne.slim-table-list :as slim-table-list]
              [melbourne.slim-sheet :as slim-sheet]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js TableListSearch
@@ -43,15 +45,15 @@
           control
           style
           (:= displayKey "list")]} rprops)
-  (var impl (or (k/get-in display ["list"])
+  (var impl (or (xtd/get-in display ["list"])
                 {}))
   (:= impl (:? (. impl props)
                (j/assignNew impl ((. impl props) impl props))
                impl))
   (var #{[top
           bottom
-          (:= filterFn k/identity)
-          (:= sortFn k/identity)]} impl)
+          (:= filterFn xtl/identity)
+          (:= sortFn xtl/identity)]} impl)
   (:= entries (-> (or entries
                       (ext-view/listenView (. views [displayKey]) "success")
                       [])

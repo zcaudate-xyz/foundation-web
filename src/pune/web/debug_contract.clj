@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[xt.lang.base-lib :as k]
+  {:require [[xt.lang.spec-base :as xt]
              [js.core :as j]
              [js.react-native :as n :include [:fn]]
              ]
@@ -67,10 +67,10 @@
      latestPrice
      additional
      order}]
-  (var balance (or (and contract (k/get-key contract "balance"))
+  (var balance (or (and contract (xt/x:get-key contract "balance"))
                    0))
-  (var buy  (or (k/get-key order "buy") []))
-  (var sell (or (k/get-key order "sell") []))
+  (var buy  (or (xt/x:get-key order "buy") []))
+  (var sell (or (xt/x:get-key order "sell") []))
   (return
    [:% n/View
     {:style {:flex 1}}

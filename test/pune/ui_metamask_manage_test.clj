@@ -14,7 +14,8 @@
 
 (l/script :js
   {:runtime :basic
-   :require [[xt.lang.base-lib :as k]
+   :require [[xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
              [xt.lang.common-repl :as repl]
              [js.lib.eth-lib :as eth-lib :include [:fn]]
              [js.lib.eth-bench :as eth-bench]
@@ -64,7 +65,7 @@
                   ~(:bytecode contract)
                   ~(:args contract)
                   {})
-                 (catch k/identity))))]
+                 (catch xtl/identity))))]
     (swap! +address+ assoc key contractAddress)
     contractAddress))
 
@@ -219,7 +220,7 @@
          (@! (:bytecode +counter-contract+))
          (@! (System/getenv "TEST_GOERLI_KEY"))
          [])
-        (catch k/identity))))
+        (catch xtl/identity))))
   
   (def +counter-deployed+
     (j/<!
@@ -229,7 +230,7 @@
          (@! (:bytecode +counter-contract+))
          (@! (last env/+default-private-keys+))
          [])
-        (catch k/identity))))
+        (catch xtl/identity))))
   
   (eth/get-past-events)
 
@@ -255,5 +256,5 @@
       methods
       (balanceOf "0x1111c0aab6941781d81b8ee493a1a0538455e966")
       (call {:from "0x1111c0aab6941781d81b8ee493a1a0538455e966"})
-      (catch k/identity)))
+      (catch xtl/identity)))
   )

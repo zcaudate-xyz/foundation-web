@@ -3,7 +3,9 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[xt.lang.base-lib :as k]
+  {:require [[xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]
              [js.core :as j]
              [js.react :as r]
              [js.react-native :as n]
@@ -36,7 +38,7 @@
                 :padding 2
                 :marginHorizontal 6}
                (:.. (j/arrayify style))]
-       :items (k/arr-repeat "" total)
+       :items (xtd/arr-repeat "" total)
        (:.. rprops)]}]))
 
 (defn.js stepperOffset
@@ -49,7 +51,7 @@
          visible} (modelFn v))
   (return
    {:style {:opacity (:? visible
-                         (k/mix 0 1 scale)
+                         (xtm/mix 0 1 scale)
                          0)
             :zIndex (:? visible (* 100 scale) -100)}}))
 
@@ -63,7 +65,7 @@
       (:= offsetFn -/stepperOffset)
       (:= pages [])
       (:.. rprops)]}]
-  (var total (j/max (k/len pages) 1))
+  (var total (j/max (xt/x:len pages) 1))
   (var iindicator   (a/useCircularIndicator
                      index
                      {:default {:type "timing"

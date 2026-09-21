@@ -19,7 +19,8 @@
              [melbourne.slim-error :as slim-error]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-font :as base-font]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js SubmitButton
@@ -146,7 +147,7 @@
           #{[design
              :variant (j/assign
                        {:bg {:key "background"}, :fg {:key "neutral"}}
-                       (k/get-in design ["variant" "clear"]))
+                       (xtd/get-in design ["variant" "clear"]))
              :style [base-font/fontH6
                      (:.. (j/arrayify clearStyle))]
              :text (or clearText "Clear")
@@ -157,7 +158,7 @@
          [:% n/Padding {:style {:width 10}}]
          [:% ui-text/ButtonAccent
           #{[design
-             :variant (k/get-in
+             :variant (xtd/get-in
                         design
                         ["variant" "cancel"])
              :style [base-font/fontH6

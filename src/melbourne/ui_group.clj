@@ -3,7 +3,9 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[xt.lang.base-lib :as k]
+  {:require [[xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [js.core :as j]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
@@ -27,7 +29,7 @@
        onChange
        styleContainer
        (:= itemProps [])
-       (:= format k/identity)]}]
+       (:= format xtl/identity)]}]
    (var itemFn
         (fn [value i]
           (return [:% ui-toggle-button/ToggleButton
@@ -90,7 +92,7 @@
        styleContainer
        outlined
        (:= itemProps [])
-       (:= format k/identity)]}]
+       (:= format xtl/identity)]}]
    (var itemFn
         (fn [value i]
           (return [:% ui-toggle-button/ToggleButton
@@ -154,12 +156,12 @@
        styleContainer
        transformations
        (:= itemProps [])
-       (:= format k/identity)]}]
-   (var outlined (k/get-in design ["theme" "active" "outlined"]))
+       (:= format xtl/identity)]}]
+   (var outlined (xtd/get-in design ["theme" "active" "outlined"]))
    (var itemFn
         (fn [e]
           (var #{item} e)
-          (var i (k/get-key e "index"))
+          (var i (xt/x:get-key e "index"))
           (return [:% ui-toggle-button/ToggleButton
                    #{[:key i
                       design variant theme
@@ -181,7 +183,7 @@
    (return [:% n/FlatList
             {:style styleContainer
              :data  items
-             :keyExtractor k/identity
+             :keyExtractor xtl/identity
              :renderItem itemFn}])))
 
 (defn.js List

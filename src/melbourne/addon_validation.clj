@@ -16,7 +16,8 @@
              [js.react-native :as n]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js addonValidation
@@ -39,7 +40,7 @@
                           (j/assign
                            {:fg {:key "neutral"}
                             :bg {:key "primary"}}
-                           (k/get-in design
+                           (xtd/get-in design
                                      ["theme" "validation"]))))
   (var #{mainError
          mainPrimary

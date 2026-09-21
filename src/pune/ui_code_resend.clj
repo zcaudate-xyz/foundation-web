@@ -13,7 +13,8 @@
    :require [[js.react-native :as n :include [:fn]]
              [melbourne.slim-submit :as slim-submit]
              [melbourne.slim-error :as slim-error]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
              [xt.event.base-form :as event-form]
              [melbourne.ui-text :as ui-text]
              [pune.common.ext-util :as ext-util]]
@@ -56,7 +57,7 @@
         :onPress onAction]}]
     [:% n/Portal
      {:target sinkId}
-     (:? (k/is-number? updated)
+     (:? (xtl/is-number? updated)
          [:<>
           [:% n/Padding {:style {:height 20}}]
           [:% ui-text/Caption

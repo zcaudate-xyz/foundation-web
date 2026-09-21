@@ -8,7 +8,8 @@
              [js.react.ext-model :as ext-view]
              [js.react.ext-route :as ext-route]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [melbourne.ui-toolbar :as ui-toolbar]
              [melbourne.ui-static :as ui-static]
              [melbourne.slim-table-list :as slim-table-list]
@@ -197,7 +198,7 @@
                    "display"
                    "control"
                    "actions"])
-  (return (k/obj-pick props parentKeys)))
+  (return (xtd/obj-pick props parentKeys)))
 
 (defn.js useParentControl
   "packages parent props"
@@ -215,11 +216,11 @@
             showCreate
             showModify]
     (cond (or (and showCreate
-                   (not= "disable" (k/get-in opts ["create"])))
+                   (not= "disable" (xtd/get-in opts ["create"])))
               (and showModify
-                   (not= "disable" (k/get-in opts ["modify"])))
+                   (not= "disable" (xtd/get-in opts ["modify"])))
               (and showDetail
-                   (not= "disable" (k/get-in opts ["detail"]))))
+                   (not= "disable" (xtd/get-in opts ["detail"]))))
           (do (. parent control (setShowHeader false)))
 
           :else

@@ -9,7 +9,7 @@
              [js.react-native :as n :include [[:icon :entypo]]]
              [melbourne.ui-button :as ui-button]
              [melbourne.ui-static :as ui-static]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js Chip

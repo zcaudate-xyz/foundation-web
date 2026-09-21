@@ -14,7 +14,9 @@
              [js.react :as r :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [xt.event.base-form :as event-form]
              [melbourne.base-font :as base-font]
              [melbourne.base-palette :as base-palette]
@@ -46,7 +48,7 @@
   (return
    [:% slim-common/FormEnclosed
     #{design mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -56,7 +58,7 @@
         :indicatorParams {:focusing {:default {:duration 100}}}
         :highlighted (== (. result ["status"])
                          "errored")
-        :value (j/toString (:? (k/nil? value) "" value))
+        :value (j/toString (:? (xtl/nil? value) "" value))
         :onFocus (fn []
                    (event-form/validate-field form field))
         :onChangeText (fn [v]
@@ -93,7 +95,7 @@
   (return
    [:% slim-common/FormEnclosed
     #{design mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -103,7 +105,7 @@
         :indicatorParams {:focusing {:default {:duration 100}}}
         :highlighted (== (. result ["status"])
                          "errored")
-        :value (j/toString (:? (k/nil? value) "" value))
+        :value (j/toString (:? (xtl/nil? value) "" value))
         :onFocus (fn []
                    (event-form/validate-field form field))
         :onChangeText (fn [v]
@@ -140,7 +142,7 @@
   (return
    [:% slim-common/FormEnclosed
     #{design mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -150,7 +152,7 @@
         :indicatorParams {:focusing {:default {:duration 100}}}
         :highlighted (== (. result ["status"])
                          "errored")
-        :value (j/toString (:? (k/nil? value) "" value))
+        :value (j/toString (:? (xtl/nil? value) "" value))
         :onFocus (fn []
                    (event-form/validate-field form field))
         :onChangeText (fn [v]

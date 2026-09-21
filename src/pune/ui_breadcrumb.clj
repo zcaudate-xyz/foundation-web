@@ -13,7 +13,8 @@
    :require [[js.core :as j]
              [melbourne.ui-static :as ui-static]
              [xt.lang.common-string :as base-text]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js Breadcrumb
@@ -29,7 +30,7 @@
       path
       text
       noBanner]}]
-  (var routePath (k/arr-append [(:.. (j/arrayify (:? branchOnly [] root)))]
+  (var routePath (xtd/arr-assign [(:.. (j/arrayify (:? branchOnly [] root)))]
                                (j/arrayify (:? rootOnly
                                                []
                                                path))))

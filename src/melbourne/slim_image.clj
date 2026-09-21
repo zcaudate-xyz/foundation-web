@@ -17,7 +17,9 @@
              [melbourne.slim-common :as slim-common]
              [melbourne.ui-image :as ui-image]
              [melbourne.base-palette :as base-palette]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [xt.event.base-form :as event-form]]
    :export [MODULE]})
 
@@ -40,10 +42,10 @@
                                              (j/assign {:slim/type "image"
                                                         :fn/type   "field"}
                                                        meta)))
-  (when (k/is-empty? value)
+  (when (xtd/is-empty? value)
     (:= value {}))
-  (when (k/is-string? value)
-    (:= value (k/json-decode value)))
+  (when (xtl/is-string? value)
+    (:= value (xt/x:json-decode value)))
   
   
   (:= palette (base-palette/getPalette design palette))
@@ -53,7 +55,7 @@
   (var [blob setBlob]   (r/local))
   (var [waiting setWaiting] (r/local))
   #_(var uri (or (and photo (. photo ["uri"]))
-               (and (k/not-empty? data)
+               (and (xtd/not-empty? data)
                     (or (. data  ["url"])
                         (. data  ["thumbnailUrl"])))))
   (return 

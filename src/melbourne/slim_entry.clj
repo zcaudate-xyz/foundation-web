@@ -22,7 +22,11 @@
              [melbourne.slim-link :as slim-link]
              [melbourne.base-font :as base-font]
              [melbourne.base-palette :as base-palette]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]
+             [xt.lang.common-tree :as xtt]]
    :export [MODULE]})
 
 (defn.js EntryImplNotFound
@@ -99,7 +103,7 @@
           variant
           (:.. iprops)]} impl)
   (var #{[;;style
-          (:.. cprops)]} (or (k/get-in props ["custom" key])
+          (:.. cprops)]} (or (xtd/get-in props ["custom" key])
                              {}))
   (return
    (r/% (or component
@@ -182,7 +186,7 @@
                (j/assign rprops
                          iprops
                          {:style [{:padding 5}
-                                  (:.. (k/arrayify style))]}))))
+                                  (:.. (xtd/arrayify style))]}))))
 
 (defn.js EntryLayoutDebug
   "creates a debug view"
@@ -228,7 +232,7 @@
          (j/assign rprops
                    iprops
                    #{variant}
-                   (k/get-in props ["custom" key])))]))
+                   (xtd/get-in props ["custom" key])))]))
 
 (defn.js entryContentText
   "creates either a title or context component"
@@ -244,20 +248,20 @@
           style
           (:.. iprops)]} impl)
   (var #{[template
-          (:= format k/identity)]} impl)
-  (var data (or (k/template-entry entry template props)
+          (:= format xtl/identity)]} impl)
+  (var data (or (xtd/template-entry entry template props)
                 ""))
   (var children "")
   (try
     (:= children (format data props))
     (catch e))
   (when (and (not (r/isValidElement children))
-             (not (k/is-string? children)))
-    (:= children (k/json-encode children)))
+             (not (xtl/is-string? children)))
+    (:= children (xt/x:json-encode children)))
   (var oprops (j/assign rprops
                         #{entry}
                         iprops
-                        (k/get-in props ["custom" key])))
+                        (xtd/get-in props ["custom" key])))
   (return
    (r/% (or component
             defaultComponent)
@@ -321,12 +325,12 @@
          entry} props)
   (var #{[key
           template
-          (:= format k/identity)
+          (:= format xtl/identity)
           (:.. iprops)]} impl)
   (var #{[style
-          (:.. cprops)]} (or (k/get-in props ["custom" key])
+          (:.. cprops)]} (or (xtd/get-in props ["custom" key])
                              {}))
-  (var name (format (k/template-entry entry template props)))
+  (var name (format (xtd/template-entry entry template props)))
   (return
    (r/% ui-text/Icon
         (j/assignNew
@@ -346,34 +350,34 @@
           style
           image
           color
-          (:= format k/identity)
+          (:= format xtl/identity)
           (:.. iprops)]} impl)
   (var #{[
-          (:.. cprops)]} (or (k/get-in props ["custom" key])
+          (:.. cprops)]} (or (xtd/get-in props ["custom" key])
                              {}))
   (var textInput  (:? text
-                      (k/template-entry entry (. text template) props)
+                      (xtd/template-entry entry (. text template) props)
                       ""))
-  (var colorInput (:? (k/not-nil? color)
-                      (k/template-entry entry (. color template) props)
+  (var colorInput (:? (xtl/not-nil? color)
+                      (xtd/template-entry entry (. color template) props)
                       ""))
   (var imageInput (:? image
-                      (k/template-entry entry (. image template) props)))
+                      (xtd/template-entry entry (. image template) props)))
   (return
    (r/% ui-text/Avatar
         (j/assignNew
          props
-         {:color  (k/not-nil? color)
+         {:color  (xtl/not-nil? color)
           :text   (:? textInput (format textInput))
           :image  imageInput
-          :styleText  (:? text  (k/get-in props ["custom" (. text key)]))
-          :styleImage (:? (k/not-empty? image) (k/get-in props ["custom" (. image key)]))
+          :styleText  (:? text  (xtd/get-in props ["custom" (. text key)]))
+          :styleImage (:? (xtd/not-empty? image) (xtd/get-in props ["custom" (. image key)]))
           :style  [{:margin 5}
-                   (:? (and (k/not-nil? color)
-                            (k/nil? imageInput))
+                   (:? (and (xtl/not-nil? color)
+                            (xtl/nil? imageInput))
                        {:backgroundColor colorInput})
-                   (:.. (k/arrayify style))
-                   (k/arrayify cprops.style)]}
+                   (:.. (xtd/arrayify style))
+                   (xtd/arrayify cprops.style)]}
          iprops
          cprops))))
 
@@ -403,7 +407,7 @@
                            {:impl (j/assign
                                    {:variant {:fg {:key "neutral"}}}
                                    title)})))]
-    (:? (k/not-empty? body)
+    (:? (xtd/not-empty? body)
         body
         
         text
@@ -453,18 +457,18 @@
           field
           fieldProps
           (:.. iprops)]} impl)
-  (var FieldComponent (:? (k/is-string? component)
-                          (k/get-key -/FIELD_COMPONENTS
+  (var FieldComponent (:? (xtl/is-string? component)
+                          (xt/x:get-key -/FIELD_COMPONENTS
                                      component)
                           (or component
                               slim-common/FormInput)))
-  (when (k/fn? fieldProps)
+  (when (xtl/is-function? fieldProps)
     (:= fieldProps (fieldProps props)))
   (var aprops (j/assign rprops
                         #{field fieldProps}
                         {:className (+ "field-" field)}
                         iprops
-                        (k/get-in props ["custom" key])))  
+                        (xtd/get-in props ["custom" key])))  
   (return
    (r/% FieldComponent aprops)))
 
@@ -481,7 +485,7 @@
   (var #{data} (ext-form/listenFieldsData form watch))
   (return (r/% ui-util/Fade
                (j/assign iprops
-                         {:visible (k/template-entry data template props)})
+                         {:visible (xtd/template-entry data template props)})
                body)))
 
 (defn.js EntryLayoutFormFold
@@ -497,14 +501,14 @@
   (var #{data} (ext-form/listenFieldsData form watch))
   (return (r/% ui-util/Fold
                (j/assign iprops
-                         {:visible (k/template-entry data template props)})
+                         {:visible (xtd/template-entry data template props)})
                [:% n/View body])))
 
 (defn.js entrySubmitType
   "picks submit type based on submit key"
   {:added "4.0"}
   [submit submitType]
-  (return (or (:? (k/fn? submit)
+  (return (or (:? (xtl/is-function? submit)
                   "custom")
               
               submitType
@@ -525,7 +529,7 @@
   [submitFn submitType entry form props args]
   (:= args (or args []))
   (return
-   (:? (k/nil? submitType)
+   (:? (xtl/nil? submitType)
        (fn:>)
 
        (== submitType "custom")
@@ -546,7 +550,7 @@
        (== submitType "modify")
        (fn:> (submitFn (. entry id) (. form data) (:.. args)))
 
-       (k/fn? submitType)
+       (xtl/is-function? submitType)
        (fn:> (submitType submitFn entry form))
        
        :else
@@ -570,7 +574,7 @@
               (== type "create")
               (. control setShowCreate)
 
-              (k/fn? type)
+              (xtl/is-function? type)
               (fn []
                 (type control props))
               
@@ -615,7 +619,7 @@
           popup
           (:.. iprops)]} impl)
   (var onSubmit  (-/entryOnControl control submit entry props))
-  (var fprops (or (k/get-in props ["custom" key])
+  (var fprops (or (xtd/get-in props ["custom" key])
                   {}))
   
   (var ControlComponent (or (. {:minor  ui-text/ButtonMinor
@@ -664,13 +668,13 @@
           key
           template
           (:.. iprops)]} impl)
-  (var fprops (or (k/get-in props ["custom" key])
+  (var fprops (or (xtd/get-in props ["custom" key])
                   {}))
   (var ControlComponent (or (. {:minor  ui-text/ButtonMinor
                                 :accent ui-text/ButtonAccent}
                                [component])
                             component))
-  (var url (k/template-entry entry template props))
+  (var url (xtd/template-entry entry template props))
   (var onPress
        (fn []
          (event-route/set-url route url true)))
@@ -695,7 +699,7 @@
           template
           body
           (:.. iprops)]} impl)
-  (var url     (k/template-entry entry template props))
+  (var url     (xtd/template-entry entry template props))
   (var onPress 
        (fn []
          (event-route/set-url route url true)))
@@ -720,9 +724,9 @@
           noMini
           (:.. iprops)]} impl)
   (var [route setRoute] [(. control [submit])
-                         (. control [(+ "set" (k/capitalize submit))])])
+                         (. control [(+ "set" (xts/capitalize submit))])])
   
-  (var fprops (or (k/get-in props ["custom" key])
+  (var fprops (or (xtd/get-in props ["custom" key])
                   {}))
   (cond (or (not mini)
             noMini)
@@ -771,10 +775,10 @@
           valueOff
           (:.. iprops)]} impl)
   (var [route setRoute] [(. control [submit])
-                         (. control [(+ "set" (k/capitalize submit))])])
+                         (. control [(+ "set" (xts/capitalize submit))])])
   
   
-  (var fprops (or (k/get-in props ["custom" key])
+  (var fprops (or (xtd/get-in props ["custom" key])
                   {}))
   (var ControlComponent (or (. {:minor  ui-text/ToggleMinor
                                         :accent ui-text/ToggleAccent}
@@ -814,18 +818,18 @@
           onSuccess
           onError
           (:.. iprops)]} impl)
-  (var submitFn  (:? (k/fn? submit)
+  (var submitFn  (:? (xtl/is-function? submit)
                      submit
                      (. actions [submit])))
   (:= submitType (-/entrySubmitType submit submitType))
   (var onSubmit  (-/entryOnSubmit submitFn submitType entry form props args))
   (:=  onSuccess (or onSuccess
                      (-/entryOnControl (. props control)
-                                       (k/get-in control ["success"])
+                                       (xtd/get-in control ["success"])
                                        entry
                                        props)))
   
-  (var sprops (or (k/get-in props ["custom" submit])
+  (var sprops (or (xtd/get-in props ["custom" submit])
                   {}))
   (var submitProps (r/useSubmitResult
                     (j/assign #{onSubmit
@@ -889,18 +893,18 @@
           (:.. iprops)]} impl)
   (:= form    (or form (ext-form/makeForm (fn:> {})
                                           {})))
-  (var sprops (or (k/get-in props ["custom" submit])
+  (var sprops (or (xtd/get-in props ["custom" submit])
                   {}))
-  (var fprops (or (k/get-in props ["custom" key])
+  (var fprops (or (xtd/get-in props ["custom" key])
                   {}))
-  (var submitFn  (:? (k/fn? submit)
+  (var submitFn  (:? (xtl/is-function? submit)
                      submit
                      (. actions [submit])))
   (:= submitType (-/entrySubmitType submit submitType))
   (var onSubmit  (-/entryOnSubmit submitFn submitType entry form props args))
   (:=  onSuccess (or onSuccess
                      (-/entryOnControl (. props control)
-                                       (k/get-in control ["success"])
+                                       (xtd/get-in control ["success"])
                                        entry
                                        props)))
   (var useSubmit   (:? submitField
@@ -922,10 +926,10 @@
   ;;
   (var disabled false)
   (when submitModify
-    (:= disabled (:? (k/arr? submitModify)
-                     (k/eq-nested (k/obj-pick (. form data) submitModify)
-                                  (k/obj-pick (or entry {}) submitModify))
-                     (k/eq-nested (. form data)
+    (:= disabled (:? (xtl/is-array? submitModify)
+                     (xtt/eq-nested (xtd/obj-pick (. form data) submitModify)
+                                  (xtd/obj-pick (or entry {}) submitModify))
+                     (xtt/eq-nested (. form data)
                                   entry))))
   (var nprops (j/assign rprops
                         #{form disabled}
@@ -961,7 +965,7 @@
     #{[design
        variant
        :style [{:flex 1}
-               (:.. (k/arrayify style))]
+               (:.. (xtd/arrayify style))]
        #_(:.. rprops)]}
     [:% n/Row
      avatar
@@ -1088,11 +1092,11 @@
   {:added "4.0"}
   [props compileFn]
   (var #{impl} props)
-  (var eprops (k/obj-pick props -/ENTRY_PROPS))
-  (var body (k/walk (. impl body)
-                    k/identity
+  (var eprops (xtd/obj-pick props -/ENTRY_PROPS))
+  (var body (xtt/tree-walk (. impl body)
+                    xtl/identity
                     (fn [e]
-                      (cond (and (k/obj? e)
+                      (cond (and (xtl/is-object? e)
                                  (or (== (. e type) "action")
                                      (== (. e type) "control")))
                             (return (j/assign {:popup true}
@@ -1121,20 +1125,20 @@
           components
           key
           views]} props)
-  (var eprops (k/obj-pick props -/ENTRY_PROPS))
-  (var impl  (or (k/get-in props ["impl"])
+  (var eprops (xtd/obj-pick props -/ENTRY_PROPS))
+  (var impl  (or (xtd/get-in props ["impl"])
                  {}))
   (when (r/isValidElement impl)
     (return impl))
   
-  (while (k/fn? (. impl props))
+  (while (xtl/is-function? (. impl props))
     (:= impl (or ((. impl props) entry props)
                  {})))
   
   (var #{[(:= type "p")]} impl)
-  (var component (or (k/get-key -/ENTRY_COMPONENTS type)
+  (var component (or (xt/x:get-key -/ENTRY_COMPONENTS type)
                      -/EntryImplNotFound))
-  (var isLayout   (k/get-key -/ENTRY_LAYOUT type))
+  (var isLayout   (xt/x:get-key -/ENTRY_LAYOUT type))
   (var isAlias     (== type "alias"))
   (var isPopup     (== type "popup"))
   (var showFn  (fn [impl i]
@@ -1166,15 +1170,15 @@
         (return (-/compileEntryPopup props -/compileEntry))
         
         isLayout
-        (do  (var body (:? (k/arr? (. impl body))
+        (do  (var body (:? (xtl/is-array? (. impl body))
                            (-> (. impl body)
                                (j/filter showFn)
                                (j/map entryFn))
                            
-                           (k/obj? (. impl body))
+                           (xtl/is-object? (. impl body))
                            (-> (. impl body)
-                               (k/obj-filter showFn)
-                               (k/obj-map entryFn))
+                               (xtd/obj-filter showFn)
+                               (xtd/obj-map entryFn))
                            
                            :else []))
              (return (r/% component (j/assign {:key key

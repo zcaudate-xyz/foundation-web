@@ -14,7 +14,8 @@
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [xt.lang.common-string :as base-text]
              [melbourne.ui-button :as ui-button]
              [melbourne.base-palette :as base-palette]
@@ -59,7 +60,7 @@
                :fontSize 12}
        :onPressIn  (fn:> (setVisible true))
        :onPressOut (fn:> (setVisible false))
-       :text (:? (k/is-empty? buttonLabel)
+       :text (:? (xtd/is-empty? buttonLabel)
                  "UNKNOWN ERROR"
                  buttonLabel)
        :transformations {:bg nil}}]
@@ -78,7 +79,7 @@
         {:style [base-font/fontText
                  {:textAlign "left"
                   :color mainBackground}]}
-        (:? (k/is-empty? errorText)
+        (:? (xtd/is-empty? errorText)
             "tag: system/unknown_error"
             errorText)]]]]
     [:% n/Padding {:style {:flex 1}}]

@@ -16,7 +16,8 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-text :as ui-text]
              [pune.ui-notify-base :as base]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-trace :as trace]
              [xt.lang.common-string :as text]]
    :export [MODULE]})
 
@@ -32,7 +33,7 @@
        op-level
        op-time
        message} body)
-  (var t (k/now-ms))
+  (var t (xt/x:now-ms))
   (var msg {:id (or msg-id (j/randomId 6))
             :title  (j/toUpperCase (text/tag-string (or op-tag "")))
             :message (or message (+ "" (new Date t)))
@@ -60,7 +61,7 @@
         setEvents] (ext-box/useBox
                     (. notify source)
                     []
-                    (k/meta:info)))
+                    (trace/meta:info)))
   (var eventsRef (r/useFollowRef events))
   (-/useUserEvents (fn [e]
                      

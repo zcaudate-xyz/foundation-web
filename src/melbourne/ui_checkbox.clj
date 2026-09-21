@@ -14,12 +14,16 @@
              [js.react :as r :include [:fn]]
              [js.react-native :as n]
              [js.react-native.ui-check-box :as ui-check-box]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
              [melbourne.base-font :as base-font]
              [melbourne.ui-static :as ui-static]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js CheckBox
@@ -31,7 +35,7 @@
       theme
       (:.. rprops)]}]
   (var __variant
-       (k/obj-assign-nested
+       (xtd/obj-assign-nested
         {:fg   {:key "background"
                 :tone "diminish"}
          :bg   {:key "background"
@@ -73,7 +77,7 @@
        styleText
        styleContainer
        (:= itemProps [])
-       (:= format k/identity)]}]
+       (:= format xtl/identity)]}]
    (var itemFn
         (fn [value i]
           (return [:% n/View
@@ -98,7 +102,7 @@
                                 {}))]}]
                    [:% ui-static/Text
                     {:design design
-                     :variant (or (k/get-in design
+                     :variant (or (xtd/get-in design
                                             ["variant" "text"])
                                   {:fg {:key "neutral"
                                         :mix "primary"

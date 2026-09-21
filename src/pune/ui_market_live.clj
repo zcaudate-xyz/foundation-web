@@ -14,7 +14,9 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-section :as ui-section]
              [pune.common.data-market :as base-market]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js live-priority-rate
@@ -34,8 +36,8 @@
   (var [buy sell] (:? (== prediction "yes")
                       [bid ask]
                       [ask bid]))
-  (return {:buy  (k/arr-reverse (k/arr-map sell rate-fn))
-           :sell (k/arr-reverse (k/arr-map buy rate-fn))}))
+  (return {:buy  (xtd/arr-reverse (xtd/arr-map sell rate-fn))
+           :sell (xtd/arr-reverse (xtd/arr-map buy rate-fn))}))
 
 (def.js ORDER_IMPL
   {:type "v"
@@ -132,7 +134,7 @@
           (:= prediction "yes")
           rate
           setRate]} control)
-  (var lookup   (k/arr-juxt published k/id-fn k/identity))
+  (var lookup   (xtd/arr-juxt published xtd/id-fn xtl/identity))
   (var fraction (j/pow 10 (- decimal)))
   (var priorities    (-/live-priority-rate market
                                            allotment

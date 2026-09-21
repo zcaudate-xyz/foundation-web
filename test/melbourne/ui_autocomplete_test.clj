@@ -17,7 +17,9 @@
              [js.core :as j]
              [melbourne.ui-autocomplete :as ui-autocomplete]
              [melbourne.slim-sheet :as slim-sheet]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (def.js NAMES
@@ -28,10 +30,10 @@
 (defn.js get-names
   [filt]
   (var output [])
-  (k/for:array [n -/NAMES]
+  (xt/for:array [n -/NAMES]
     (when (j/startsWith n (j/toUpperCase filt))
-      (x:arr-push output {:name n}))
-    (when (< 15 (k/len output))
+      (xt/x:arr-push output {:name n}))
+    (when (< 15 (xt/x:len output))
       (return output)))
   (return output))
   
@@ -65,8 +67,8 @@
        [:% ui-autocomplete/SelectSingle
         #{selected
           setSelected
-          {:source {:key-fn k/id-fn
-                    :val-fn k/identity
+          {:source {:key-fn xtd/id-fn
+                    :val-fn xtl/identity
                     :view view}}}]])))
 
   (def.js MODULE (!:module)))

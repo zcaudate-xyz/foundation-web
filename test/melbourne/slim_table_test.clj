@@ -23,7 +23,7 @@
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
              [js.core :as j]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [xt.event.base-route :as event-route]]
    :export [MODULE]})
 
@@ -35,7 +35,7 @@
     []
     (var control (slim/useLocalControl))
     (var actions {:modify (fn:> [e] (j/delayed [100]
-                                      (alert (k/json-encode e))))})
+                                      (alert (xt/x:json-encode e))))})
     (var entry {:id "id-0"})
     (var form (ext-form/makeForm
                (fn:> {:currency "STATS"
@@ -139,7 +139,7 @@
     []
     (var control (slim/useLocalControl))
     (var actions {:create (fn:> [e] (j/delayed [100]
-                                      (alert (k/json-encode e))))})
+                                      (alert (xt/x:json-encode e))))})
     (var form (ext-form/makeForm
                (fn:> {:currency "STATS"
                       :name ""

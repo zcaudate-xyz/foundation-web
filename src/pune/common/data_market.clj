@@ -3,28 +3,32 @@
             [std.lib :as h]))
 
 (l/script :xtalk
-  {:require [[xt.lang.base-lib :as k]]
+  {:require [[js.core :as j]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]]
    :export [MODULE]})
 
 (defn.xt price-to-float
   "converts price to float"
   {:added "4.0"}
   [price]
-  (if (k/is-string? price)
-    (return (k/to-number price))
+  (if (xtl/is-string? price)
+    (return (xtl/to-number price))
     (return price)))
 
 (defn.xt frac-to-decimal
   "converts frac to decimal"
   {:added "4.0"}
   [frac]
-  (return (k/floor (+ 0.5 (- (k/log10 frac))))))
+  (return (j/floor (+ 0.5 (- (j/log10 frac))))))
 
 (defn.xt decimal-to-frac
   "converts decimal to frac"
   {:added "4.0"}
   [decimal]
-  (return (k/pow 10 (- decimal))))
+  (return (j/pow 10 (- decimal))))
 
 (defn.xt position-to-rate
   "converts position to rate"
@@ -42,7 +46,7 @@
    frac
    decimal
    position]
-  (return (k/to-fixed (:? (== prediction "yes") (* position frac) (* (- allotment position) frac))
+  (return (xts/to-fixed (:? (== prediction "yes") (* position frac) (* (- allotment position) frac))
                       decimal)))
 
 (defn.xt price-to-position
@@ -53,17 +57,17 @@
    frac
    price]
   (if (== prediction "yes")
-    (return (k/floor (+ 0.5 (/ (-/price-to-float price) frac))))
-    (return (- allotment (k/floor (+ 0.5  (/ (-/price-to-float price) frac)))))))
+    (return (j/floor (+ 0.5 (/ (-/price-to-float price) frac))))
+    (return (- allotment (j/floor (+ 0.5  (/ (-/price-to-float price) frac)))))))
 
 (defn.xt book-enrich
   "gets the book max value"
   {:added "4.0"}
   ([book]
    (var #{decimal allotment} book)
-   (var frac (k/pow 10 (- decimal)))
+   (var frac (j/pow 10 (- decimal)))
    (var max  (* allotment frac))
-   (return (k/obj-assign {:frac frac
+   (return (xtd/obj-assign {:frac frac
                           :max  max}
                          book))))
 
@@ -73,19 +77,19 @@
   ([live book]
    (var #{frac max decimal allotment} book)
    (var #{ask bid} live)
-   (var all-pos (k/arr-mapcat [(or (k/get-key bid "volume") [])
-                               (or (k/get-key ask "volume") [])]
-                              k/identity))
-   (var volume (k/arr-foldl all-pos
-                            (fn:> [acc e] (+ acc (or (k/second e)
+   (var all-pos (xtd/arr-mapcat [(or (xt/x:get-key bid "volume") [])
+                               (or (xt/x:get-key ask "volume") [])]
+                              xtl/identity))
+   (var volume (xtd/arr-foldl all-pos
+                            (fn:> [acc e] (+ acc (or (xtd/second e)
                                                      0)))
                             0))
-   (var ask-pos  (k/first  (or (k/get-key ask "range") [])))
-   (var bid-pos  (k/second (or (k/get-key bid "range") [])))
-   (var yes-sell (:? ask-pos (k/to-fixed (* frac ask-pos) decimal) "-"))
-   (var yes-buy  (:? bid-pos (k/to-fixed (* frac bid-pos) decimal) "-"))
-   (var no-sell  (:? bid-pos (k/to-fixed (- max (* frac bid-pos)) decimal) "-"))
-   (var no-buy   (:? ask-pos (k/to-fixed (- max (* frac ask-pos)) decimal) "-"))
+   (var ask-pos  (xtd/first  (or (xt/x:get-key ask "range") [])))
+   (var bid-pos  (xtd/second (or (xt/x:get-key bid "range") [])))
+   (var yes-sell (:? ask-pos (xts/to-fixed (* frac ask-pos) decimal) "-"))
+   (var yes-buy  (:? bid-pos (xts/to-fixed (* frac bid-pos) decimal) "-"))
+   (var no-sell  (:? bid-pos (xts/to-fixed (- max (* frac bid-pos)) decimal) "-"))
+   (var no-buy   (:? ask-pos (xts/to-fixed (- max (* frac ask-pos)) decimal) "-"))
    
    (return {:no-sell no-sell
             :no-buy no-buy
@@ -103,16 +107,16 @@
    retrieve]
   (:= retrieve (or retrieve 7))
   (var #{ask bid} live)
-  (var avol (k/arr-sort (or (k/get-key ask "volume") [])
-                        k/first k/lt))
-  (var bvol (k/arr-sort (or (k/get-key bid "volume") [])
-                        k/first k/lt))
+  (var avol (xtd/arr-sort (or (xt/x:get-key ask "volume") [])
+                        xtd/first xtl/lt))
+  (var bvol (xtd/arr-sort (or (xt/x:get-key bid "volume") [])
+                        xtd/first xtl/lt))
   (var buy-offers    (:? (== prediction "yes")
-                         (k/arr-rslice avol 0 (k/min retrieve (k/len avol)))
-                         (k/arr-slice bvol (k/max 0 (- (k/len bvol) retrieve)) (k/len bvol))))
+                         (xtd/arr-rslice avol 0 (j/min retrieve (xt/x:len avol)))
+                         (xtd/arr-slice bvol (j/max 0 (- (xt/x:len bvol) retrieve)) (xt/x:len bvol))))
   (var sell-offers  (:? (== prediction "yes")
-                        (k/arr-rslice bvol (k/max 0 (- (k/len bvol) retrieve)) (k/len bvol))
-                        (k/arr-slice avol 0 (k/min retrieve (k/len avol)))))
+                        (xtd/arr-rslice bvol (j/max 0 (- (xt/x:len bvol) retrieve)) (xt/x:len bvol))
+                        (xtd/arr-slice avol 0 (j/min retrieve (xt/x:len avol)))))
   (return {:buy  buy-offers
            :sell sell-offers}))
 
@@ -132,8 +136,8 @@
                               prediction
                               retrieve))
   (var #{buy sell} raw)
-  (return {:buy  (k/arr-map buy rate-fn)
-           :sell (k/arr-map sell rate-fn)}))
+  (return {:buy  (xtd/arr-map buy rate-fn)
+           :sell (xtd/arr-map sell rate-fn)}))
 
 (defn.xt live-offers-price
   "converts live positions to price offers (reverse order)"
@@ -152,8 +156,8 @@
                               prediction
                               retrieve))
   (var #{buy sell} raw)
-  (return {:buy  (k/arr-map buy price-fn)
-           :sell (k/arr-map sell price-fn)}))
+  (return {:buy  (xtd/arr-map buy price-fn)
+           :sell (xtd/arr-map sell price-fn)}))
 
 (defn.xt segment-price
   "classifies order price given live offers"
@@ -163,15 +167,15 @@
    (var #{buy sell} offers)
    (var higher-than  (fn:> [offers]
                        (> price
-                          (k/to-number (k/first (k/first offers))))))
+                          (xtl/to-number (xtd/first (xtd/first offers))))))
    (var lower-than   (fn:> [offers]
                        (< price
-                          (k/to-number (k/first (k/last offers))))))
-   (cond (and (== 0 (k/len buy))
-              (== 0 (k/len sell)))
+                          (xtl/to-number (xtd/first (xtd/last offers))))))
+   (cond (and (== 0 (xt/x:len buy))
+              (== 0 (xt/x:len sell)))
          (return "center")
 
-         (== 0 (k/len sell))
+         (== 0 (xt/x:len sell))
          (cond (higher-than buy)
                (return "top")
 
@@ -181,7 +185,7 @@
                :else
                (return "none"))
 
-         (== 0 (k/len buy))
+         (== 0 (xt/x:len buy))
          (cond (higher-than sell)
                (return "center")
 
@@ -244,7 +248,7 @@
     book
     summary]
    (var #{allotment frac} book)
-   (var pos (k/floor (+ 0.5  (/ (-/price-to-float price) frac))))
+   (var pos (j/floor (+ 0.5  (/ (-/price-to-float price) frac))))
    (return (-/position-can-trade pos trade prediction
                                  book
                                  summary))))
@@ -257,7 +261,7 @@
    summary]
   (var #{decimal frac} book)
   (return
-   (k/to-fixed (* frac (-/position-estimate trade prediction
+   (xts/to-fixed (* frac (-/position-estimate trade prediction
                                             book
                                             summary))
                decimal)))
@@ -266,8 +270,8 @@
   "calculates the rake"
   {:added "4.0"}
   ([rake type-key value-key frac amount spend]
-   (let [type  (k/get-key rake type-key)
-         value (k/get-key rake value-key)])
+   (let [type  (xt/x:get-key rake type-key)
+         value (xt/x:get-key rake value-key)])
    (cond (== type "none")         (return 0)
          (== type "per_trade")    (return (* value frac))
          (== type "per_contract") (return (* value amount frac))

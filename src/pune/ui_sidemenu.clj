@@ -7,7 +7,8 @@
   {:require [[js.core :as j]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-string :as xts]
              [xt.lang.common-string :as text]
              [js.react-native.ui-tooltip :as ui-tooltip]
              [melbourne.base-palette :as base-palette]
@@ -90,7 +91,7 @@
                  :fontWeight "600"
                  :fontSize 12.5
                  :borderRadius 1}
-         :format (fn:> [s] (k/capitalize (text/tag-string s)))
+         :format (fn:> [s] (xts/capitalize (text/tag-string s)))
          :transformations {:bg nil}
          :data data
          (:.. rprops)]}]

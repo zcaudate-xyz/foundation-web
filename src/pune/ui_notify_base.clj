@@ -15,7 +15,8 @@
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [js.react-native.ui-notify :as ui-notify-events]
              [js.react-native.ui-util :as ui-util]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [melbourne.ui-spinner :as ui-spinner]
              [melbourne.ui-picker :as ui-picker]
              [melbourne.ui-button :as ui-button]
@@ -32,8 +33,8 @@
                    (return
                     (and (not (. e sticky))
                          (< (+ duration (. e time))
-                            (k/now-ms))))))
-       (j/map k/id-fn))))
+                            (xt/x:now-ms))))))
+       (j/map xtd/id-fn))))
 
 (defn.js useOutdated
   [#{events
@@ -43,16 +44,16 @@
   (var refresh   (r/useRefresh))
   (var evictFn
        (fn [ids]
-         (when (k/not-empty? ids)
-           (setEvents (k/obj-omit events ids)))))
+         (when (xtd/not-empty? ids)
+           (setEvents (xtd/obj-omit events ids)))))
   (r/watch [duration events refresh]
     (when (< 0 duration)
-      (when (and (k/not-empty? events))
+      (when (and (xtd/not-empty? events))
         (j/future-delayed [500]
           (when (isMounted)
             (refresh))))
       (var outdated (-/getOutdated events duration))
-      (when (k/not-empty? outdated)
+      (when (xtd/not-empty? outdated)
         (evictFn outdated))))
   (return evictFn))
 
@@ -111,11 +112,11 @@
      [:% n/View
       {:style {:flex 1}}
       [:% ui-picker/PickerValues
-       {:key (k/len data)
+       {:key (xt/x:len data)
         :design design
         :variant __variant
-        :items (:? (k/not-empty? data)
-                   (j/map data (k/key-fn "title"))
+        :items (:? (xtd/not-empty? data)
+                   (j/map data (xtd/key-fn "title"))
                    ["NO NOTIFICATIONS"])
         :style {:width 300}
         :styleText {:width 300
@@ -124,19 +125,19 @@
         :index index
         :setIndex setIndex}]]
      [:% n/View
-      (:? (< 1 (k/len data))
+      (:? (< 1 (xt/x:len data))
           [:% n/Row {:style {:alignItems "center"}}
            [:% ui-spinner/SpinnerControls
             {:min 0,
              :iconProps {:size 10},
-             :key (k/len data),
+             :key (xt/x:len data),
              :variant __variant,
              :value index,
              :setValue setIndex,
              :style {:borderRadius 0,
                      :paddingHorizontal 3,
                      :paddingVertical 3},
-             :max (- (k/len data) 1),
+             :max (- (xt/x:len data) 1),
              :decimal 0,
              :design design,
              :step 1}
@@ -144,7 +145,7 @@
              {:design design,
               :style {:fontSize 11, :margin 5},
               :variant __variant}
-             (+ (+ index 1) " of " (k/len data))]]])]]
+             (+ (+ index 1) " of " (xt/x:len data))]]])]]
     [:% n/Row
      {:style {:flex 1
               :paddingLeft 5}}
@@ -154,7 +155,7 @@
        :style [{:position "absolute"
                 :top 5
                 :fontSize 11}]}
-      (k/get-in data [index "message"])]]]))
+      (xtd/get-in data [index "message"])]]]))
 
 (defn.js TopNotify
   [#{design
@@ -163,7 +164,7 @@
      data
      onClose}]
   (var [index setIndex] (r/local 0))
-  (var visible (k/not-empty? data))
+  (var visible (xtd/not-empty? data))
   (var notifyElem
        (r/% -/TopNotifyInner
             #{design

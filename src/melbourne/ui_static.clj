@@ -14,7 +14,8 @@
              [js.react-native :as n :include [:fn]]
              [js.react-native.ui-tooltip :as ui-tooltip]
              [js.react-native.ui-scrollview :as ui-scrollview]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-font :as base-font]]
    :export [MODULE]})
@@ -176,11 +177,11 @@
   (return
    [:% -/ScrollView
     #{[design
-       :variant (k/get-in design ["variant" "scrollview"])
+       :variant (xtd/get-in design ["variant" "scrollview"])
        (:.. rprops)]}
     [:% -/Text
      #{[design
-        :variant (k/get-in design ["variant" "text"])
+        :variant (xtd/get-in design ["variant" "text"])
         :style [(n/PlatformSelect {:ios {:fontFamily "Courier"}
                                    :default {:fontFamily "monospace"}})
                 {:fontSize 10}

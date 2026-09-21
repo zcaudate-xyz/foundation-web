@@ -19,7 +19,7 @@
              [melbourne.slim-number :as slim-number]
              [melbourne.slim-select :as slim-select]
              [melbourne.slim-submit :as slim-submit]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 

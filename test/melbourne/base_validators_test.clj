@@ -6,7 +6,7 @@
 (l/script :js
   {:runtime :basic
    :config {:layout :flat}
-   :require [[xt.lang.base-lib :as k]
+   :require [[xt.lang.spec-base :as xt]
              [melbourne.base-validators :as validators]]
    :export [MODULE]})
 

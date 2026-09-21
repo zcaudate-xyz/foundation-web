@@ -18,7 +18,9 @@
              [melbourne.base-theme :as base-theme]
              [melbourne.base-font :as base-font]
              [melbourne.ui-static :as ui-static]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js RadioBox
@@ -70,7 +72,7 @@
        styleText
        styleContainer
        (:= itemProps [])
-       (:= format k/identity)]}]
+       (:= format xtl/identity)]}]
    (var itemFn
         (fn [value i]
           (return [:% n/View
@@ -94,7 +96,7 @@
                     #{design
                       {:variant (j/assign
                                  {:fg {:key "primary"}}
-                                 (k/get-in design ["variant" "text"]))
+                                 (xtd/get-in design ["variant" "text"]))
                        :style styleText}}
                     (format value i)]])))
    (return [:% n/View

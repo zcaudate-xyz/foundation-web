@@ -24,7 +24,9 @@
              [melbourne.slim-entry :as slim-entry]
              [melbourne.slim-table-common :as slim-table-common]
              [melbourne.slim-sheet :as slim-sheet]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [xt.event.base-model :as event-view]]
    :export [MODULE]})
 
@@ -118,7 +120,7 @@
           (:= textDetail "DETAIL")
           (:= textDelete "DELETE")
           (:= showDetail true)
-          (:= showDelete true)]} (or (k/get-in display ["swipe"])
+          (:= showDelete true)]} (or (xtd/get-in display ["swipe"])
                                      {}))
   (var swipeView
        [:% n/View
@@ -217,7 +219,7 @@
                      (== (. card component) "fold")
                      -/TableListCardFold
 
-                     (k/fn? (. card component))
+                     (xtl/is-function? (. card component))
                      (. card component)
                      
                      :else
@@ -231,11 +233,11 @@
   [#{[entries
       impl
       (:.. rprops)]}]
-  (var join (k/get-in impl ["groups" "join"]))
+  (var join (xtd/get-in impl ["groups" "join"]))
   (return
    [:% n/FlatList
     {:data entries
-     :keyExtractor k/id-fn
+     :keyExtractor xtd/id-fn
      :renderItem
      (fn [iprops i]
        (var entry (. iprops item))
@@ -247,7 +249,7 @@
                            {:entry entry
                             :list  impl}))
          (:? (and join
-                  (< (+ 1 i) (k/len entries)))
+                  (< (+ 1 i) (xt/x:len entries)))
              (r/% slim-entry/Entry (j/assignNew rprops {:impl join})))]))}]))
 
 (defn.js TableListViewGroup
@@ -257,7 +259,7 @@
   (var #{[group
           impl
           (:.. rprops)]} props)
-  (var component (k/get-in impl ["groups" "header"]))
+  (var component (xtd/get-in impl ["groups" "header"]))
   (var #{entries} group)
   (return
    [:% n/View
@@ -273,16 +275,16 @@
   (var #{impl
          entries} props)
   (var itemsImpl   (j/assign {:reverse false
-                              :sort k/identity
-                              :filter k/identity}
+                              :sort xtl/identity
+                              :filter xtl/identity}
                              (. impl items)))
-  (var isGrouped   (k/not-nil? (. impl groups)))
+  (var isGrouped   (xtl/not-nil? (. impl groups)))
   (cond isGrouped
         (do (var groups (slim-sheet/groupEntries entries impl))
             (return
              [:% n/FlatList
               {:data groups
-               :keyExtractor k/first
+               :keyExtractor xtd/first
                :renderItem
                (fn [iprops]
                  (var [name entries] (. iprops item))
@@ -303,11 +305,11 @@
           views
           impl
           (:= displayKey "list")]} props)
-  (var #{[(:= filterFn k/identity)
-          (:= sortFn k/identity)]} impl)
+  (var #{[(:= filterFn xtl/identity)
+          (:= sortFn xtl/identity)]} impl)
   (var page (j/assign {:display 20}
-                      (k/get-in impl ["page"])))
-  (var [showPage setShowPage] (:? (k/get-in control ["setShowPage"])
+                      (xtd/get-in impl ["page"])))
+  (var [showPage setShowPage] (:? (xtd/get-in control ["setShowPage"])
                                   [(. control showPage) (. control setShowPage)]
                                   (r/local 1)))
   (var entriesAll (-> (or (. props entries)
@@ -315,11 +317,11 @@
                           [])
                       (sortFn (. control orderBy))))
   (var entries (-> entriesAll
-                   (k/arr-slice (* (- showPage 1)
+                   (xtd/arr-slice (* (- showPage 1)
                                    (. page display))
                                 (* showPage
                                    (. page display)))
-                   (k/arr-filter k/identity)))
+                   (xtd/arr-filter xtl/identity)))
   (return #{page
             showPage setShowPage
             entriesAll
@@ -336,7 +338,7 @@
   (return
    [:% n/View
     (r/% ListComponent (j/assignNew props #{entries}))
-    (:? (> (k/len entriesAll)
+    (:? (> (xt/x:len entriesAll)
            (. page display))
         [:% ui-static/Div
          {:design design
@@ -368,21 +370,21 @@
           views
           impl
           (:= displayKey "list")]} props)
-  (var #{[(:= filterFn k/identity)
-          (:= sortFn k/identity)]} impl)
+  (var #{[(:= filterFn xtl/identity)
+          (:= sortFn xtl/identity)]} impl)
   (var page (j/assign {:display 20
                        :total 0
-                       :argsFn k/identity}
-                      (k/get-in impl ["page"])))
+                       :argsFn xtl/identity}
+                      (xtd/get-in impl ["page"])))
   (var [showPage setShowPage]
-       (:? (k/get-in control ["setShowPage"])
+       (:? (xtd/get-in control ["setShowPage"])
            [(. control showPage) (. control setShowPage)]
            (r/local 1)))
   (var args ((. page argsFn) [showPage (. page display)] props))
   (var entriesUpdatedRef (r/ref))
   (var refresh-fn
        (fn []
-         (r/curr:set entriesUpdatedRef (k/now-ms))
+         (r/curr:set entriesUpdatedRef (xt/x:now-ms))
          (ext-view/refreshArgsFn
           (. views [displayKey])
           args
@@ -397,7 +399,7 @@
          (fn [event]
            (when (== "view.output" (. event type))
              (when (== "main" (. event data tag))
-               (when (> (- (k/now-ms)
+               (when (> (- (xt/x:now-ms)
                            (r/curr entriesUpdatedRef))
                         5000)
                  (refresh-fn)))))}
@@ -409,7 +411,7 @@
                                           {}
                                           nil
                                           "remote"))
-  (r/watch [(k/json-encode args)]
+  (r/watch [(xt/x:json-encode args)]
     (refresh-fn))
   (r/init []
     (refresh-fn)
@@ -440,7 +442,7 @@
                   :justifyContent "center"}}
          [:% n/ActivityIndicator]]
 
-        (k/is-empty? entries)
+        (xtd/is-empty? entries)
         [:% n/View
          {:style {:flex 1
                   :alignItems "center"
@@ -476,7 +478,7 @@
             #{design
               {:style {:marginTop 2}
                :variant {:fg {:key "neutral"}}}}
-            (k/cat (+ 1 (* (. page display)
+            (xt/x:cat (+ 1 (* (. page display)
                            (- showPage 1)))
                    "-"
                    (* (. page display)
@@ -497,11 +499,11 @@
   [props]
   (var #{impl
          entries} props)
-  (cond (k/get-in impl ["page" "remote"])
+  (cond (xtd/get-in impl ["page" "remote"])
         (return
          (r/% -/TableListViewRemotePaged props))
         
-        (k/get-in impl ["page"])
+        (xtd/get-in impl ["page"])
         (return
          (r/% -/TableListViewPaged props))
 
@@ -524,15 +526,15 @@
           components
           control
           (:= displayKey "list")]} rprops)
-  (var impl (or (k/get-in display ["list"])
+  (var impl (or (xtd/get-in display ["list"])
                 {}))
   (:= impl (:? (. impl props)
                (j/assignNew impl ((. impl props) impl props))
                impl))
   (var #{[top
           bottom
-          (:= filterFn k/identity)
-          (:= sortFn k/identity)]} impl)
+          (:= filterFn xtl/identity)
+          (:= sortFn xtl/identity)]} impl)
   (:= entries (-> (or entries
                       (ext-view/listenView (. views [displayKey]) "success")
                       [])

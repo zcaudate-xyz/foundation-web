@@ -12,7 +12,9 @@
              [melbourne.ui-section :as ui-section]
              [pune.common.data-market :as base-market]
              [pune.common.data-swap :as base-swap]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]]
    :export [MODULE]})
 
 (defn.js MarketLadderRow
@@ -73,7 +75,7 @@
                                      #_#_:mix "background"
                                      #_#_:ratio 4}
                                :fg  {:key "background"}}
-                     :template (or (k/to-fixed (* 0.001 amount)
+                     :template (or (xts/to-fixed (* 0.001 amount)
                                                1)
                                    "")}]}]})))
 
@@ -92,8 +94,8 @@
                                               nil
                                               "yes"
                                               steps))
-  (var amountMax (k/max (:.. (k/arr-map (. offers buy) k/second))
-                        (:.. (k/arr-map (. offers sell) k/second))))
+  (var amountMax (j/max (:.. (xtd/arr-map (. offers buy) xtd/second))
+                        (:.. (xtd/arr-map (. offers sell) xtd/second))))
   (var lineFn
        (fn [side]
          (return

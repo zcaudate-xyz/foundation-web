@@ -16,7 +16,10 @@
              [melbourne.ui-spinner-basic :as ui-spinner-basic]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-input :as ui-input]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]]
    :export [MODULE]})
 
 ^{:refer melbourne.ui-spinner-basic/SpinnerBasicControls :added "0.1"}
@@ -109,12 +112,12 @@
                                              decimal)))
     (var setEditTextNumber
          (fn [v]
-           (var hasDot (== "." (k/last v)))
+           (var hasDot (== "." (xtd/last v)))
            (var num (j/parseFloat v))
-           (cond (k/is-empty? v)
+           (cond (xtd/is-empty? v)
                  (setEditText v)
                  
-                 (k/not-nil? num)
+                 (xtl/not-nil? num)
                  (setEditText
                   (+ (j/toString num)
                      (:? hasDot "." "")))
@@ -132,8 +135,8 @@
                         decimal))
             :else
             (setValue
-             (k/round
-              (* (k/to-number editText)
+             (xtm/round
+              (* (xtl/to-number editText)
                  (j/pow 10 decimal))))))
     (return
      (n/EnclosedCode 

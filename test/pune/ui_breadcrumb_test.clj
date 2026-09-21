@@ -18,7 +18,7 @@
              [pune.ui-breadcrumb :as ui-breadcrumb]
              [pune.ui-page :as ui-page]
              [melbourne.base-validators :as validators]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 ^{:refer pune.ui-breadcrumb/Breadcrumb :added "0.1"}

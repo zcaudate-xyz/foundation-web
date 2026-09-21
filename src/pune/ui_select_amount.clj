@@ -16,7 +16,10 @@
              [melbourne.ui-input :as ui-input]
              [melbourne.ui-spinner-basic :as ui-spinner-basic]
              [pune.common.data-swap :as data-swap]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]]
    :export [MODULE]})
 
 (defn.js SelectAmount
@@ -38,37 +41,37 @@
                                            (j/max 0 decimal))))
   (var calcValue
        (fn [num]
-         (var val (k/round
+         (var val (xtm/round
                    (* num 
                       (j/pow 10 decimal))))
-         (:= val (:? (k/not-nil? min)
-                     (k/max min val)
+         (:= val (:? (xtl/not-nil? min)
+                     (j/max min val)
                      val))
-         (:= val (:? (k/not-nil? max)
-                     (k/min max val)
+         (:= val (:? (xtl/not-nil? max)
+                     (j/min max val)
                      val))
          (return val)))
   
   (var setEditTextNumber
        (fn [v]
-         (var isEnding (k/first (or (j/match v #"\.0+$")
+         (var isEnding (xtd/first (or (j/match v #"\.0+$")
                                     [])))
-         (var isStarting (k/first (or (j/match v #"^\.")
+         (var isStarting (xtd/first (or (j/match v #"^\.")
                                     [])))
-         (var hasDot (== "." (k/last v)))
-         (var isZero (or (k/nil? v)
-                         (k/not-empty? )))
+         (var hasDot (== "." (xtd/last v)))
+         (var isZero (or (xtl/nil? v)
+                         (xtd/not-empty? )))
          (var num (j/parseFloat v))
-         (cond (k/is-empty? v)
+         (cond (xtd/is-empty? v)
                (setEditText "0")
 
                (or isEnding isStarting)
                (setEditText v)
 
-               (k/nil? num)
+               (xtl/nil? num)
                (setEditText editText)
                
-               (k/not-nil? num)
+               (xtl/not-nil? num)
                (do (setEditText
                     (+ (j/toString num)
                        (:? hasDot "." "")))
@@ -80,7 +83,7 @@
                    (:? hasDot "." ""))))))
   (r/watch [editShow]
     (cond setValueEdit
-          (do (var out (k/to-number editText))
+          (do (var out (xtl/to-number editText))
               (when (not (j/isNaN out))
                 (setValueEdit out editShow)))
 
@@ -91,7 +94,7 @@
                       (j/max 0 decimal)))
 
           :else
-          (do (var out (k/to-number editText))
+          (do (var out (xtl/to-number editText))
               (when (not (j/isNaN out))
                 (setValue
                  (calcValue out))))))
@@ -173,10 +176,10 @@
   (var setEditTextNumber
        (fn []
          (var num (j/parseFloat editText))
-         (cond (or (k/nil? num)
+         (cond (or (xtl/nil? num)
                    (== 0 num)
                    (j/isNaN num)
-                   (k/is-empty? editText))
+                   (xtd/is-empty? editText))
                (setEditText (data-swap/position-to-fstr position))
 
                :else

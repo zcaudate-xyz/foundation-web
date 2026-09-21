@@ -19,7 +19,7 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.slim :as slim]
              [js.core :as j]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [xt.event.base-route :as event-route]]
    :export [MODULE]})
 

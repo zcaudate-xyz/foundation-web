@@ -3,7 +3,8 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[xt.lang.base-lib :as k]
+  {:require [[xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
              [js.react-native :as n]
              [js.core :as j]]
    :export [MODULE]})
@@ -82,14 +83,14 @@
   "gets font style gives size"
   {:added "4.0"}
   [font]
-  (cond (k/obj? font)
+  (cond (xtl/is-object? font)
         (return font)
 
-        (k/is-number? font)
+        (xtl/is-number? font)
         (return {:fontSize font})
 
         :else
-        (return (or (k/get-key -/FontStyle font)
+        (return (or (xt/x:get-key -/FontStyle font)
                     -/fontText))))
 
 (def.js MODULE (!:module))

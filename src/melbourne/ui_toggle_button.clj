@@ -7,7 +7,8 @@
   {:require [[js.core :as j]
              [js.react :as r]
              [js.react-native.ui-toggle-button :as ui-toggle-button]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [melbourne.addon-tooltip :as addon-tooltip]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
@@ -54,9 +55,9 @@
                      refLink
                      (. chord hovering)
                      #{design
-                       {:variant (k/get-in design ["variant" "tooltip"])}
+                       {:variant (xtd/get-in design ["variant" "tooltip"])}
                        tooltip}))
-                (:.. (k/arrayify addons))]
+                (:.. (xtd/arrayify addons))]
        :transformations
        (j/assign
         {:bg (fn:> [#{pressing}]

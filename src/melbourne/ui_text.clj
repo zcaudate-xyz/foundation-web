@@ -20,7 +20,9 @@
              [melbourne.ui-button :as ui-button]
              [melbourne.ui-toggle-button :as ui-toggle-button]
              [melbourne.ui-group :as ui-group]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js Row
@@ -197,10 +199,10 @@
           (:= imageProps {})
           (:= textProps {})]} props)
   
-  (when (k/is-string? image)
-    (:= image (k/json-decode image)))
+  (when (xtl/is-string? image)
+    (:= image (xt/x:json-decode image)))
   
-  (var imageElem (:? (k/not-empty? image)
+  (var imageElem (:? (xtd/not-empty? image)
                      [:% n/Image
                       #{[:style [{:height size
                                   :width size
@@ -212,7 +214,7 @@
                      [:% ui-static/Text
                       #{[:design design
                          :variant (j/assign {:fg {:key "background"}}
-                                            (k/get-in design ["variant" "text"]))
+                                            (xtd/get-in design ["variant" "text"]))
                          :style [(n/PlatformSelect {:web {:cursor "default" :userSelect "none"}})
                                  {:fontWeight 500}
                                  (:.. (j/arrayify styleText))]
@@ -234,7 +236,7 @@
          [:% ui-static/Div
           {:design design
            :variant (j/assign
-                     (:? (k/not-empty? image)
+                     (:? (xtd/not-empty? image)
                          {}
                          {:bg {:key "neutral" :mix "primary" :ratio 2}})
                      variant)
@@ -636,8 +638,8 @@
             {:design design
              :variant (j/assign
                        {}
-                       (k/get-in design ["variant" "tooltip"])
-                       (k/get-in tooltip ["overlay" "variant"]))}
+                       (xtd/get-in design ["variant" "tooltip"])
+                       (xtd/get-in tooltip ["overlay" "variant"]))}
             visible
             setVisible
             onPress

@@ -16,7 +16,8 @@
              [melbourne.ui-spinner :as ui-spinner]
              [melbourne.slim-submit :as slim-submit]
              [melbourne.ui-text :as ui-text]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-trace :as trace]]
    :export [MODULE]})
 
 (def.js styleLargeDigit
@@ -329,7 +330,7 @@
        :data ["buy" "sell"]
        :value trade
        :setValue (fn [s]
-                   (k/LOG! s)
+                   (trace/LOG! s)
                    (setTrade s))}]
      [:% ui-text/TabsAccent
       {:design design

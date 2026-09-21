@@ -9,7 +9,8 @@
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-input :as ui-input]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js ColorInput
@@ -37,7 +38,7 @@
                            (setValue currentText))
         :onChangeText setCurrentText
         :onBlur (fn:> (setCurrentText value))}}]
-    (:? (k/not-empty? value)
+    (:? (xtd/not-empty? value)
         [:% n/View
          {:style {:backgroundColor value
                   :height 30

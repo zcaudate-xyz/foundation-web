@@ -17,7 +17,9 @@
              [js.react-native.physical-base :as ui]
              [pune.ui-depthchart :as depthchart]
              #_[statslink.impl.base-market :as base-market]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (def.js CHART
@@ -33,11 +35,11 @@
     (!.js
      (var offers [[65 75] [64 60] [63 100]])
      (var buy-domain [63 70])
-     (var buy-lu  (k/arr-juxt offers  k/first k/second))
+     (var buy-lu  (xtd/arr-juxt offers  xtd/first xtd/second))
      (depthchart/get-depth-histogram buy-domain
                                      buy-lu
                                      1
-                                     k/lt))
+                                     xtl/lt))
     => [0 100 160 235 235 235 235 235]))
 
 ^{:refer pune.ui-depthchart/get-depth-data :added "0.1"}

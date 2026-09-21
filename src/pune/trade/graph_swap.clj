@@ -14,7 +14,9 @@
              [js.react-native :as n :include [:fn]]
              [js.react-native.helper-color :as c]
              [js.lib.lw-charts :as lw]
-             [xt.lang.base-lib :as k]
+             [js.core :as j]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [pune.common.data-swap :as data-swap]
              [melbourne.base-palette :as base-palette]]
    :export [MODULE]})
@@ -37,7 +39,7 @@
             design]
     (var precision
          (data-swap/position-to-fdecimal
-          (or (k/get-in history [0 "p_start"])
+          (or (xtd/get-in history [0 "p_start"])
               510000)))
     (var chart
          (lw/createChart
@@ -87,7 +89,7 @@
                     {:priceFormat
                      {:type "price"
                       :precision precision
-                      :minMove (/ 1 (k/pow 10 precision))}}))
+                      :minMove (/ 1 (j/pow 10 precision))}}))
     
     (. chart (applyOptions
               {:layout {:background {:color (base-palette/getColorRaw
@@ -145,7 +147,7 @@
             design]
     (var precision
          (data-swap/position-to-fdecimal
-          (or (k/get-in history [0 "p_start"])
+          (or (xtd/get-in history [0 "p_start"])
               510000)))
     (var chart
          (lw/createChart
@@ -199,7 +201,7 @@
                     {:priceFormat
                      {:type "price"
                       :precision precision
-                      :minMove (/ 1 (k/pow 10 precision))}
+                      :minMove (/ 1 (j/pow 10 precision))}
                      :lineWidth 1.5}))
     
     (. chart (applyOptions

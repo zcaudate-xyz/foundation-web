@@ -3,7 +3,11 @@
             [std.lib :as h]))
 
 (l/script :xtalk
-  {:require [[xt.lang.base-lib :as k]]
+  {:require [[js.core :as j]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-string :as xts]
+             [xt.lang.common-math :as xtm]]
    :export [MODULE]})
 
 (defn.xt fprice-to-vprice
@@ -11,20 +15,20 @@
   {:added "0.1"}
   [fprice]
   (var decimal-floor
-       (k/floor (k/log10 fprice)))
+       (j/floor (j/log10 fprice)))
   (when (< decimal-floor -8)
-    (k/err "floor too small" {:input fprice}))
+    (xt/x:err "floor too small" {:input fprice}))
   (cond (>= decimal-floor -4)
-        (do (var units (k/round
+        (do (var units (xtm/round
                           (/ fprice
-                             (k/pow 10
-                                    (- (k/floor (k/log10 fprice))
+                             (j/pow 10
+                                    (- (j/floor (j/log10 fprice))
                                        4)))))
             (return [(+ 4 decimal-floor)
                      units]))
         
         :else
-        (do (var units (k/round
+        (do (var units (xtm/round
                         (* fprice
                            100000000)))
             (return [0 units]))))
@@ -35,13 +39,13 @@
   [vprice]
   (var [power units] vprice)
   (when (< power 0)
-    (k/err "power negative" {:input vprice}))
+    (xt/x:err "power negative" {:input vprice}))
   (when (> power 99999)
-    (k/err "units too high" {:input vprice}))
+    (xt/x:err "units too high" {:input vprice}))
   (when (not (or (== power 0)
                  (>= units 10000)))
-    (k/err "units too low" {:input vprice}))
-  (return (* (k/pow 10 (- power 8))
+    (xt/x:err "units too low" {:input vprice}))
+  (return (* (j/pow 10 (- power 8))
              units)))
 
 (defn.xt vprice-to-position
@@ -50,12 +54,12 @@
   [vprice]
   (var [power units] vprice)
   (when (< power 0)
-    (k/err "power negative" {:input vprice}))
+    (xt/x:err "power negative" {:input vprice}))
   (when (> power 99999)
-    (k/err "units too high" {:input vprice}))
+    (xt/x:err "units too high" {:input vprice}))
   (when (not (or (== power 0)
                  (>= units 10000)))
-    (k/err "units too low" {:input vprice}))
+    (xt/x:err "units too low" {:input vprice}))
   (return (+ (* 100000 power)
              units)))
 
@@ -72,8 +76,8 @@
   "trade position to vector price"
   {:added "0.1"}
   [position]
-  (var units (k/mod position 100000))
-  (var power (k/floor (k/div position 100000)))
+  (var units (xtm/mod position 100000))
+  (var power (j/floor (xtl/div position 100000)))
   (return [power
            units]))
 
@@ -81,24 +85,24 @@
   "trade position to float price"
   {:added "0.1"}
   [position]
-  (var units (k/mod position 100000))
-  (var power (k/floor (/ position 100000)))
-  (return (* (k/pow 10 (- power 8))
+  (var units (xtm/mod position 100000))
+  (var power (j/floor (/ position 100000)))
+  (return (* (j/pow 10 (- power 8))
              units)))
 
 (defn.xt position-to-fdecimal
   "trade position to float price"
   {:added "0.1"}
   [position]
-  (var power (k/floor (/ position 100000)))
-  (return (k/max 0 (- 8 power))))
+  (var power (j/floor (/ position 100000)))
+  (return (j/max 0 (- 8 power))))
 
 (defn.xt position-to-fstr
   "trade position to float price"
   {:added "0.1"}
   [position]
   (return
-   (k/to-fixed (-/position-to-fprice position)
+   (xts/to-fixed (-/position-to-fprice position)
                (-/position-to-fdecimal position))))
 
 (defn.xt position-to-scale
@@ -107,6 +111,6 @@
   [position]
   (return
    (* (-/position-to-fprice position)
-      (k/pow 10 (-/position-to-fdecimal position)))))
+      (j/pow 10 (-/position-to-fdecimal position)))))
 
 (def.xt MODULE (!:module))

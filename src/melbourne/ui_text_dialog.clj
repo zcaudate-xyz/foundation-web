@@ -18,7 +18,7 @@
              [melbourne.base-theme :as base-theme]
              [melbourne.ui-text :as ui-text]
              [melbourne.slim-dialog :as slim-dialog]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js ConfirmDialog

@@ -21,7 +21,9 @@
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
              [js.core :as j]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [xt.event.base-route :as event-route]]
    :export [MODULE]})
 
@@ -37,11 +39,11 @@
                                    (fn:>
                                      (j/future-delayed [100]
                                        (return
-                                        (-> (k/arr-range 200)
-                                            (k/arr-map (fn:> [i]
+                                        (-> (xtd/arr-range 200)
+                                            (xtd/arr-map (fn:> [i]
                                                          {:id (+ "id-" i)
-                                                          :balance (k/random)
-                                                          :escrow  (k/random)}))))))})}))
+                                                          :balance (xt/x:random)
+                                                          :escrow  (xt/x:random)}))))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"
@@ -52,13 +54,13 @@
                                                  :template "B"}
                                                 {:template ["balance"]
                                                  :style {:marginLeft 10}
-                                                 :format (fn:> [n] (:? (k/is-number? n) (j/toFixed n 2)))}]}
+                                                 :format (fn:> [n] (:? (xtl/is-number? n) (j/toFixed n 2)))}]}
                                         {:type "h"
                                          :body [{:type "title"
                                                  :template "E"}
                                                 {:template ["escrow"]
                                                  :style {:marginLeft 10}
-                                                 :format (fn:> [n] (:? (k/is-number? n) (j/toFixed n 2)))}]}]}
+                                                 :format (fn:> [n] (:? (xtl/is-number? n) (j/toFixed n 2)))}]}]}
                         :avatar {:type "image"
                                  :text  {:template  ["currency_id"]}
                                  :image {:template  ["picture"]}}}})
@@ -98,13 +100,13 @@
                            (fn:> [showPage display]
                              (j/future-delayed [200]
                                                (return
-                                                (k/arr-map (k/arr-range display)
+                                                (xtd/arr-map (xtd/arr-range display)
                                                            (fn:> [i]
                                                              {:id   (+ "id-" (+ (* (- showPage 2) display)
                                                                                 display
                                                                                 i))
-                                                              :balance (k/random)
-                                                              :escrow  (k/random)})))))})}))
+                                                              :balance (xt/x:random)
+                                                              :escrow  (xt/x:random)})))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"
@@ -115,13 +117,13 @@
                                                  :template "B"}
                                                 {:template ["balance"]
                                                  :style {:marginLeft 10}
-                                                 :format (fn:> [n] (:? (k/is-number? n) (j/toFixed n 2)))}]}
+                                                 :format (fn:> [n] (:? (xtl/is-number? n) (j/toFixed n 2)))}]}
                                         {:type "h"
                                          :body [{:type "title"
                                                  :template "E"}
                                                 {:template ["escrow"]
                                                  :style {:marginLeft 10}
-                                                 :format (fn:> [n] (:? (k/is-number? n) (j/toFixed n 2)))}]}]}
+                                                 :format (fn:> [n] (:? (xtl/is-number? n) (j/toFixed n 2)))}]}]}
                         :avatar {:type "image"
                                  :text  {:template  ["currency_id"]}
                                  :image {:template  ["picture"]}}}})

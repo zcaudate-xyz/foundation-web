@@ -12,7 +12,8 @@
              [melbourne.ui-spinner :as ui-spinner]
              [melbourne.ui-spinner-basic :as ui-spinner-basic]
              [melbourne.ui-slider :as ui-slider]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js FormSpinner
@@ -42,7 +43,7 @@
    [:% slim-common/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -98,7 +99,7 @@
    [:% slim-common/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -155,7 +156,7 @@
    [:% slim-common/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone

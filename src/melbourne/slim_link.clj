@@ -13,7 +13,9 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.slim-common :as slim-common]
              [melbourne.slim-select :as slim-select]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js useViewLink
@@ -32,9 +34,9 @@
   (var args nil)
   (var link-id (ext-form/listenFieldValue form field))
   (r/watch [results]
-    (when (and (k/not-empty? results)
-               (k/nil? link-id))
-      (event-form/set-field form field (k/id-fn (k/first results)))))
+    (when (and (xtd/not-empty? results)
+               (xtl/nil? link-id))
+      (event-form/set-field form field (xtd/id-fn (xtd/first results)))))
 
   (when viewArgs
     (var data (ext-form/listenFormData form))
@@ -60,13 +62,13 @@
    (r/% slim-select/FormDropdown
         (j/assignNew {}
                      props
-                     {:key (k/json-encode args)
+                     {:key (xt/x:json-encode args)
                       :data     (. links results)
                       :fieldProps
-                      {:valueFn  k/id-fn
+                      {:valueFn  xtd/id-fn
                        :format (fn [id]
-                                 (return (k/template-entry
-                                          (k/get-in links ["lookup" id])
+                                 (return (xtd/template-entry
+                                          (xtd/get-in links ["lookup" id])
                                           viewTemplate)))}}))))
 
 (defn.js FormLinkReadOnly
@@ -88,8 +90,8 @@
         (j/assignNew props
                      {:template (fn [e]
                                   (return
-                                   (k/template-entry
-                                    (k/get-in links ["lookup" (. e [field])])
+                                   (xtd/template-entry
+                                    (xtd/get-in links ["lookup" (. e [field])])
                                     viewTemplate)))}))))
 
 (defn.js useViewLinkEntry
@@ -132,8 +134,8 @@
         (j/assignNew props
                      {:template (fn [e]
                                   (return
-                                   (k/template-entry
-                                    (k/get-in links ["lookup" (. e [field])])
+                                   (xtd/template-entry
+                                    (xtd/get-in links ["lookup" (. e [field])])
                                     viewTemplate)))}))))
 
 (def.js MODULE (!:module))

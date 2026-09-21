@@ -7,7 +7,8 @@
   {:require [[js.core :as j]
              [js.react-native.helper-color :as c]
              [js.react-native :as n :include [:fn]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-math :as xtm]
              [melbourne.ui-input :as ui-input]
              [melbourne.ui-input-xl :as ui-input-xl]
              [melbourne.base-palette :as base-palette]]
@@ -42,12 +43,12 @@
                          mainBackground
                          (:? #_(< 0.01 highlighted)
                              (- 1 active))))
-             (return {:style {:fontSize   (k/mix 18  10  active)
+             (return {:style {:fontSize   (xtm/mix 18  10  active)
                               :opacity 0.6
                               :color (c/toHSL color)
                               :transform
-                              [{:translateY (k/mix 15 53 active)}
-                               {:translateX (k/mix 10 -5  active)}]}}))}))
+                              [{:translateY (xtm/mix 15 53 active)}
+                               {:translateX (xtm/mix 10 -5  active)}]}}))}))
 
 (defn.js InputXL
   "creates the large input"

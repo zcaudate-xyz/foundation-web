@@ -7,7 +7,8 @@
   {:require [[melbourne.base-validators :as validators]
              [js.cell :as cl]
              [statslink.full.link-remote :as link-remote]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js is-email-available
@@ -20,7 +21,7 @@
                      (return (. (link-remote/check-email-available
                                  (cl/get-cell context)
                                  v)
-                                (then (k/key-fn "data")))))}]))
+                                (then (xtd/key-fn "data")))))}]))
 
 (defn.js is-nickname-available
   "checks that nickname is available"
@@ -32,7 +33,7 @@
                      (return (. (link-remote/check-nickname-available
                                  (cl/get-cell context)
                                  v)
-                                (then (k/key-fn "data")))))}]))
+                                (then (xtd/key-fn "data")))))}]))
 
 (defn.js account-new-validators
   "creates new account validators"

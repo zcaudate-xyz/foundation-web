@@ -13,23 +13,24 @@
              [js.react :as r :include [:fn]]
              [js.core :as j]
              [melbourne.base-palette :as base-palette]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js getPath
   [values width height maxValue minValue]
-  (when (k/is-empty? values)
+  (when (xtd/is-empty? values)
     (return ""))
   (var out [])
-  (var maxX (- (k/len values) 1))
+  (var maxX (- (xt/x:len values) 1))
   (var maxY (+ (or maxValue
-                   (k/max (:.. values)))
+                   (j/max (:.. values)))
                2))
   (var minY (- (or minValue
-                   (k/min (:.. values)))
+                   (j/min (:.. values)))
                2))
-  (k/for:array [[i v] values]
-    (x:arr-push out (k/cat (j/round (/ (* width i)
+  (xt/for:array [[i v] values]
+    (xt/x:arr-push out (xt/x:cat (j/round (/ (* width i)
                                        maxX))
                            ","
                            (- height
