@@ -1,5 +1,5 @@
 (ns pune.ui-notify-events
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -17,7 +17,7 @@
              [melbourne.ui-text :as ui-text]
              [pune.ui-notify-base :as base]
              [xt.lang.base-lib :as k]
-             [xt.lang.base-text :as text]]
+             [xt.lang.common-string :as text]]
    :export [MODULE]})
 
 (defn.js parseEvent

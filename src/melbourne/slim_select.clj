@@ -1,6 +1,6 @@
 (ns melbourne.slim-select
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -8,7 +8,7 @@
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react.ext-form :as ext-form]
-             [xt.lang.event-form :as event-form]
+             [xt.event.base-form :as event-form]
              [melbourne.slim-common :as slim-common]
              [melbourne.ui-picker :as ui-picker]
              [melbourne.ui-picker-basic :as ui-picker-basic]

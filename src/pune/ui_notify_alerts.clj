@@ -1,5 +1,5 @@
 (ns pune.ui-notify-alerts
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -10,14 +10,13 @@
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
    :require [[js.core :as j]
-             [js.cell :as cl]
              [js.react :as r :include [:fn]]
              [js.react.ext-box :as ext-box]
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-text :as ui-text]
              [melbourne.slim-dialog :as slim-dialog]
              [xt.lang.base-lib :as k]
-             [xt.lang.base-text :as text]]
+             [xt.lang.common-string :as text]]
    :export [MODULE]})
 
 (defn.js NotifyAlerts

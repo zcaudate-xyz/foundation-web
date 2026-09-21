@@ -1,5 +1,5 @@
 (ns melbourne.slim-entry
-  (:require [std.lang :as  l]
+  (:require [lang.core :as  l]
             [std.lib :as h]))
 
 (l/script :js
@@ -8,7 +8,7 @@
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-util :as ui-util]
              [js.react.ext-form :as ext-form]
-             [xt.lang.event-route :as event-route]
+             [xt.event.base-route :as event-route]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-text-dialog :as ui-text-dialog]
              [melbourne.ui-static :as ui-static]

@@ -1,5 +1,5 @@
 (ns melbourne.ui-toolbar
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]
             [std.lib.link :as link]))
 

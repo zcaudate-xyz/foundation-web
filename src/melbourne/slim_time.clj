@@ -1,6 +1,6 @@
 (ns melbourne.slim-time
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -15,7 +15,7 @@
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
              [xt.lang.base-lib :as k]
-             [xt.lang.event-form :as event-form]
+             [xt.event.base-form :as event-form]
              [melbourne.base-font :as base-font]
              [melbourne.base-palette :as base-palette]
              [melbourne.slim-common :as slim-common]

@@ -1,5 +1,5 @@
 (ns melbourne.ui-autocomplete
-  (:require [std.lang :as  l]
+  (:require [lang.core :as  l]
             [std.lib :as h]
             [std.string :as str]))
 
@@ -7,7 +7,7 @@
   {:require [[js.core :as j]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
-             [js.react.ext-view :as ext-view]
+             [js.react.ext-model :as ext-view]
              [js.react-native.ui-autocomplete :as ui-autocomplete]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]

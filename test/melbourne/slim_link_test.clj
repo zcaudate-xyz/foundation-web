@@ -1,6 +1,6 @@
 (ns melbourne.slim-link-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -11,13 +11,13 @@
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
    :require [[js.react :as r]
-             [js.react.ext-view :as ext-view]
+             [js.react.ext-model :as ext-view]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.slim-link :as slim-link]
              [js.core :as j]
              [xt.lang.base-lib :as k]
-             [xt.lang.event-view :as event-view]]
+             [xt.event.base-model :as event-view]]
    :export [MODULE]})
 
 ^{:refer melbourne.slim-link/useViewLink :added "4.0"}
@@ -228,7 +228,7 @@
   (def.js MODULE (!:module)))
 
   
-  ^{:refer js.react.ext-view/listenViewOutput :adopt true :added "4.0"}
+  ^{:refer js.react.ext-model/listenViewOutput :adopt true :added "4.0"}
   (fact "uses an async entry"
 
     (defn.js ListenViewOutputPane
@@ -258,7 +258,7 @@
               (ext-view/refresh-view view))
       (return
        (n/EnclosedCode 
-{:label "js.react.ext-view/listenViewOutput"} 
+{:label "js.react.ext-model/listenViewOutput"}
 [:% n/Row
          [:% n/Button
           {:title "R"

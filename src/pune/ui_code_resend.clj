@@ -1,6 +1,6 @@
 (ns pune.ui-code-resend
   (:use code.test)
-  (:require [std.lang :as  l]
+  (:require [lang.core :as  l]
             [std.lib :as h]))
 
 (l/script :js
@@ -14,7 +14,7 @@
              [melbourne.slim-submit :as slim-submit]
              [melbourne.slim-error :as slim-error]
              [xt.lang.base-lib :as k]
-             [xt.lang.event-form :as event-form]
+             [xt.event.base-form :as event-form]
              [melbourne.ui-text :as ui-text]
              [pune.common.ext-util :as ext-util]]
    :export [MODULE]})

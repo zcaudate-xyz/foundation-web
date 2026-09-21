@@ -1,6 +1,6 @@
 (ns pune.ui-sidemenu
   (:use code.test)
-  (:require [std.lang :as  l]
+  (:require [lang.core :as  l]
             [std.lib :as h]))
 
 (l/script :js
@@ -8,7 +8,7 @@
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [xt.lang.base-lib :as k]
-             [xt.lang.base-text :as text]             
+             [xt.lang.common-string :as text]
              [js.react-native.ui-tooltip :as ui-tooltip]
              [melbourne.base-palette :as base-palette]
              [melbourne.ui-group :as ui-group]

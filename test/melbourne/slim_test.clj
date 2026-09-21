@@ -1,6 +1,6 @@
 (ns melbourne.slim-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -11,7 +11,7 @@
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
    :require [[js.react :as r]
-             [js.react.ext-view :as ext-view]
+             [js.react.ext-model :as ext-view]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.base-palette :as base-palette]
              [melbourne.ui-group :as ui-group]
@@ -20,7 +20,7 @@
              [melbourne.slim :as slim]
              [js.core :as j]
              [xt.lang.base-lib :as k]
-             [xt.lang.event-route :as event-route]]
+             [xt.event.base-route :as event-route]]
    :export [MODULE]})
 
 ^{:refer melbourne.slim/Table :adopt true :added "0.1"}

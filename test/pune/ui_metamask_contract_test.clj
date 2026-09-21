@@ -1,6 +1,6 @@
 (ns pune.ui-metamask-contract-test
   (:use code.test)
-  (:require [std.lang :as  l]
+  (:require [lang.core :as  l]
             [std.lib :as h]
             [pune.ui-metamask-manage-test :as manage-test]))
 
@@ -21,7 +21,7 @@
              [js.react-native.physical-base :as ui]
              [pune.ui-metamask-contract :as metamask-contract]
              [xt.lang.base-lib :as k]
-             [xt.lang.event-box :as event-box]]
+             [xt.event.base-box :as event-box]]
    :import  [["@statstrade/interface/StatstradeGateway.json" :as GatewaySpec]]
    :export [MODULE]})
 

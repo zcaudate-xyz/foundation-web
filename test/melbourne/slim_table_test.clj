@@ -1,6 +1,6 @@
 (ns melbourne.slim-table-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -11,7 +11,7 @@
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
    :require [[js.react :as r]
-             [js.react.ext-view :as ext-view]
+             [js.react.ext-model :as ext-view]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.base-palette :as base-palette]
@@ -24,7 +24,7 @@
              [melbourne.ui-static :as ui-static]
              [js.core :as j]
              [xt.lang.base-lib :as k]
-             [xt.lang.event-route :as event-route]]
+             [xt.event.base-route :as event-route]]
    :export [MODULE]})
 
 ^{:refer melbourne.slim-table/TableModifyView :added "4.0"}

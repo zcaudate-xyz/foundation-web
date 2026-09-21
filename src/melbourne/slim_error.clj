@@ -1,6 +1,6 @@
 (ns melbourne.slim-error
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -15,7 +15,7 @@
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
              [xt.lang.base-lib :as k]
-             [xt.lang.base-text :as base-text]
+             [xt.lang.common-string :as base-text]
              [melbourne.ui-button :as ui-button]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-font :as base-font]]

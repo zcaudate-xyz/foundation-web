@@ -1,6 +1,6 @@
 (ns melbourne.addon-validation-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -16,7 +16,7 @@
              [melbourne.addon-validation :as addon-validation]
              [melbourne.ui-input :as ui-input]
              [melbourne.base-validators :as validators]
-             [xt.lang.event-form :as base-form]]
+             [xt.event.base-form :as base-form]]
    :export [MODULE]})
 
 ^{:refer melbourne.addon-validation/addonValidation :added "0.1"}

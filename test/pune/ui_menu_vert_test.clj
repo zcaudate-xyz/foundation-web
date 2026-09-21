@@ -1,6 +1,6 @@
 (ns pune.ui-menu-vert-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js

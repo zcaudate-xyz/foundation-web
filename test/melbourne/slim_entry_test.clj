@@ -1,6 +1,6 @@
 (ns melbourne.slim-entry-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -17,8 +17,8 @@
                      [melbourne.slim-entry :as slim-entry]
                      [melbourne.base-validators :as validators]
                      [xt.lang.base-lib :as k]
-                     [xt.lang.event-form :as event-form]
-                     [xt.lang.event-route :as event-route]]
+                     [xt.event.base-form :as event-form]
+                     [xt.event.base-route :as event-route]]
            :export [MODULE]})
 
 ^{:refer melbourne.slim-entry/EntryImplNotFound :added "4.0"}

@@ -2,7 +2,7 @@
 (cemerick.pomegranate.aether/register-wagon-factory!
  "http" #(org.apache.maven.wagon.providers.http.HttpWagon.))
  
-(defproject xyz.zcaudate/foundation-web "4.0.11"
+(defproject xyz.zcaudate/foundation-web "4.1.8"
   :description "web libraries for foundation"
   :url "https://www.github.com/zcaudate/foundation-web"
   :license  {:name "MIT License"
@@ -10,42 +10,40 @@
   :aliases
   {"publish"     ["exec" "-ep" "(use 'code.doc)     (deploy-template :all) (publish :all)"]
    "incomplete"  ["exec" "-ep" "(use 'code.manage)  (incomplete :all) (System/exit 0)"]
-   "install"     ["exec" "-ep" "(use 'code.maven)   (install :all {:tag :all}) (System/exit 0)"]
-   "deploy"      ["exec" "-ep" "(use 'code.maven)   (deploy :all {:tag :all}) (System/exit 0)"]
-   "deploy-lein" ["exec" "-ep" "(use 'code.maven)   (deploy-lein :all {:tag :all}) (System/exit 0)"]
+   "install"     ["exec" "-ep" "(use 'code.tool.maven)   (install :all {:tag :all}) (System/exit 0)"]
+   "deploy"      ["exec" "-ep" "(use 'code.tool.maven)   (deploy :all {:tag :all}) (System/exit 0)"]
+   "deploy-lein" ["exec" "-ep" "(use 'code.tool.maven)   (deploy-lein :all {:tag :all}) (System/exit 0)"]
    "push-web-code"  ["run" "-m" "component.task-web-index"]}
   
-  :dependencies [[org.clojure/clojure "1.11.1"]
-                 [xyz.zcaudate/code.test           "4.0.11"]
-                 [xyz.zcaudate/code.manage         "4.0.11"]
-                 [xyz.zcaudate/code.java           "4.0.11"]
-                 [xyz.zcaudate/code.maven          "4.0.11"]
-                 [xyz.zcaudate/code.doc            "4.0.11"]
-                 [xyz.zcaudate/code.dev            "4.0.11"]
+  :dependencies [[org.clojure/clojure "1.12.0"]
+                 [xyz.zcaudate/code.test           "4.1.8"]
+                 [xyz.zcaudate/code.manage         "4.1.8"]
+                 [xyz.zcaudate/code.tool.java      "4.1.8"]
+                 [xyz.zcaudate/code.tool.maven     "4.1.8"]
+                 [xyz.zcaudate/code.doc            "4.1.8"]
                  
-                 [xyz.zcaudate/js.core             "4.0.11"]
-                 [xyz.zcaudate/js.cell             "4.0.11"]
-                 [xyz.zcaudate/js.lib.datetime     "4.0.11"]
-                 [xyz.zcaudate/js.lib.ethereum     "4.0.11"]
-                 [xyz.zcaudate/js.lib.rn           "4.0.11"]
-                 [xyz.zcaudate/js.lib.lw-charts    "4.0.11"]
-                 [xyz.zcaudate/js.lib.valtio       "4.0.11"]
-                 [xyz.zcaudate/js.react            "4.0.11"]
-                 [xyz.zcaudate/js.react-ext        "4.0.11"]
-                 [xyz.zcaudate/js.react-native     "4.0.11"]
+                 [xyz.zcaudate/js.core             "4.1.8"]
+                 [xyz.zcaudate/js.lib.datetime     "4.1.8"]
+                 [xyz.zcaudate/js.lib.ethereum     "4.1.8"]
+                 [xyz.zcaudate/js.lib.rn           "4.1.8"]
+                 [xyz.zcaudate/js.lib.lw-charts    "4.1.8"]
+                 [xyz.zcaudate/js.lib.valtio       "4.1.8"]
+                 [xyz.zcaudate/js.react            "4.1.8"]
+                 [xyz.zcaudate/js.react-ext        "4.1.8"]
+                 [xyz.zcaudate/js.react-native     "4.1.8"]
                  
-                 [xyz.zcaudate/jvm                 "4.0.11"]
-                 [xyz.zcaudate/net.http            "4.0.11"]
+                 [xyz.zcaudate/jvm                 "4.1.8"]
+                 [xyz.zcaudate/net.http            "4.1.8"]
 
-                 [xyz.zcaudate/rt.basic            "4.0.11"]
+                 [xyz.zcaudate/lang                "4.1.8"]
                  
-                 [xyz.zcaudate/script.css          "4.0.11"]
-                 [xyz.zcaudate/script.sql          "4.0.11"]
-                 [xyz.zcaudate/std.lib             "4.0.11"]
-                 [xyz.zcaudate/std.log             "4.0.11"]
-                 [xyz.zcaudate/std.lang            "4.0.11"]
-                 [xyz.zcaudate/std.text            "4.0.11"]
-                 [xyz.zcaudate/xtalk.lang          "4.0.11"]]
+                 [xyz.zcaudate/script.css          "4.1.8"]
+                 [xyz.zcaudate/script.sql          "4.1.8"]
+                 [xyz.zcaudate/std.lib             "4.1.8"]
+                 [xyz.zcaudate/std.log             "4.1.8"]
+                 [xyz.zcaudate/std.make            "4.1.8"]
+                 [xyz.zcaudate/std.text            "4.1.8"]
+                 [xyz.zcaudate/xtalk.event          "4.1.8"]]
   :profiles {:dev {:plugins [[lein-ancient "0.6.15"]
                              [lein-exec "0.3.7"]
                              [lein-cljfmt "0.7.0"]

@@ -1,6 +1,6 @@
 (ns melbourne.ui-input-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -17,7 +17,7 @@
              [melbourne.ui-input :as ui-input]
              [js.react.ext-form :as ext-form]
              [xt.lang.base-lib :as k]
-             [xt.lang.event-form :as event-form]]
+             [xt.event.base-form :as event-form]]
    :export [MODULE]})
 
 (comment

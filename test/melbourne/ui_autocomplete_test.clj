@@ -1,6 +1,6 @@
 (ns melbourne.ui-autocomplete-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -13,7 +13,7 @@
    :require [[js.react :as r]
              [js.react-native :as n :include [:fn]]
              [js.react.ext-form :as ext-form]
-             [js.react.ext-view :as ext-view]
+             [js.react.ext-model :as ext-view]
              [js.core :as j]
              [melbourne.ui-autocomplete :as ui-autocomplete]
              [melbourne.slim-sheet :as slim-sheet]

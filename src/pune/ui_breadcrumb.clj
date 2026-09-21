@@ -1,5 +1,5 @@
 (ns pune.ui-breadcrumb
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]
             [std.lib.link :as link]))
 
@@ -12,7 +12,7 @@
             :notify {:type :webpage :path "dev/notify"}}
    :require [[js.core :as j]
              [melbourne.ui-static :as ui-static]
-             [xt.lang.base-text :as base-text]
+             [xt.lang.common-string :as base-text]
              [xt.lang.base-lib :as k]]
    :export [MODULE]})
 

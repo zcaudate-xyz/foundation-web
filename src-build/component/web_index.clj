@@ -1,9 +1,8 @@
 (ns component.web-index
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]
             [std.string :as str]
-            [net.http :as http]
-            [rt.basic]))
+            [net.http :as http]))
 
 (l/script :js
   {:runtime :websocket
@@ -18,8 +17,7 @@
              [js.react-native :as n :include [:fn]]
              [js.lib.rn-expo :as x :include [:lib]]
              [xt.lang.base-lib :as k]
-             [xt.lang.base-client :as client]
-             [xt.lang.event-box :as base-box]
+             [xt.event.base-box :as base-box]
              [component.web-melbourne :as web-melbourne]
              [component.web-pune-frame :as web-pune-frame]]
    :export [MODULE]
@@ -81,4 +79,3 @@
 
 (def.js MODULE
   (x/registerRootComponent -/App))
-

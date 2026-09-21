@@ -1,6 +1,6 @@
 (ns pune.f04-market.form-market-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (comment

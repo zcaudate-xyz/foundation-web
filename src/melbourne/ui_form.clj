@@ -1,6 +1,6 @@
 (ns melbourne.ui-form
   (:use code.test)
-  (:require [std.lang :as  l]
+  (:require [lang.core :as  l]
             [std.lib :as h]))
 
 (l/script :js
@@ -12,7 +12,7 @@
             :notify {:type :webpage :path "dev/notify"}}
    :require [[js.core :as j]
              [js.react :as r :include [:fn]]
-             [js.react.ext-view :as ext-view]
+             [js.react.ext-model :as ext-view]
              [js.react.ext-route :as ext-route]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.slim-common :as slim-common]
