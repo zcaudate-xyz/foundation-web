@@ -93,9 +93,9 @@
                        :selected (. indices [i])
                        :onPress (fn []
                                   (var changed
-                                       (xtd/arr-map indices
-                                              (fn [e ei]
-                                                (return (:? (== ei i) (not e) e)))))
+                                       (. indices
+                                          (map (fn [e ei]
+                                                 (return (:? (== ei i) (not e) e))))))
                                   (setIndices changed)
                                   (if onChange (onChange changed)))
                        (:.. (or (. itemProps [i])
@@ -111,7 +111,7 @@
                     (format value i)]])))
    (return [:% n/View
             {:style styleContainer}
-            (xtd/arr-map items itemFn)])))
+            (. items (map itemFn))])))
 
 (defn.js CheckGroup
   "creates a group of check boxes"

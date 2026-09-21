@@ -32,27 +32,33 @@
               (l/rt:stop)]})
 
 ^{:refer pune.common.data-user/is-email-available :added "0.1"
-  :setup [(j/<! ((. (data-user/is-email-available "hello" nil)
-                    [1]
-                    ["check"])
-                 "a@a.com"))]}
+  :setup [(notify/wait-on :js
+            (. ((. (data-user/is-email-available "hello" nil)
+                  [1]
+                  ["check"])
+                "a@a.com")
+               (then (repl/>notify))))]}
 (fact "checks that email is available"
   ^:hidden
   
-  (j/<! ((. (data-user/is-email-available "hello" nil)
-            [1]
-            ["check"])
-         "a@a.com"))
+  (notify/wait-on :js
+    (. ((. (data-user/is-email-available "hello" nil)
+          [1]
+          ["check"])
+        "a@a.com")
+       (then (repl/>notify))))
   => boolean?)
 
 ^{:refer pune.common.data-user/is-nickname-available :added "0.1"}
 (fact "checks that nickname is available"
   ^:hidden
   
-  (j/<! ((. (data-user/is-nickname-available "hello" nil)
-            [1]
-            ["check"])
-         "a@a.com"))
+  (notify/wait-on :js
+    (. ((. (data-user/is-nickname-available "hello" nil)
+          [1]
+          ["check"])
+        "a@a.com")
+       (then (repl/>notify))))
   => boolean?)
 
 ^{:refer pune.common.data-user/account-new-validators :added "0.1"}

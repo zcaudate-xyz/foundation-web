@@ -113,7 +113,6 @@
      :variant {:bg {:key "background"}}
      :style [{:margin 4
               :overflow "hidden"}]}
-    (xtd/arr-map items (itemFn mini))]))
+    (. items (map (itemFn mini)))]))
 
 (def.js MODULE (!:module))
-

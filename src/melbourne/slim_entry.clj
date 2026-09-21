@@ -1112,7 +1112,7 @@
                                                                    i)}
                                                          #{impl})))))
           (return [:% n/View
-                   (xtd/arr-map (or body []) entryFn)]))))
+                   (. (or body []) (map entryFn))]))))
   (return
    (r/% -/EntryLayoutPopup (Object.assign #{mainComponent} props))))
 
@@ -1141,7 +1141,7 @@
   (var isLayout   (xt/x:get-key -/ENTRY_LAYOUT type))
   (var isAlias     (== type "alias"))
   (var isPopup     (== type "popup"))
-  (var showFn  (fn [impl i]
+  (var showFn  (fn [impl]
                  (cond (not impl)
                        (return false)
                        
@@ -1171,9 +1171,8 @@
         
         isLayout
         (do  (var body (:? (xtl/is-array? (. impl body))
-                           (-> (. impl body)
-                               (xtd/arr-filter showFn)
-                               (xtd/arr-map entryFn))
+                           (. (xtd/arr-filter (. impl body) showFn)
+                              (map entryFn))
                            
                            (xtl/is-object? (. impl body))
                            (-> (. impl body)

@@ -94,8 +94,7 @@
    [:% n/View
     {:style [{:overflow "hidden"}
              (:.. (xtd/arrayify style))]}
-    (xtd/arr-map pages pageFn)]))
+    (. pages (map pageFn))]))
 
 (def.js MODULE (!:module))
-
 

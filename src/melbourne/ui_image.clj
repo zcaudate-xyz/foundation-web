@@ -180,13 +180,13 @@
                                (split "/")
                                (pop))))
       (. (append "folder" "upload"))
-      (. (append "publicKey" (j/! imagekit/+public+))))
+      (. (append "publicKey" imagekit/+public+)))
     (setUploading true)
     (return
      (-> (base-imagekit/imagekit-upload
           (state/token)
           form)
-         (j/toJson)
+         (. (json))
          (promise/x:promise-then (fn [res]
                    (setData (Object.assign res {:type "imagekit"}))))
          (promise/x:promise-finally (fn []

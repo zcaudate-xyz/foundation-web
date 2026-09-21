@@ -202,9 +202,8 @@
                     :overflow "hidden"
                     :flexDirection "row"
                     :justifyContent "space-between"}]}
-          (-> items
-              (xtd/arr-filter (xtd/key-fn "mini"))
-              (xtd/arr-map    (itemFn true)))
+          (. (xtd/arr-filter items (xtd/key-fn "mini"))
+             (map (itemFn true)))
           [:% -/MainMenuMiniContext
            #{design visible setVisible}
            [:% ui-static/Div
@@ -212,11 +211,11 @@
              :variant {:bg {:key "background"
                             :tone "sharpen"}}
              :style [{:padding 2}]}
-            (xtd/arr-map (xtd/arr-filter items
-                             (fn:> [e]
-                               (and (not (. e mini))
-                                    (. e key))))
-                   (itemFn true))]]])
+            (. (xtd/arr-filter items
+                               (fn:> [e]
+                                 (and (not (. e mini))
+                                      (. e key))))
+               (map (itemFn true)))]]])
         
 
         :else
@@ -228,7 +227,6 @@
            :style [{:padding 2
                     :flex 1
                     :overflow "hidden"}]}
-          (xtd/arr-map items (itemFn mini))])))
+          (. items (map (itemFn mini)))])))
 
 (def.js MODULE (!:module))
-

@@ -54,10 +54,9 @@
   
   (var setEditTextNumber
        (fn [v]
-         (var isEnding (xtd/first (or (j/match v #"\.0+$")
+         (var isEnding (xtd/first (or (. v (match #"\.0+$"))
                                     [])))
-         (var isStarting (xtd/first (or (j/match v #"^\.")
-                                    [])))
+         (var isStarting (xtd/first (or (. v (match #"^\.")) [])))
          (var hasDot (== "." (xtd/last v)))
          (var isZero (or (xtl/nil? v)
                          (xtd/not-empty? v)))

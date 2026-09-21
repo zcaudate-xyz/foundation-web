@@ -42,9 +42,9 @@
                       :outlined (. indices [i])
                       :onPress (fn []
                                  (var changed
-                                      (xtd/arr-map indices
-                                             (fn [e ei]
-                                               (return (:? (== ei i) (not e) e)))))
+                                      (. indices
+                                         (map (fn [e ei]
+                                                (return (:? (== ei i) (not e) e))))))
                                  (setIndices changed)
                                  (if onChange (onChange changed)))
                       (:.. (or (. itemProps [i])
@@ -52,7 +52,7 @@
    (return [:% n/Row
             {:style [{:margin 5}
                      (:.. (xtd/arrayify styleContainer))]}
-            (xtd/arr-map items itemFn)])))
+            (. items (map itemFn))])))
 
 (defn.js EnumMulti
   "creates a multi-select horizontal tab bar"
@@ -113,7 +113,7 @@
    (return [:% n/Row
             {:style [{:margin 5}
                      (:.. (xtd/arrayify styleContainer))]}
-            (xtd/arr-map items itemFn)])))
+            (. items (map itemFn))])))
 
 (defn.js Tabs
   "creates a horizontal tab bar"

@@ -69,7 +69,7 @@
     (when (xtd/is-empty? assets)
       (return nil))
     (var currencyFn
-         (fn [currencyId i]
+         (fn [currencyId]
            (return [:% -/AssetControlLabel
                     #{[:key currencyId
                        design
@@ -84,5 +84,4 @@
 
 
 (def.js MODULE (!:module))
-
 

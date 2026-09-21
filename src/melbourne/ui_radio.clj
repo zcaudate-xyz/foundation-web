@@ -101,7 +101,7 @@
                     (format value i)]])))
    (return [:% n/View
             {:style styleContainer}
-            (xtd/arr-map items itemFn)])))
+            (. items (map itemFn))])))
 
 (defn.js RadioGroup
   "creates a group of radio boxes"

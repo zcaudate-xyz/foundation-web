@@ -74,13 +74,13 @@
       {:style {:flexWrap "wrap"
                :maxWidth 400
                :alignItems "center"}}
-      (xtd/arr-map values
-             (fn:> [value i]
-               [:% ui-chip/Chip
-                #{design
-                  {:key i
-                   :text value
-                   :onClose (fn:> (setValues (xtd/arr-omit values i)))}}]))
+      (. values
+         (map (fn:> [value i]
+                [:% ui-chip/Chip
+                 #{design
+                   {:key i
+                    :text value
+                    :onClose (fn:> (setValues (xtd/arr-omit values i)))}}])))
       (:? (xtd/not-empty? values)
           [:% ui-button/Button
            #{design

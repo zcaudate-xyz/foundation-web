@@ -265,13 +265,13 @@
   (cond (xtl/is-array? section)
         (return
          [:% n/Row
-          (-> section 
-              (xtd/arr-map (fn:> [group i]
-                       [:% -/EntryCardBodyGroup
-                        #{design
-                          entry
-                          group
-                          {:key i}}])))])
+          (. section
+             (map (fn:> [group i]
+                    [:% -/EntryCardBodyGroup
+                     #{design
+                       entry
+                       group
+                       {:key i}}])))])
         
         :else
         (do (var #{[(:= format xtl/identity)]} section)

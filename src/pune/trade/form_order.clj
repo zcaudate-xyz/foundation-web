@@ -854,9 +854,9 @@
                     {:template (. order ["time_created"])
                      :style {:fontSize 9}
                      :format (fn:> [t]
-                               (+  (j/toLocaleDateString (new Date (/ t 1000)))
+                               (+  (. (new Date (/ t 1000)) (toLocaleDateString))
                                    " "
-                                   (j/toLocaleTimeString (new Date (/ t 1000)))
+                                   (. (new Date (/ t 1000)) (toLocaleTimeString))
                                    "\n"
                                    (dt/agoVerbose t)))}]}
             

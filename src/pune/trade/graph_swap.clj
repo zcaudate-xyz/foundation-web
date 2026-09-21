@@ -246,7 +246,7 @@
 
 (comment
 
-  (j/toRadix 100 5)
+  (. 100 (toString 5))
   (!.js
    (var x 100)
    (. x (toString 16)))

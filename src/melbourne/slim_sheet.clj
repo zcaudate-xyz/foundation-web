@@ -164,7 +164,7 @@
                 :paddingHorizontal 10
                 :alignItems "center"}
                (:.. (xtd/arrayify style))]]}
-    (xtd/arr-map columns columnFn)]))
+    (. columns (map columnFn))]))
 
 (defn.js SheetRow
   "creates a sheet row"
@@ -209,7 +209,7 @@
                 :paddingLeft 10
                 :paddingRight 20}
                (:.. (xtd/arrayify style))]]}
-    (xtd/arr-map columns columnFn)]))
+    (. columns (map columnFn))]))
 
 (defn.js SheetBasicRows
   "creates a basic sheet"
@@ -222,15 +222,15 @@
   (return
    [:% n/View
     {:style {:flex 1}}
-    (xtd/arr-map entries
-           (fn:> [entry i]
-             (r/% -/SheetRow
-                  (Object.assign {}
-                   props
-                   {:key (+ (or (. entry id)
-                                "")
-                            i)
-                    :entry entry}))))]))
+    (. entries
+       (map (fn:> [entry i]
+              (r/% -/SheetRow
+                   (Object.assign {}
+                    props
+                    {:key (+ (or (. entry id)
+                                 "")
+                             i)
+                     :entry entry})))))]))
 
 (defn.js SheetBasic
   "creates a basic sheet"

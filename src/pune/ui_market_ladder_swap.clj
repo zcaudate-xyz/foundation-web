@@ -100,7 +100,7 @@
   (var lineFn
        (fn [side]
          (return
-          (fn [[position amount] i]
+          (fn [[position amount]]
             (return
              [:% -/MarketLadderRow
               #{{:key position}

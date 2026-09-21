@@ -57,10 +57,10 @@
      :onSubmit (fn []
                  (setVisible false)
                  (when action (action))
-                 (setEvents (j/splice events 1)))
+                 (setEvents (xtd/arr-slice events 1 nil)))
      :onCancel (fn []
                  (setVisible false)
-                 (setEvents (j/splice events 1)))
+                 (setEvents (xtd/arr-slice events 1 nil)))
      :visible visible}]))
 
 (def.js MODULE (!:module))

@@ -157,79 +157,79 @@
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (xtd/arr-map [ui-text/H1
-                ui-text/H2
-                ui-text/H3
-                ui-text/H4
-                ui-text/H5
-                ui-text/H6]
-               (fn [Component i]
-                 (return
-                  [:% n/View
-                   {:key i
-                    :style {:padding 10}}
-                   [:% Component
-                    {:design #{type color}}
-                    "HELLO"]])))]
+        (. [ui-text/H1
+            ui-text/H2
+            ui-text/H3
+            ui-text/H4
+            ui-text/H5
+            ui-text/H6]
+           (map (fn [Component i]
+                  (return
+                   [:% n/View
+                    {:key i
+                     :style {:padding 10}}
+                    [:% Component
+                     {:design #{type color}}
+                     "HELLO"]]))))]
        [:% n/View
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (xtd/arr-map [ui-text/H1
-                ui-text/H2
-                ui-text/H3
-                ui-text/H4
-                ui-text/H5
-                ui-text/H6]
-               (fn [Component i]
-                 (return
-                  [:% n/View
-                   {:key i
-                    :style {:padding 10}}
-                   [:% Component
-                    {:design #{type color}
-                     :designOverride {:variant {:fg {:key "neutral"
-                                                   :tone "sharpen"}}}}
-                    "HELLO"]])))]
+        (. [ui-text/H1
+            ui-text/H2
+            ui-text/H3
+            ui-text/H4
+            ui-text/H5
+            ui-text/H6]
+           (map (fn [Component i]
+                  (return
+                   [:% n/View
+                    {:key i
+                     :style {:padding 10}}
+                    [:% Component
+                     {:design #{type color}
+                      :designOverride {:variant {:fg {:key "neutral"
+                                                    :tone "sharpen"}}}}
+                     "HELLO"]]))))]
        [:% n/View
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (xtd/arr-map [ui-text/H1
-                ui-text/H2
-                ui-text/H3
-                ui-text/H4
-                ui-text/H5
-                ui-text/H6]
-               (fn [Component i]
-                 (return
-                  [:% n/View
-                   {:key i
-                    :style {:padding 10}}
-                   [:% Component
-                    {:design #{type color}
-                     :designOverride {:variant {:fg {:key "background"
-                                                   :tone "flatten"}}}}
-                    "HELLO"]])))]
+        (. [ui-text/H1
+            ui-text/H2
+            ui-text/H3
+            ui-text/H4
+            ui-text/H5
+            ui-text/H6]
+           (map (fn [Component i]
+                  (return
+                   [:% n/View
+                    {:key i
+                     :style {:padding 10}}
+                    [:% Component
+                     {:design #{type color}
+                      :designOverride {:variant {:fg {:key "background"
+                                                    :tone "flatten"}}}}
+                     "HELLO"]]))))]
        [:% n/View
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (xtd/arr-map [ui-text/H1
-                ui-text/H2
-                ui-text/H3
-                ui-text/H4
-                ui-text/H5
-                ui-text/H6]
-               (fn [Component i]
-                 (return
-                  [:% n/View
-                   {:key i
-                    :style {:padding 10}}
-                   [:% Component
-                    {:design #{type color}
-                     :designOverride {:variant {:fg {:key "error"}}}}
-                    "HELLO"]])))]]))))
+        (. [ui-text/H1
+            ui-text/H2
+            ui-text/H3
+            ui-text/H4
+            ui-text/H5
+            ui-text/H6]
+           (map (fn [Component i]
+                  (return
+                   [:% n/View
+                    {:key i
+                     :style {:padding 10}}
+                    [:% Component
+                     {:design #{type color}
+                      :designOverride {:variant {:fg {:key "error"}}}}
+                     "HELLO"]]))))]]))))
 
 ^{:refer melbourne.ui-text/createTextFn :added "0.1"}
 (fact "seed function for the text"
@@ -263,32 +263,32 @@
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (xtd/arr-map [ui-text/P
-                ui-text/Caption]
-               (fn [Component i]
-                 (return
-                  [:% n/View
-                   {:key i
-                    :style {:padding 10}}
-                   [:% Component
-                    {:design #{type color}}
-                    "HELLO"]])))]
+        (. [ui-text/P
+            ui-text/Caption]
+           (map (fn [Component i]
+                  (return
+                   [:% n/View
+                    {:key i
+                     :style {:padding 10}}
+                    [:% Component
+                     {:design #{type color}}
+                     "HELLO"]]))))]
        [:% n/View
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (xtd/arr-map [ui-text/P
-                ui-text/Caption]
-               (fn [Component i]
-                 (return
-                  [:% n/View
-                   {:key i
-                    :style {:padding 10}}
-                   [:% Component
-                    {:design #{type color}
-                     :variant {:fg {:key "background"}
-                               :bg {:key "primary"}}}
-                    "HELLO"]])))]]))))
+        (. [ui-text/P
+            ui-text/Caption]
+           (map (fn [Component i]
+                  (return
+                   [:% n/View
+                    {:key i
+                     :style {:padding 10}}
+                    [:% Component
+                     {:design #{type color}
+                      :variant {:fg {:key "background"}
+                                :bg {:key "primary"}}}
+                     "HELLO"]]))))]]))))
 
 ^{:refer melbourne.ui-text/ActivityIndicator :added "0.1"}
 (fact "creates an activity indicator"
@@ -434,29 +434,28 @@
         :value foil
         :setValue setFoil}] 
 [:% n/Row
-       (xtd/arr-map
-        overrides
-        (fn [override i]
-          (return
-           [:% n/View
-            {:key i
-             :style {:backgroundColor (base-palette/getColorRaw
-                                       palette
-                                       (or foil "background"))}}
-            (xtd/arr-map components
-                   (fn [Component i]
-                     (return
-                      [:% n/View
-                       {:key i
-                        :style {:padding 10}}
-                       [:% Component
-                        {:design #{type color}
-                         :variant override
-                         :selected selected
-                         :onPress
-                         (fn:> (setSelected
-                                (not selected)))
-                         :text "HELLO"}]])))])))]))))
+       (. overrides
+          (map (fn [override i]
+                 (return
+                  [:% n/View
+                   {:key i
+                    :style {:backgroundColor (base-palette/getColorRaw
+                                              palette
+                                              (or foil "background"))}}
+                   (. components
+                      (map (fn [Component i]
+                             (return
+                              [:% n/View
+                               {:key i
+                                :style {:padding 10}}
+                               [:% Component
+                                {:design #{type color}
+                                 :variant override
+                                 :selected selected
+                                 :onPress
+                                 (fn:> (setSelected
+                                        (not selected)))
+                                 :text "HELLO"}]]))))]))))]))))
 
 ^{:refer melbourne.ui-text/accentButtonTheme :added "0.1"}
 (fact "creates the accent button theme")
@@ -516,29 +515,28 @@
         :value foil
         :setValue setFoil}] 
 [:% n/Row
-       (xtd/arr-map
-        overrides
-        (fn [override i]
-          (return
-           [:% n/View
-            {:key i
-             :style {:backgroundColor (base-palette/getColorRaw
-                                       palette
-                                       (or foil "background"))}}
-            (xtd/arr-map components
-                   (fn [Component i]
-                     (return
-                      [:% n/View
-                       {:key i
-                        :style {:padding 10}}
-                       [:% Component
-                        {:design #{type color}
-                         :variant override
-                         :selected selected
-                         :onPress
-                         (fn:> (setSelected
-                                (not selected)))
-                         :text "HELLO"}]])))])))]))))
+       (. overrides
+          (map (fn [override i]
+                 (return
+                  [:% n/View
+                   {:key i
+                    :style {:backgroundColor (base-palette/getColorRaw
+                                              palette
+                                              (or foil "background"))}}
+                   (. components
+                      (map (fn [Component i]
+                             (return
+                              [:% n/View
+                               {:key i
+                                :style {:padding 10}}
+                               [:% Component
+                                {:design #{type color}
+                                 :variant override
+                                 :selected selected
+                                 :onPress
+                                 (fn:> (setSelected
+                                        (not selected)))
+                                 :text "HELLO"}]]))))]))))]))))
 
 ^{:refer melbourne.ui-text/ButtonTooltipOverlay :added "4.0"}
 (fact "creates a button overlay")
