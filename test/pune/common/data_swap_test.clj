@@ -6,7 +6,7 @@
 (l/script- :js
   {:runtime :basic
    :require [[pune.common.data-swap :as ut-swap]
-             [xt.lang.spec-base :as xt]]}) 
+             [xt.lang.spec-base :as xt]]})
 
 (fact:global
  {:setup    [(l/rt:restart)]

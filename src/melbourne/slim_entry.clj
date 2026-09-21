@@ -468,7 +468,7 @@
                         #{field fieldProps}
                         {:className (+ "field-" field)}
                         iprops
-                        (xtd/get-in props ["custom" key])))  
+                        (xtd/get-in props ["custom" key])))
   (return
    (r/% FieldComponent aprops)))
 
