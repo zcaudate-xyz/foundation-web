@@ -8,7 +8,6 @@
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [xt.lang.spec-base :as xt]
-             [xt.lang.common-string :as xts]
              [xt.lang.common-string :as text]
              [js.react-native.ui-tooltip :as ui-tooltip]
              [melbourne.base-palette :as base-palette]
@@ -92,7 +91,7 @@
                  :fontWeight "900"
                  :fontSize 12.5
                  :borderRadius 1}
-         :format (fn:> [s] (xts/capitalize (text/tag-string s)))
+         :format (fn:> [s] (text/capitalize (text/tag-string s)))
          :transformations {:bg nil}
          :data data
          (:.. rprops)]}]
@@ -201,4 +200,3 @@
        (r/% -/TopMenuList listProps)}})))
 
 (def.js MODULE (!:module))
-
