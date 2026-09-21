@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-math :as xtm]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [melbourne.slim :as slim]
@@ -94,7 +94,7 @@
                                               nil
                                               "yes"
                                               steps))
-  (var amountMax (j/max (:.. (xtd/arr-map (. offers buy) xtd/second))
+  (var amountMax (xtm/max (:.. (xtd/arr-map (. offers buy) xtd/second))
                         (:.. (xtd/arr-map (. offers sell) xtd/second))))
   (var lineFn
        (fn [side]
@@ -119,7 +119,7 @@
               :flex 1
               :flexDirection "column-reverse"
               :overflow "hidden"}}
-     (j/map (j/reverse [(:.. (. offers buy))])
+     (xtd/arr-map (xtd/arr-reverse [(:.. (. offers buy))])
             (lineFn "ask"))]
     [:% ui-section/SectionSeparator
      {:design design
@@ -132,7 +132,7 @@
               :flex 1
               :flexDirection "column"
               :overflow "hidden"}}
-     (j/map (. offers sell)
+     (xtd/arr-map (. offers sell)
             (lineFn "bid"))]]))
 
 (def.js MODULE (!:module))

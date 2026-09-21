@@ -11,7 +11,7 @@
               :emit {:native {:suppress true}
                      :lang/jsx false}
               :notify {:type :webpage :path "dev/notify"}}
-     :require [[js.core :as j]
+     :require [
                [js.core.style :as css]
                [js.react :as r]
                [js.react-native :as n :include [:fn]]
@@ -37,14 +37,14 @@
            (var #{item index} e)
            (return
             [:% n/Row
-             (j/map columns
+             (xtd/arr-map columns
                     (fn:> [#{key}]
                       [:% n/Text
                        {:style {:width 80}}
                        (+ "" (. item [key]))]))])))
     (return [:% n/View
              [:% n/Row
-              (j/map columns
+              (xtd/arr-map columns
                      (fn:> [#{title}]
                        [:% n/Text
                         {:style {:width 80}}

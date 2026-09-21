@@ -12,7 +12,7 @@
    :require [[xt.lang.spec-base :as xt]
              [xt.lang.common-data :as xtd]
              [xt.event.base-log :as event-log]
-             [js.core :as j]
+             
              [js.cell :as cl]
              [js.react.ext-box :as ext-box]
              [js.react.ext-log :as ext-log]
@@ -199,11 +199,11 @@
                  :targetFn
                  (fn [model modelKey parents cell]
                    (var #{output input} (or (cl/get-view
-                                             [(:.. (j/arrayify parents))
+                                             [(:.. (xtd/arrayify parents))
                                               modelKey]
                                              cell)
                                             {}))
-                   (return (j/assign #{input} output)))
+                   (return (Object.assign #{input} output)))
                  :displayFn -/displayInfo}]
        (:.. rprops)]}]))
 

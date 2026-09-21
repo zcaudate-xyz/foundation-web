@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react.ext-form :as ext-form]
@@ -33,7 +33,7 @@
       data
       minWidth]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "picker"
+                                          (Object.assign {:slim/type "picker"
                                                      :fn/type   "field"}
                                                     meta)))
   (var setValue (r/const (fn [v]
@@ -80,7 +80,7 @@
       data
       minWidth]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "picker"
+                                          (Object.assign {:slim/type "picker"
                                                      :fn/type   "field"}
                                                     meta)))
   (var setValue (r/const (fn [v]
@@ -131,7 +131,7 @@
       setActive]}]
   (var #{value result} (ext-form/listenField
                         form field
-                        (j/assign {:slim/type "dropdown"
+                        (Object.assign {:slim/type "dropdown"
                                    :fn/type   "field"}
                                   meta)))
   (var setValue (r/const (fn [v]

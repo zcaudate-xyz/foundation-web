@@ -11,7 +11,7 @@
             :notify {:type :webpage :path "dev/notify"}}
    :require [[js.react-native :as n :include [:fn :svg]]
              [js.react :as r :include [:fn]]
-             [js.core :as j]
+             [xt.lang.common-math :as xtm]
              [melbourne.base-palette :as base-palette]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-data :as xtd]]
@@ -24,13 +24,13 @@
   (var out [])
   (var maxX (- (xt/x:len values) 1))
   (var maxY (+ (or maxValue
-                   (j/max (:.. values)))
+                   (xtm/max (:.. values)))
                2))
   (var minY (- (or minValue
-                   (j/min (:.. values)))
+                   (xtm/min (:.. values)))
                2))
   (xt/for:array [[i v] values]
-    (xt/x:arr-push out (xt/x:cat (j/round (/ (* width i)
+    (xt/x:arr-push out (xt/x:cat (xtm/round (/ (* width i)
                                        maxX))
                            ","
                            (- height
@@ -53,21 +53,21 @@
                        maxValue
                        minValue))
   (var palette  (base-palette/designPalette design))
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:fg {:key "primary"}}
                   variant))
   (return
    [:% n/Svg
     {:height height
      :width width
-     :style (j/assign
+     :style (Object.assign
              {:backgroundColor (:? (. __variant bg)
                                    (base-palette/getColor
                                     palette
                                     (. __variant bg)))}
              style)}
     (r/% n/Path
-         (j/assign
+         (Object.assign
           {:d path
            :fill "none"
            :stroke (base-palette/getColor

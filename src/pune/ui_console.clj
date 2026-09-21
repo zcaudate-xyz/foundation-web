@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-data :as xtd]
@@ -37,7 +37,7 @@
    [:% ui-static/Div
     {:design design
      :style [{:flex 1}
-             (:.. (j/arrayify style))]}
+             (:.. (xtd/arrayify style))]}
     [:% ui-static/Div
      {:design design
       :style {:flexDirection "row"}

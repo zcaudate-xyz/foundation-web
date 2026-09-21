@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react-native :as n :include [:fn]]
              [melbourne.base-palette :as base-palette]
              [melbourne.ui-button :as ui-button]
@@ -57,7 +57,7 @@
   
   (defn.js styleInputLabel
     [#{mainNeutral} m]
-    (return (j/assign {:fontFamily "Helvetica"
+    (return (Object.assign {:fontFamily "Helvetica"
                        :fontSize 12
                        :fontWeight "800"
                        :padding 8

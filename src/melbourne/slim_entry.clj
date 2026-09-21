@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-util :as ui-util]
@@ -49,7 +49,7 @@
   (var #{[component
           (:.. rimpl)]} impl)
   (return
-   (r/% component (j/assign rprops
+   (r/% component (Object.assign rprops
                             rimpl
                             {:impl rimpl}))))
 
@@ -62,7 +62,7 @@
          impl} props)
   (return
    (r/% ui-static/Text
-        (j/assign
+        (Object.assign
          #{design
            {:style {:margin 10}}}
          impl)
@@ -108,7 +108,7 @@
   (return
    (r/% (or component
             defaultComponent)
-        (j/assign rprops
+        (Object.assign rprops
                   #{[:style [{:marginVertical 2}
                              defaultStyle
                              style]
@@ -137,7 +137,7 @@
       (:.. rprops)]}]
   (var #{[body
           (:.. iprops)]} impl)
-  (return (r/% slim-common/FormEnclosed (j/assign rprops iprops)
+  (return (r/% slim-common/FormEnclosed (Object.assign rprops iprops)
                [:% n/Row
                 {:style {:flexDirection "row-reverse"}}
                 body])))
@@ -150,7 +150,7 @@
   (var #{[body
           (:.. iprops)]} impl)
   (return (r/% n/Portal
-               (j/assign rprops iprops)
+               (Object.assign rprops iprops)
                body)))
 
 (defn.js EntryLayoutPortalSink
@@ -161,7 +161,7 @@
   (var #{[body
           (:.. iprops)]} impl)
   (return (r/% n/PortalSink
-               (j/assign rprops iprops)
+               (Object.assign rprops iprops)
                body)))
 
 (defn.js EntryLayoutScroll
@@ -172,7 +172,7 @@
   (var #{[body
           (:.. iprops)]} impl)
   (return (r/% ui-static/ScrollView
-               (j/assign rprops iprops)
+               (Object.assign rprops iprops)
                body)))
 
 (defn.js EntryLayoutPopup
@@ -183,7 +183,7 @@
   (var #{[style
           (:.. iprops)]} impl)
   (return (r/% ui-text/ButtonTooltip
-               (j/assign rprops
+               (Object.assign rprops
                          iprops
                          {:style [{:padding 5}
                                   (:.. (xtd/arrayify style))]}))))
@@ -197,7 +197,7 @@
   (var #{[body
           (:.. iprops)]} impl)
   (return (r/% ui-text/TextAlt
-               (j/assign rprops iprops
+               (Object.assign rprops iprops
                          {:value entry})
                body)))
 
@@ -209,7 +209,7 @@
   (var #{[body
           (:.. iprops)]} impl)
   (return (r/% ui-util/FadeIn
-               (j/assign rprops iprops)
+               (Object.assign rprops iprops)
                body)))
 
 (defn.js EntryContentSeparator
@@ -229,7 +229,7 @@
    [:% n/View
     {:style {:marginHorizontal (:? header 0 5)}}
     (r/% ui-static/Separator
-         (j/assign rprops
+         (Object.assign rprops
                    iprops
                    #{variant}
                    (xtd/get-in props ["custom" key])))]))
@@ -258,14 +258,14 @@
   (when (and (not (r/isValidElement children))
              (not (xtl/is-string? children)))
     (:= children (xt/x:json-encode children)))
-  (var oprops (j/assign rprops
+  (var oprops (Object.assign rprops
                         #{entry}
                         iprops
                         (xtd/get-in props ["custom" key])))
   (return
    (r/% (or component
             defaultComponent)
-        (j/assign oprops #{design variant style})
+        (Object.assign oprops #{design variant style})
         children)))
 
 (defn.js EntryContentTitleH1
@@ -333,7 +333,7 @@
   (var name (format (xtd/template-entry entry template props)))
   (return
    (r/% ui-text/Icon
-        (j/assignNew
+        (Object.assign {}
          props
          iprops
          #{name}
@@ -365,7 +365,7 @@
                       (xtd/template-entry entry (. image template) props)))
   (return
    (r/% ui-text/Avatar
-        (j/assignNew
+        (Object.assign {}
          props
          {:color  (xtl/not-nil? color)
           :text   (:? textInput (format textInput))
@@ -403,8 +403,8 @@
               :marginRight 5}}
      (:? title
          (r/% -/EntryContentTitle
-              (j/assignNew props
-                           {:impl (j/assign
+              (Object.assign {} props
+                           {:impl (Object.assign
                                    {:variant {:fg {:key "neutral"}}}
                                    title)})))]
     (:? (xtd/not-empty? body)
@@ -412,7 +412,7 @@
         
         text
         (r/% -/EntryContentParagraph
-             (j/assignNew props {:impl text}))
+             (Object.assign {} props {:impl text}))
 
         :else nil)]))
 
@@ -464,7 +464,7 @@
                               slim-common/FormInput)))
   (when (xtl/is-function? fieldProps)
     (:= fieldProps (fieldProps props)))
-  (var aprops (j/assign rprops
+  (var aprops (Object.assign rprops
                         #{field fieldProps}
                         {:className (+ "field-" field)}
                         iprops
@@ -484,7 +484,7 @@
           (:.. iprops)]} impl)
   (var #{data} (ext-form/listenFieldsData form watch))
   (return (r/% ui-util/Fade
-               (j/assign iprops
+               (Object.assign iprops
                          {:visible (xtd/template-entry data template props)})
                body)))
 
@@ -500,7 +500,7 @@
           (:.. iprops)]} impl)
   (var #{data} (ext-form/listenFieldsData form watch))
   (return (r/% ui-util/Fold
-               (j/assign iprops
+               (Object.assign iprops
                          {:visible (xtd/template-entry data template props)})
                [:% n/View body])))
 
@@ -633,7 +633,7 @@
                   (. props (setVisible false)))))
   (return
    (r/% ControlComponent
-        (j/assign rprops
+        (Object.assign rprops
                   {:style [{:width nil
                             :padding 5}
                            base-font/fontP] 
@@ -652,7 +652,7 @@
           (:.. iprops)]} impl)
   (var onSubmit (-/entryOnControl control submit entry props))
   (return (r/% n/TouchableOpacity
-               (j/assign iprops {:onPress onSubmit})
+               (Object.assign iprops {:onPress onSubmit})
                body)))
 
 (defn.js EntryContentLink
@@ -680,7 +680,7 @@
          (event-route/set-url route url true)))
   (return
    (r/% ControlComponent
-        (j/assign rprops
+        (Object.assign rprops
                   {:style [{:width nil
                             :padding 5}
                            base-font/fontP] 
@@ -704,7 +704,7 @@
        (fn []
          (event-route/set-url route url true)))
   (return (r/% n/TouchableOpacity
-               (j/assign iprops {:onPress onPress})
+               (Object.assign iprops {:onPress onPress})
                body)))
 
 (defn.js EntryContentRoute
@@ -737,7 +737,7 @@
                                     component))
           (return
            (r/% ControlComponent
-                (j/assign rprops
+                (Object.assign rprops
                           {:style [{:width nil
                                     :padding 5}] 
                            :value route
@@ -748,7 +748,7 @@
         :else
         (return
          (r/% ui-dropdown/Dropdown
-              (j/assign rprops
+              (Object.assign rprops
                         {:style [{:width 130
                                   :padding 7}]
                          :styleMenuItem {:width 150}
@@ -786,7 +786,7 @@
                             component))
   (return
    (r/% ControlComponent
-        (j/assign rprops
+        (Object.assign rprops
                   {:style [{:width nil
                             :padding 5}] 
                    :selected (== route valueOn)
@@ -832,7 +832,7 @@
   (var sprops (or (xtd/get-in props ["custom" submit])
                   {}))
   (var submitProps (r/useSubmitResult
-                    (j/assign #{onSubmit
+                    (Object.assign #{onSubmit
                                 onError
                                 onSuccess}
                               sprops)))
@@ -853,7 +853,7 @@
                                    "accent")
                                ui-text/ButtonAccent
                                ui-text/ButtonMinor)))
-  (var output (j/assign rprops
+  (var output (Object.assign rprops
                         {:style [{:width nil
                                   :padding 5}
                                  base-font/fontP
@@ -912,7 +912,7 @@
                        slim-submit/useSubmitForm))
   
   (var submitProps (useSubmit
-                    (j/assign #{field
+                    (Object.assign #{field
                                 form
                                 onSubmit
                                 onSuccess
@@ -931,7 +931,7 @@
                                   (xtd/obj-pick (or entry {}) submitModify))
                      (xtt/eq-nested (. form data)
                                   entry))))
-  (var nprops (j/assign rprops
+  (var nprops (Object.assign rprops
                         #{form disabled}
                         iprops
                         fprops
@@ -1099,7 +1099,7 @@
                       (cond (and (xtl/is-object? e)
                                  (or (== (. e type) "action")
                                      (== (. e type) "control")))
-                            (return (j/assign {:popup true}
+                            (return (Object.assign {:popup true}
                                               e))
                             
                             :else (return e)))))
@@ -1107,14 +1107,14 @@
        (r/const
         (fn [mprops]
           (var entryFn (fn [impl i]
-                         (return (compileFn (j/assignNew mprops
+                         (return (compileFn (Object.assign {} mprops
                                                          {:key (or (. impl key)
                                                                    i)}
                                                          #{impl})))))
           (return [:% n/View
-                   (j/map (or body []) entryFn)]))))
+                   (xtd/arr-map (or body []) entryFn)]))))
   (return
-   (r/% -/EntryLayoutPopup (j/assign #{mainComponent} props))))
+   (r/% -/EntryLayoutPopup (Object.assign #{mainComponent} props))))
 
 (defn.js compileEntry
   "compiles the entry"
@@ -1155,7 +1155,7 @@
                        (return true))))
   
   (var entryFn (fn:> [impl i]
-                 (-/compileEntry (j/assignNew eprops
+                 (-/compileEntry (Object.assign {} eprops
                                               {:key (or (. impl key)
                                                         i)}
                                               #{impl}))))
@@ -1163,7 +1163,7 @@
         (do (var aliasComponent (or (. components [(. impl alias)])
                                     EntryComponent))
             (return
-             (r/% aliasComponent (j/assign {:impl (. display [(. impl alias)])}
+             (r/% aliasComponent (Object.assign {:impl (. display [(. impl alias)])}
                                            eprops))))
 
         isPopup
@@ -1172,8 +1172,8 @@
         isLayout
         (do  (var body (:? (xtl/is-array? (. impl body))
                            (-> (. impl body)
-                               (j/filter showFn)
-                               (j/map entryFn))
+                               (xtd/arr-filter showFn)
+                               (xtd/arr-map entryFn))
                            
                            (xtl/is-object? (. impl body))
                            (-> (. impl body)
@@ -1181,13 +1181,13 @@
                                (xtd/obj-map entryFn))
                            
                            :else []))
-             (return (r/% component (j/assign {:key key
-                                               :impl (j/assignNew impl #{body})}
+             (return (r/% component (Object.assign {:key key
+                                               :impl (Object.assign {} impl #{body})}
                                            eprops))))
         
         :else
         (do 
-          (var oprops (j/assign #{impl
+          (var oprops (Object.assign #{impl
                                   key
                                   {:views (. props views)}}
                                 eprops))

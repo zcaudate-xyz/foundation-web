@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-static :as ui-static]

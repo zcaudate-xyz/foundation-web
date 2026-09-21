@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [melbourne.base-palette :as base-palette]]
    :export [MODULE]})
 
@@ -92,7 +92,7 @@
   {:added "4.0"}
   [palette variant]
   (return
-   (j/assign
+   (Object.assign
     (-/themeNormal palette variant)
     (-/themePressed palette variant)
     (-/themeHovered palette variant)
@@ -103,7 +103,7 @@
   {:added "4.0"}
   [palette variant]
   (return
-   (j/assign
+   (Object.assign
     (-/themeNormal palette variant)
     (-/themePressed palette variant)
     (-/themeHovered palette variant)
@@ -115,7 +115,7 @@
   {:added "4.0"}
   [palette variant]
   (return
-   (j/assign
+   (Object.assign
     (-/themeUiState palette variant)
     (-/themeHighlighted palette variant))))
 

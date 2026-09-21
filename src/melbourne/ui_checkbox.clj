@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n]
              [js.react-native.ui-check-box :as ui-check-box]
@@ -50,7 +50,7 @@
         variant))
   (var __style (base-font/getFontStyle (or (. __variant font)
                                              "h6")))
-  (var __theme  (j/assign (base-theme/themeUiInput
+  (var __theme  (Object.assign (base-theme/themeUiInput
                            (base-palette/designPalette design)
                            __variant)
                           theme))
@@ -60,7 +60,7 @@
        :style [{:paddingHorizontal 3
                 }
                __style
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        (:.. rprops)]}]))
 
 (defn.js CheckGroupIndexed
@@ -93,7 +93,7 @@
                        :selected (. indices [i])
                        :onPress (fn []
                                   (var changed
-                                       (j/map indices
+                                       (xtd/arr-map indices
                                               (fn [e ei]
                                                 (return (:? (== ei i) (not e) e)))))
                                   (setIndices changed)
@@ -111,7 +111,7 @@
                     (format value i)]])))
    (return [:% n/View
             {:style styleContainer}
-            (j/map items itemFn)])))
+            (xtd/arr-map items itemFn)])))
 
 (defn.js CheckGroup
   "creates a group of check boxes"

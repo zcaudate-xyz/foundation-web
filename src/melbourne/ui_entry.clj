@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-text :as ui-text]
@@ -31,7 +31,7 @@
         (return entry)
         
         :else
-        (return (xtd/get-in entry (j/arrayify getter)))))
+        (return (xtd/get-in entry (xtd/arrayify getter)))))
 
 ;;
 ;; Entry Row
@@ -51,7 +51,7 @@
   (var #{[name]} column)
   (return
    (r/% ui-text/H6
-        (j/assign
+        (Object.assign
          #{design
            {:style [{:flex 1}
                     (:.. (xtd/arrayify style))]}}
@@ -82,7 +82,7 @@
                                     {}))
          (return
           (r/% Component
-               (j/assign
+               (Object.assign
                 #{[design
                    variant
                    impl
@@ -100,7 +100,7 @@
                 :margin 5
                 :maxWidth 500}
                (:.. (xtd/arrayify style))]]}
-    (j/map columns columnFn)]))
+    (xtd/arr-map columns columnFn)]))
 
 ;;
 ;; Entry Row
@@ -118,7 +118,7 @@
   (var text (-/get-entry-data entry (. column data)))
   (return
    (r/% ui-text/P
-        (j/assignNew
+        (Object.assign {}
          props
          {:style [{:flex 1}
                   (:.. (xtd/arrayify style))]})
@@ -145,7 +145,7 @@
                             -/EntryRowText))
          (return
           (r/% Component
-               (j/assign
+               (Object.assign
                 #{[design
                    entry
                    :style [(:.. (xtd/arrayify (. header style)))
@@ -164,7 +164,7 @@
               :justifyContent "space-between"
               :maxWidth 500}
              (:.. (xtd/arrayify style))]}
-    (j/map columns columnFn)]))
+    (xtd/arr-map columns columnFn)]))
 
 ;;
 ;; Entry Card
@@ -216,13 +216,13 @@
          styleText} props)
   (var #{[(:= format xtl/identity)
           name]} column)
-  (var titleProps (j/assignNew
+  (var titleProps (Object.assign {}
                    props
                    #{design {:style [{:fontWeight "500"}
                                      (:.. (xtd/arrayify styleTitle))]}}))
   
   (var text (-/get-entry-data entry (. column data)))
-  (var textProps  (j/assignNew
+  (var textProps  (Object.assign {}
                    props
                    #{design {:style [{:marginLeft 10}
                                      (:.. (xtd/arrayify styleText))]}}))
@@ -244,11 +244,11 @@
     #{design
       {:style [{:marginRight 20}
                (. group style)]}}
-    (j/map (. group columns)
+    (xtd/arr-map (. group columns)
            (fn [column]
              (return
               (r/% -/EntryCardBodyPair
-                   (j/assign #{{:key (. column name)}
+                   (Object.assign #{{:key (. column name)}
                                design
                                entry
                                column}
@@ -266,7 +266,7 @@
         (return
          [:% n/Row
           (-> section 
-              (j/map (fn:> [group i]
+              (xtd/arr-map (fn:> [group i]
                        [:% -/EntryCardBodyGroup
                         #{design
                           entry
@@ -278,7 +278,7 @@
             (var text (-/get-entry-data entry (. section data)))
             (return
              (r/% ui-text/P
-                  (j/assignNew
+                  (Object.assign {}
                    props
                    #{design
                      {:style [{:flex 1}
@@ -307,7 +307,7 @@
                             defaultComponent))
          (return
           (r/% Component
-               (j/assign
+               (Object.assign
                 #{[design
                    entry
                    section]}
@@ -374,7 +374,7 @@
      [:% n/View
       {:style {:flex 1
                :margin 10}}
-      (j/map entries
+      (xtd/arr-map entries
              (fn:> [entry]
                [:% -/EntryRow
                 #{design entry

@@ -12,7 +12,7 @@
              [js.react-native.ui-util :as ui-util]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
-             [js.core :as j]
+             [xt.lang.common-string :as xts]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-lib :as xtl]
              [xt.lang.common-data :as xtd]]
@@ -85,7 +85,7 @@
 
 (defn.js format-address-string
   [s len]
-  (return (+ "0x" (j/substring s 2 (or len 20)) "...")))
+  (return (+ "0x" (xts/substring s 2 (or len 20)) "...")))
 
 (defn.js format-chain-id
   [n]
@@ -110,7 +110,7 @@
   (return [:% Consumer
            (fn [provider]
              (return
-              (r/% component (j/assign rprops
+              (r/% component (Object.assign rprops
                                        #{provider}))))]))
 
 (defn.js MetamaskEnsureInstall
@@ -154,7 +154,7 @@
                  (fn [arr]
                    (var accounts (xtd/arr-juxt (or arr [])
                                              (fn [s]
-                                               (return (+ "0x" (j/toUpperCase (j/substring s 2)))))
+                                               (return (+ "0x" (xts/to-uppercase (xts/substring s 2)))))
                                              xtl/T))
                    (setAccounts accounts)
                    (when onChange (onChange accounts)))))
@@ -235,7 +235,7 @@
      (fn []
        (-/removeListener "chainChanged" setId))))
   (return
-   (:? (== chainId (j/toString id))
+   (:? (== chainId (xtl/to-string id))
        (or children [:% n/View])
        [:% ui-util/Fade
         {:visible visible}
@@ -263,7 +263,7 @@
    (:? (xtd/is-empty? accounts)
        (:? fallbackLink
            (r/% fallbackLink
-                (j/assign #{design} fallbackProps))
+                (Object.assign #{design} fallbackProps))
            [:% n/Row
             [:% ui-text/ButtonAccent
              {:design design
@@ -276,7 +276,7 @@
        :else
        (:? fallback
            (r/% fallback
-                (j/assign #{design accounts} fallbackProps))
+                (Object.assign #{design accounts} fallbackProps))
            [:% ui-util/FadeIn
             [:% n/View
              {:style {:justifyContent "center"

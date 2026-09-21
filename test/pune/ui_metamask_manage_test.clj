@@ -19,7 +19,7 @@
              [xt.lang.common-repl :as repl]
              [js.lib.eth-lib :as eth-lib :include [:fn]]
              [js.lib.eth-bench :as eth-bench]
-             [js.core :as j]]})
+             ]})
 
 (fact:global
  {:setup    [(env/stop-ganache-server)

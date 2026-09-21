@@ -15,7 +15,7 @@
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.slim-link :as slim-link]
-             [js.core :as j]
+             [xt.lang.common-string :as xts]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-data :as xtd]
              [xt.event.base-model :as event-view]]
@@ -53,7 +53,7 @@
         :style {:height 200}} 
        [:% n/Row
         (r/% slim-link/FormLinkDropdown
-             (j/assign #{form views}
+             (Object.assign #{form views}
                        {:design {:type "light"}
                         :label "Account",
                         :field "account_id",
@@ -91,7 +91,7 @@
 {:label "melbourne.slim-link/FormLinkReadOnly"} 
 [:% n/Row
        (r/% slim-link/FormLinkReadOnly
-            (j/assign #{form views entry}
+            (Object.assign #{form views entry}
                       {:design {:type "light"}
                        :label "Account",
                        :field "account_id",
@@ -130,7 +130,7 @@
 {:label "melbourne.slim-link/FormLinkEntryReadOnly"} 
 [:% n/Row
        (r/% slim-link/FormLinkEntryReadOnly
-            (j/assign #{form views entry}
+            (Object.assign #{form views entry}
                       {:design {:type "light"}
                        :label "Account",
                        :field "account_id",
@@ -183,7 +183,7 @@
                                                  :template "B"}
                                                 {:template ["balance"]
                                                  :style {:marginLeft 10}
-                                                 #_#_:format (fn:> [n] (j/toFixed n 2))}]}
+                                                 #_#_:format (fn:> [n] (xts/to-fixed n 2))}]}
                                         {:type "h"
                                          :body [{:type "title"
                                                  :template "E"}
@@ -196,7 +196,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   {:impl impl})))))
     (var [example setExample] (r/local "A"))
@@ -265,9 +265,9 @@
           {:title "R"
            :onPress (fn:> (ext-view/refresh-args
                            view
-                           [(j/random)
-                            (j/random)
-                            (j/random)]))}]
+                           [(xt/x:random)
+                            (xt/x:random)
+                            (xt/x:random)]))}]
          [:% n/Text " "]
          [:% n/Button
           {:title "D"
@@ -287,5 +287,5 @@
     (def +++
       (h/suppress
        (!.js
-        (j/assign test.web-00-rn.main/I09_RAW
+        (Object.assign test.web-00-rn.main/I09_RAW
                   (component.web-native/raw-controls)))))))

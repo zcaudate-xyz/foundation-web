@@ -4,7 +4,8 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-math :as xtm]
+             [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [js.react-native.animate :as a]
@@ -30,7 +31,7 @@
          (var [pos vol] pair)
          (return [(base-market/position-to-rate prediction allotment pos)
                   vol])))
-  (var #{ask bid} (j/assign {:ask []
+  (var #{ask bid} (Object.assign {:ask []
                              :bid []}
                             market))
   (var [buy sell] (:? (== prediction "yes")
@@ -58,7 +59,7 @@
   (r/watch [amount]
     (when (not= prev amount)
       (setChanged true)
-      (j/setTimeout (fn []
+      (setTimeout (fn []
                       (setChanged false))
                     600)))
   (return
@@ -104,12 +105,12 @@
      {:design design
       :variant {:font "h6"}
       :style {:width 50}}
-     (j/toFixed (* rate fraction) decimal)]
+     (xts/to-fixed (* rate fraction) decimal)]
     [:% n/View
      {:style {:flex 1}}
      [:% n/Row
       {:style {:flexWrap "wrap"}}
-      (j/map priority
+      (xtd/arr-map priority
              (fn [[order-id amount]]
                (return
                 [:% -/MarketLiveOrder
@@ -135,7 +136,7 @@
           rate
           setRate]} control)
   (var lookup   (xtd/arr-juxt published xtd/id-fn xtl/identity))
-  (var fraction (j/pow 10 (- decimal)))
+  (var fraction (xtm/pow 10 (- decimal)))
   (var priorities    (-/live-priority-rate market
                                            allotment
                                            prediction))
@@ -158,7 +159,7 @@
     [:% n/View
      {:style {:minHeight 60
               :flexDirection "column-reverse"}}
-     (j/map (j/reverse [(:.. (. priorities buy))])
+     (xtd/arr-map (xtd/arr-reverse [(:.. (. priorities buy))])
             lineFn)]
     [:% ui-section/SectionSeparator
      {:design design
@@ -167,7 +168,7 @@
     [:% n/View
      {:style {:minHeight 60
               :flexDirection "column"}}
-     (j/map (. priorities sell)
+     (xtd/arr-map (. priorities sell)
             lineFn)]]))
 
 (def.js MODULE (!:module))

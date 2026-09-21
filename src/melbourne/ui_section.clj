@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react-native :as n :include [:fn]]
              [js.react-native.ui-util :as ui-util]
              [melbourne.ui-static :as ui-static]
@@ -51,13 +51,13 @@
   (return
    [:% ui-static/Div
     {:design design
-     :variant (j/assign
+     :variant (Object.assign
                {}
                #_{:bg {:key "background"
                      :tone "augment"}}
                variant)
      :style [-/styleSection
-             (:.. (j/arrayify style))
+             (:.. (xtd/arrayify style))
              (:? mini {:padding 4})]}
     [:% n/Row
      {:style {:marginBottom 5
@@ -66,7 +66,7 @@
      [:% Text
       #{design
         {:style [{:fontFamily "impact"}
-                 (:.. (j/arrayify styleTitle))]
+                 (:.. (xtd/arrayify styleTitle))]
          :variant {:fg {:key "neutral"
                         }}
          :children title}}]
@@ -82,7 +82,7 @@
   (return
    [:% ui-static/Separator
     {:design design
-     :variant (j/assign
+     :variant (Object.assign
                {:fg {:key "background"
                      :mix "neutral"
                      :ratio 1}}

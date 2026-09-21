@@ -8,7 +8,7 @@
 (l/script- :js
   {:runtime :basic
    :require [[pune.common.data-user :as data-user]
-             [js.core :as j]
+             
              [statslink.full.link-local :as link-local]
              [statslink.full.link-remote :as link-remote]
              [statslink.test.setup-node-debug :as setup-debug]

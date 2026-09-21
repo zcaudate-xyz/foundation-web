@@ -14,7 +14,7 @@
              [js.react-native :as n :include [:fn]]
              [statslink.app.model-constant :as mc]
              [pune.web.debug-connection :as debug-connection]
-             [js.core :as j]
+             
              [xt.lang.spec-base :as xt]
              [xt.lang.common-string :as xts]
              ]

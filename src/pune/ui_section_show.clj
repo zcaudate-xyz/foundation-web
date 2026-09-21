@@ -9,7 +9,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [xt.lang.spec-base :as xt]

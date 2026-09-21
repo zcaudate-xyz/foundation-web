@@ -5,7 +5,7 @@
 
 (l/script :js
   {:require [[js.react :as r :include [:fn]]
-             [js.core :as j]
+             [xt.lang.common-math :as xtm]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-lib :as xtl]]
    :export [MODULE]})
@@ -21,7 +21,7 @@
   (return {:disabled (and (xtl/is-number? updated)
                           (< (- t updated)
                              (* delay 1000)))
-           :seconds  (j/max (j/ceil (- delay (/ (- t updated) 1000)))
+           :seconds  (xtm/max (xtm/ceil (- delay (/ (- t updated) 1000)))
                             0)
            :updated  updated}))
 

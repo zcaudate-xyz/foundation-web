@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-data :as xtd]
              [js.react-native.ui-input :as ui-input]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
@@ -22,7 +22,7 @@
       (:.. rprops)]}]
   (var palette (base-palette/designPalette design))
   (var __variant
-       (j/assign
+       (Object.assign
         {:fg   {:key "neutral"}
          :bg   {:key "background"
                 :mix "primary"
@@ -37,7 +37,7 @@
                         :mix "neutral"
                         :ratio 4}}}
         variant))
-  (var __theme  (j/assign (base-theme/themeUiInput
+  (var __theme  (Object.assign (base-theme/themeUiInput
                            palette
                            __variant)
                           theme))
@@ -46,12 +46,12 @@
     #{[:theme __theme
        :selectionColor (. palette mainColor)
        :style [{:fontFamily "Helvetica"}
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        :styleContainer [{:flex 1
                          :borderStyle "solid" 
                          :borderWidth 1
                          :borderColor "black"}
-                        (:.. (j/arrayify styleContainer))]
+                        (:.. (xtd/arrayify styleContainer))]
        (:.. rprops)]}]))
 
 (def.js MODULE (!:module))

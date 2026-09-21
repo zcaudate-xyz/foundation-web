@@ -21,7 +21,7 @@
              [melbourne.ui-input :as ui-input]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
-             [js.core :as j]
+             [xt.lang.common-string :as xts]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-data :as xtd]
              [xt.event.base-route :as event-route]
@@ -55,7 +55,7 @@
                                                  :template "B"}
                                                 {:template ["balance"]
                                                  :style {:marginLeft 10}
-                                                 #_#_:format (fn:> [n] (j/toFixed n 2))}]}
+                                                 #_#_:format (fn:> [n] (xts/to-fixed n 2))}]}
                                         {:type "h"
                                          :body [{:type "title"
                                                  :template "E"}
@@ -68,7 +68,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   {:impl impl})))))
     (var [example setExample] (r/local "A"))

@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.core.style :as css]
              [js.react-native.helper-color :as c]
              [js.react :as r]
@@ -61,7 +61,7 @@
 [:% n/Row
        {:style {:height 350}}
        (r/% market-live/MarketLive
-            (j/assign {:orderFn
+            (Object.assign {:orderFn
                        (fn [orderId orderLookup]
                          (return
                           (. (j/future-delayed [200]

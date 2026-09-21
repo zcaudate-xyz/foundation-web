@@ -6,7 +6,7 @@
   {:require [[xt.lang.spec-base :as xt]
              [xt.lang.common-lib :as xtl]
              [xt.lang.common-data :as xtd]
-             [js.core :as j]
+             
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-toggle-button :as ui-toggle-button]]
@@ -36,13 +36,13 @@
                    #{[:key (+ value "-" i)
                       design variant theme
                       :style [{:marginHorizontal 5}
-                              (:.. (j/arrayify style))]
+                              (:.. (xtd/arrayify style))]
                       :text (format value i)
                       :selected (. indices [i])
                       :outlined (. indices [i])
                       :onPress (fn []
                                  (var changed
-                                      (j/map indices
+                                      (xtd/arr-map indices
                                              (fn [e ei]
                                                (return (:? (== ei i) (not e) e)))))
                                  (setIndices changed)
@@ -51,8 +51,8 @@
                                {}))]}])))
    (return [:% n/Row
             {:style [{:margin 5}
-                     (:.. (j/arrayify styleContainer))]}
-            (j/map items itemFn)])))
+                     (:.. (xtd/arrayify styleContainer))]}
+            (xtd/arr-map items itemFn)])))
 
 (defn.js EnumMulti
   "creates a multi-select horizontal tab bar"
@@ -99,7 +99,7 @@
                    #{[:key (+ value "-" i)
                       design variant theme
                       :style [{:marginHorizontal 5}
-                              (:.. (j/arrayify style))]
+                              (:.. (xtd/arrayify style))]
                       :text (format value i)
                       :selected (== i index)
                       :onPress (fn []
@@ -112,8 +112,8 @@
                                {}))]}])))
    (return [:% n/Row
             {:style [{:margin 5}
-                     (:.. (j/arrayify styleContainer))]}
-            (j/map items itemFn)])))
+                     (:.. (xtd/arrayify styleContainer))]}
+            (xtd/arr-map items itemFn)])))
 
 (defn.js Tabs
   "creates a horizontal tab bar"
@@ -169,7 +169,7 @@
                       :style [{:marginVertical 5
                                :alignItems "center"
                                :justifyContent "center"}
-                              (:.. (j/arrayify style))]
+                              (:.. (xtd/arrayify style))]
                       :selected (== i index)
                       :onPress (fn []
                                  (when (not= i index)

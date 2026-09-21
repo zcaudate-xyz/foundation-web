@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react-native.ui-toggle-switch :as ui-toggle-switch]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
@@ -46,7 +46,7 @@
                   variant))
   (var __style (base-font/getFontStyle (or (. __variant font)
                                            "h6")))
-  (var __theme  (j/assign (base-theme/themeUiState
+  (var __theme  (Object.assign (base-theme/themeUiState
                            (base-palette/designPalette design)
                            __variant)
                           theme))
@@ -56,7 +56,7 @@
        :selected selected
        :style [{:padding 10}
                __style
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        :knobStyle {:width 22
                    :height 22
                    :justifyContent "center"

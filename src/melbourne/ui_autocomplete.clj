@@ -4,7 +4,7 @@
             [std.string :as str]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [js.react.ext-model :as ext-view]

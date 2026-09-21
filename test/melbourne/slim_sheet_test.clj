@@ -13,7 +13,7 @@
    :require [[js.react-native :as n :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react :as r]
-             [js.core :as j]
+             [xt.lang.common-string :as xts]
              [melbourne.ui-static :as ui-static]
              [melbourne.slim-sheet :as slim-sheet]
              [xt.lang.spec-base :as xt]
@@ -108,7 +108,7 @@
          {:design {:type "light"}
           :style {:padding 10}
           :entry entry
-          :impl  {:header  {:format j/toUpperCase}
+          :impl  {:header  {:format xts/to-uppercase}
                   :columns [{:name "title"
                              :template ["currency_id"]}
                             {:name "balance"
@@ -123,7 +123,7 @@
          {:design {:type "dark"}
           :style {:padding 10}
           :entry entry
-          :impl  {:header  {:format j/toUpperCase}
+          :impl  {:header  {:format xts/to-uppercase}
                   :columns [{:name "title"
                              :template ["currency_id"]}
                             {:name "balance"
@@ -152,7 +152,7 @@
          {:design {:type "light"}
           :style {:padding 10}
           :entry entry
-          :impl  {:header  {:format j/toUpperCase}
+          :impl  {:header  {:format xts/to-uppercase}
                   :columns [{:name "title"
                              :template ["currency_id"]}
                             {:name "balance"
@@ -167,7 +167,7 @@
          {:design {:type "dark"}
           :style {:padding 10}
           :entry entry
-          :impl  {:header  {:format j/toUpperCase}
+          :impl  {:header  {:format xts/to-uppercase}
                   :columns [{:name "title"
                              :template ["currency_id"]}
                             {:name "balance"
@@ -201,7 +201,7 @@
                     {"currency_id" "DOGE"
                      :balance 1000
                      :escrow 50.5}]
-          :impl  {:header  {:format j/toUpperCase}
+          :impl  {:header  {:format xts/to-uppercase}
                   :columns [{:name "title"
                              :template ["currency_id"]}
                             {:name "balance"
@@ -221,7 +221,7 @@
                     {"currency_id" "DOGE"
                      :balance 1000
                      :escrow 50.5}]
-          :impl  {:header  {:format j/toUpperCase}
+          :impl  {:header  {:format xts/to-uppercase}
                   :columns [{:name "title"
                              :template ["currency_id"]}
                             {:name "balance"
@@ -255,7 +255,7 @@
                     {"currency_id" "DOGE"
                      :balance 1000
                      :escrow 50.5}]
-          :impl  {:header  {:format j/toUpperCase}
+          :impl  {:header  {:format xts/to-uppercase}
                   :columns [{:name "title"
                              :template ["currency_id"]}
                             {:name "balance"
@@ -275,7 +275,7 @@
                     {"currency_id" "DOGE"
                      :balance 1000
                      :escrow 50.5}]
-          :impl  {:header  {:format j/toUpperCase}
+          :impl  {:header  {:format xts/to-uppercase}
                   :columns [{:name "title"
                              :template ["currency_id"]}
                             {:name "balance"
@@ -323,7 +323,7 @@
         [:% slim-sheet/SheetGroupRows
          {:design {:type "light"}
           :group (@! +group+)
-          :impl  {:header  {:format j/toUpperCase}
+          :impl  {:header  {:format xts/to-uppercase}
                   :columns [{:name "title"
                              :template ["name"]}
                             {:name "balance"
@@ -338,7 +338,7 @@
         [:% slim-sheet/SheetGroupRows
          {:design {:type "dark"}
           :group (@! +group+)
-          :impl  {:header  {:format j/toUpperCase}
+          :impl  {:header  {:format xts/to-uppercase}
                   :columns [{:name "title"
                              :template ["name"]}
                             {:name "balance"
@@ -406,7 +406,7 @@
          {:design {:type "light"}
           :impl   {:groups  {:split ["currency_id"]}
                    :items   {:sort (fn:> [arr] (xtsort/sort-by arr ["balance" "name"]))}
-                   :header  {:format j/toUpperCase}
+                   :header  {:format xts/to-uppercase}
                    :columns [{:name "name"
                               :template ["name"]}
                              {:name "balance"

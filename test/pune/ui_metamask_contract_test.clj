@@ -11,7 +11,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.core.style :as css]
              
              [js.react-native.helper-color :as c]

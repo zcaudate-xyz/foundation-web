@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
@@ -55,14 +55,14 @@
            index
            :styleContainer [{:overflow "auto"
                              :flex 1}
-                            (:.. (j/arrayify styleMenu))]
+                            (:.. (xtd/arrayify styleMenu))]
            :style   [{:marginVertical 0
                       :borderRadius 0
                       :fontSize 13
                       :width (. dims width)
                       #_#_:maxWidth (. dims width)
                       :fontWeight "400"}
-                     (:.. (j/arrayify styleMenuItem))]
+                     (:.. (xtd/arrayify styleMenuItem))]
            :onPress (fn:> (setVisible false))
            :format format
            :transformations (or {:bg nil}
@@ -126,7 +126,7 @@
      [:% ui-toggle-button/ToggleButton
       #{[design
          theme
-         :variant (j/assign {:bg   {:key "background"
+         :variant (Object.assign {:bg   {:key "background"
                                     :mix "primary"
                                     :ratio 1}
                              :hovered {:bg {:raw 1}}}
@@ -150,7 +150,7 @@
                   :justifyContent "center"
                   :fontSize 13
                   :fontWeight "400"}
-                 (:.. (j/arrayify style))]
+                 (:.. (xtd/arrayify style))]
          :transformations {:bg nil}
          (:.. rprops)]}]
      [:% -/DropdownIndexedModal

@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
@@ -30,7 +30,7 @@
     (var [result1 setResult1] (r/local (fn:>)))
     (var sink0Id (r/id))
     (var sink1Id (r/id))
-    (var [key setKey] (r/local (j/random)))
+    (var [key setKey] (r/local (xt/x:random)))
     (var form (ext-form/makeForm (fn:> {:email "test00001@statstrade.io"
                                         :code  "1234"})
                                  {:email []
@@ -40,7 +40,7 @@
 {:label "pune.ui-code-resend/CodeResendButton"} 
 [:% n/Row
        [:% n/Button {:title "R"
-                     :onPress (fn:> (setKey (j/random)))}]] 
+                     :onPress (fn:> (setKey (xt/x:random)))}]] 
 [:% n/View
        [:% n/View
         {:style {:backgroundColor "#eee"

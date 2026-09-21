@@ -12,7 +12,7 @@
    :require [[xt.lang.spec-base :as xt]
              [xt.lang.common-lib :as xtl]
              [xt.lang.common-data :as xtd]
-             [js.core :as j]
+             [xt.lang.common-math :as xtm]
              [js.react :as r :include [:fn]]
              [js.cell :as cl]
              [js.react.ext-cell :as cr]
@@ -49,10 +49,10 @@
                  :width 150}
      :content   (:? (xtl/nil? updated)
                     "initialising"
-                    (+ "" (j/floor (/ (- (xt/x:now-ms) updated)
+                    (+ "" (xtm/floor (/ (- (xt/x:now-ms) updated)
                                       1000))
                        " - "
-                       (j/floor (/ updated 1000))))}]))
+                       (xtm/floor (/ updated 1000))))}]))
 
 (defn.js LoginControl
   "creates a login panel"

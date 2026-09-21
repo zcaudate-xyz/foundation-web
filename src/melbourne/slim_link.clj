@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-util :as ui-util]
@@ -51,7 +51,7 @@
   "creates a Dropdown"
   {:added "0.1"}
   [props]
-  (var aprops (j/assignNew props (. props fieldProps)))
+  (var aprops (Object.assign {} props (. props fieldProps)))
   (var #{views viewKey viewArgs viewOpts
          viewTemplate viewValueFn
          form field} aprops)
@@ -60,7 +60,7 @@
          args} (-/useViewLink aprops))
   (return
    (r/% slim-select/FormDropdown
-        (j/assignNew {}
+        (Object.assign {} {}
                      props
                      {:key (xt/x:json-encode args)
                       :data     (. links results)
@@ -78,7 +78,7 @@
   [props]
   (var #{views viewKey viewArgs viewOpts
          viewTemplate
-         form field} (j/assignNew props (. props fieldProps)))
+         form field} (Object.assign {} props (. props fieldProps)))
   (var #{args
          links} (-/useViewLink #{views
                                   form
@@ -88,7 +88,7 @@
                                  viewOpts}))
   (return
    (r/% slim-common/FormReadOnly
-        (j/assignNew props
+        (Object.assign {} props
                      {:template (fn [e]
                                   (return
                                    (xtd/template-entry
@@ -124,7 +124,7 @@
   [props]
   (var #{views viewKey viewArgs viewOpts
          viewTemplate
-         entry field} (j/assignNew props (. props fieldProps)))
+         entry field} (Object.assign {} props (. props fieldProps)))
   (var #{args
          links} (-/useViewLinkEntry #{views
                                        viewKey
@@ -133,7 +133,7 @@
                                      entry field))
   (return
    (r/% slim-common/FormReadOnly
-        (j/assignNew props
+        (Object.assign {} props
                      {:template (fn [e]
                                   (return
                                    (xtd/template-entry

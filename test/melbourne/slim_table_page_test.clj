@@ -20,7 +20,7 @@
              [melbourne.slim-entry :as slim-entry]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
-             [js.core :as j]
+             [xt.lang.common-string :as xts]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-lib :as xtl]
              [xt.lang.common-data :as xtd]
@@ -54,13 +54,13 @@
                                                  :template "B"}
                                                 {:template ["balance"]
                                                  :style {:marginLeft 10}
-                                                 :format (fn:> [n] (:? (xtl/is-number? n) (j/toFixed n 2)))}]}
+                                                 :format (fn:> [n] (:? (xtl/is-number? n) (xts/to-fixed n 2)))}]}
                                         {:type "h"
                                          :body [{:type "title"
                                                  :template "E"}
                                                 {:template ["escrow"]
                                                  :style {:marginLeft 10}
-                                                 :format (fn:> [n] (:? (xtl/is-number? n) (j/toFixed n 2)))}]}]}
+                                                 :format (fn:> [n] (:? (xtl/is-number? n) (xts/to-fixed n 2)))}]}]}
                         :avatar {:type "image"
                                  :text  {:template  ["currency_id"]}
                                  :image {:template  ["picture"]}}}})
@@ -68,7 +68,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   {:impl impl})))))
     (var components {:entry-brief  EntryBrief})
@@ -117,13 +117,13 @@
                                                  :template "B"}
                                                 {:template ["balance"]
                                                  :style {:marginLeft 10}
-                                                 :format (fn:> [n] (:? (xtl/is-number? n) (j/toFixed n 2)))}]}
+                                                 :format (fn:> [n] (:? (xtl/is-number? n) (xts/to-fixed n 2)))}]}
                                         {:type "h"
                                          :body [{:type "title"
                                                  :template "E"}
                                                 {:template ["escrow"]
                                                  :style {:marginLeft 10}
-                                                 :format (fn:> [n] (:? (xtl/is-number? n) (j/toFixed n 2)))}]}]}
+                                                 :format (fn:> [n] (:? (xtl/is-number? n) (xts/to-fixed n 2)))}]}]}
                         :avatar {:type "image"
                                  :text  {:template  ["currency_id"]}
                                  :image {:template  ["picture"]}}}})
@@ -131,7 +131,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   {:impl impl})))))
     (var components {:entry-brief  EntryBrief})

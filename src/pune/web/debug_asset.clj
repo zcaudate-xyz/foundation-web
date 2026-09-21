@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-string :as xts]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-lib :as xtl]
              [xt.lang.common-data :as xtd]]
@@ -25,11 +25,11 @@
                 #_{:color designNeutral}]}
        (:? noCurrencyLabel
            ""
-           (+ (j/padEnd currencyId 6 " ")
+           (+ (xts/pad-right currencyId 6 " ")
               " "))
        (:? notFound
            "NOT FOUND"
-           (+ "(" (j/toFixed
+           (+ "(" (xts/to-fixed
                    (or activeEscrow
                        escrow)
                    decimal) ")"))]
@@ -39,7 +39,7 @@
                 #_{:color designNeutral}]}
        (:? notFound
            "-"
-           (j/toFixed balance decimal))]]))
+           (xts/to-fixed balance decimal))]]))
   
   (defn.js AssetControlLabel
     "constructs an asset control label"
@@ -80,7 +80,7 @@
                                   (cl/view-update mc/C_ASSET_MAIN context))]}])))
     (return
      [:% n/View
-      (j/map currencies currencyFn)])))
+      (xtd/arr-map currencies currencyFn)])))
 
 
 (def.js MODULE (!:module))

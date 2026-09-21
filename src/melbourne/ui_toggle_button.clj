@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r]
              [js.react-native.ui-toggle-button :as ui-toggle-button]
              [xt.lang.spec-base :as xt]
@@ -28,7 +28,7 @@
       tooltip
       (:.. rprops)]}]
   (var palette  (base-palette/designPalette design))
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:fg {:key "neutral"}
                    :bg {:key "background"}
                    :active  {:fg {:key "background"}
@@ -36,7 +36,7 @@
                   variant))
   (var __style   (base-font/getFontStyle (or (. __variant font)
                                              "h6")))
-  (var __theme   (j/assign (base-theme/themeUiState
+  (var __theme   (Object.assign (base-theme/themeUiState
                             (base-palette/designPalette design)
                             __variant)
                            theme))
@@ -49,7 +49,7 @@
        :style [{:padding 8
                 :borderRadius 3}
                __style
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        :addons [(:? tooltip
                     (addon-tooltip/addonTooltip
                      refLink
@@ -59,7 +59,7 @@
                        tooltip}))
                 (:.. (xtd/arrayify addons))]
        :transformations
-       (j/assign
+       (Object.assign
         {:bg (fn:> [#{pressing}]
                    {:style {:transform [{:scale (+ 1 (* 0.08 pressing))}]}})}
         transformations)

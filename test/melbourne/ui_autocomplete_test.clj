@@ -14,7 +14,7 @@
              [js.react-native :as n :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react.ext-model :as ext-view]
-             [js.core :as j]
+             [xt.lang.common-string :as xts]
              [melbourne.ui-autocomplete :as ui-autocomplete]
              [melbourne.slim-sheet :as slim-sheet]
              [xt.lang.spec-base :as xt]
@@ -31,7 +31,7 @@
   [filt]
   (var output [])
   (xt/for:array [n -/NAMES]
-    (when (j/startsWith n (j/toUpperCase filt))
+    (when (xts/starts-with? n (xts/to-uppercase filt))
       (xt/x:arr-push output {:name n}))
     (when (< 15 (xt/x:len output))
       (return output)))

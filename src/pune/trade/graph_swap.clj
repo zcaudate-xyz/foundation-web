@@ -14,7 +14,7 @@
              [js.react-native :as n :include [:fn]]
              [js.react-native.helper-color :as c]
              [js.lib.lw-charts :as lw]
-             [js.core :as j]
+             [xt.lang.common-math :as xtm]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-data :as xtd]
              [pune.common.data-swap :as data-swap]
@@ -89,7 +89,7 @@
                     {:priceFormat
                      {:type "price"
                       :precision precision
-                      :minMove (/ 1 (j/pow 10 precision))}}))
+                      :minMove (/ 1 (xtm/pow 10 precision))}}))
     
     (. chart (applyOptions
               {:layout {:background {:color (base-palette/getColorRaw
@@ -201,7 +201,7 @@
                     {:priceFormat
                      {:type "price"
                       :precision precision
-                      :minMove (/ 1 (j/pow 10 precision))}
+                      :minMove (/ 1 (xtm/pow 10 precision))}
                      :lineWidth 1.5}))
     
     (. chart (applyOptions

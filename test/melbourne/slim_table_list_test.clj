@@ -20,7 +20,7 @@
              [melbourne.slim-entry :as slim-entry]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
-             [js.core :as j]
+             [xt.lang.common-string :as xts]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-data :as xtd]
              [xt.lang.common-sort-by :as xtsort]
@@ -201,7 +201,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew props #{impl})))))
+                 (Object.assign {} props #{impl})))))
     (var components {:entry-detail EntryDetail})
     (return
      [:% n/Isolation
@@ -262,14 +262,14 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew props
+                 (Object.assign {} props
                               {:impl {:type "card"
                                       :body {:title {:template ["currency_id"]}}}})))))
     (var EntryDetail
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew  props #{impl})))))
+                 (Object.assign {}  props #{impl})))))
     (var components {:entry-brief  EntryBrief
                      :entry-detail EntryDetail})
     (var [type setType]   (r/local "fold"))
@@ -469,7 +469,7 @@
          {:design {:type "light"}
           :control {}
           :impl   {:page    {:display 5} 
-                   :header  {:format j/toUpperCase}}
+                   :header  {:format xts/to-uppercase}}
           :display {:brief  {:type "v"
                              :body [{:template ["name"]}
                                     {:template ["amount"]}]}}
@@ -515,7 +515,7 @@
           :views  views
           :impl   {:page    {:display 5
                              :total 100} 
-                   :header  {:format j/toUpperCase}}
+                   :header  {:format xts/to-uppercase}}
           :display {:brief  {:type "v"
                              :body [{:template ["name"]}
                                     {:template ["amount"]}]}}}]]]))))
@@ -576,7 +576,7 @@
          {:design {:type "light"}
           :impl   {:groups  {:split ["currency_id"]}
                    :items   {:sort (fn:> [arr] (xtsort/sort-by arr [["name" true] "balance"]))}
-                   :header  {:format j/toUpperCase}}
+                   :header  {:format xts/to-uppercase}}
           :display {:brief  {:type "v"
                              :body [{:template ["name"]}
                                     {:template ["balance"]}
@@ -626,7 +626,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   {:impl {:type "card"
                           :body {:title {:template ["currency_id"]}}}})))))
@@ -634,7 +634,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew props #{impl})))))
+                 (Object.assign {} props #{impl})))))
     (var components {:entry-brief  EntryBrief
                      :entry-detail EntryDetail})
     (var [type setType]   (r/local "fold"))

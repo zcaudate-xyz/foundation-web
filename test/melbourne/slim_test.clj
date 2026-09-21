@@ -18,7 +18,7 @@
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
              [melbourne.slim :as slim]
-             [js.core :as j]
+             
              [xt.lang.spec-base :as xt]
              [xt.event.base-route :as event-route]]
    :export [MODULE]})
@@ -53,7 +53,7 @@
           (fn [props]
             (return
              (r/% slim/Entry
-                  (j/assignNew
+                  (Object.assign {}
                    props
                    {:impl {:type "card"
                            :body {:title {:type "title"
@@ -61,7 +61,7 @@
     (var EntryDetail
          (r/const
           (fn [props]
-            (var nprops (j/assignNew props
+            (var nprops (Object.assign {} props
                                      {:impl
                                       {:type "card"
                                        :body {:main   {:type "v"

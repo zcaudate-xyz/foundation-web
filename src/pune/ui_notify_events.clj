@@ -9,7 +9,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-data :as xtd]
              [js.cell :as cl]
              [js.react :as r :include [:fn]]
              [js.react.ext-box :as ext-box]
@@ -34,8 +34,8 @@
        op-time
        message} body)
   (var t (xt/x:now-ms))
-  (var msg {:id (or msg-id (j/randomId 6))
-            :title  (j/toUpperCase (text/tag-string (or op-tag "")))
+  (var msg {:id (or msg-id (text/str-rand 6))
+            :title  (text/to-uppercase (text/tag-string (or op-tag "")))
             :message (or message (+ "" (new Date t)))
             ;;:sticky (== op-level "N")
             :time t})
@@ -45,7 +45,7 @@
 (defn.js useUserEvents
   [handler event-key event-types]
   (r/init []
-    (var callbackKey (+ event-key "/" (j/randomId 4)))
+    (var callbackKey (+ event-key "/" (text/str-rand 4)))
     (cl/add-raw-callback event-key
                          event-types
                          handler)
@@ -68,7 +68,7 @@
                      (var [ok msg] (-/parseEvent e (. notify filter)))
                      (when ok
                        (var #{id} msg)
-                       (setEvents (j/assign {id msg} (r/curr eventsRef)))))
+                       (setEvents (Object.assign {id msg} (r/curr eventsRef)))))
                    (. notify key)
                    (. notify types))
   (base/useOutdated
@@ -77,7 +77,7 @@
   (return
    [:% base/TopNotify
     #{design mini
-      {:data    (j/values events)
+      {:data    (xtd/obj-vals events)
        :onClose (fn:> (setEvents {}))}}]))
 
 (def.js MODULE (!:module))

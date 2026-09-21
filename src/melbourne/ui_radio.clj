@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n]
              [js.react-native.ui-radio-box :as ui-radio-box]
@@ -31,7 +31,7 @@
       style
       theme
       (:.. rprops)]}]
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:fg   {:key "neutral"}
                    :bg   {:key "background"
                           :tone "darken"
@@ -46,7 +46,7 @@
                   variant))
   (var __style  (base-font/getFontStyle (or (. __variant font)
                                             "h6")))
-  (var __theme  (j/assign (base-theme/themeUiInput
+  (var __theme  (Object.assign (base-theme/themeUiInput
                            (base-palette/designPalette design)
                            __variant)
                           theme))
@@ -55,7 +55,7 @@
     #{[:theme __theme
        :style [{:padding 0}
                __style
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        (:.. rprops)]}]))
 
 (defn.js RadioGroupIndexed
@@ -94,14 +94,14 @@
                                 {}))]}]
                    [:% ui-static/Text
                     #{design
-                      {:variant (j/assign
+                      {:variant (Object.assign
                                  {:fg {:key "primary"}}
                                  (xtd/get-in design ["variant" "text"]))
                        :style styleText}}
                     (format value i)]])))
    (return [:% n/View
             {:style styleContainer}
-            (j/map items itemFn)])))
+            (xtd/arr-map items itemFn)])))
 
 (defn.js RadioGroup
   "creates a group of radio boxes"

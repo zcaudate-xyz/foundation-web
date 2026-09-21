@@ -10,7 +10,8 @@
             :emit   {:native {:suppress true}
                      :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-math :as xtm]
+             [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-spinner :as ui-spinner]
@@ -260,7 +261,7 @@
       onResult
       submitProps
       (:= showSlider true)]}]
-  (var __submitProps (j/assign (r/useSubmitResult
+  (var __submitProps (Object.assign (r/useSubmitResult
                                 #{onSubmit
                                   onSuccess
                                   onError
@@ -276,7 +277,7 @@
          :variant {:pressed {:fg {:key "primary"
                                   :tone "sharpen"}
                              :bg {:key "neutral"}}}
-         :text (j/toUpperCase (+ trade " " prediction))
+         :text (xts/to-uppercase (+ trade " " prediction))
          :style {:width 110}
          :onPress (. __submitProps onActionPress)
          (:.. __submitProps)]}]]
@@ -316,7 +317,7 @@
       onSubmit
       onSuccess
       onError]}]
-  (var ratio (j/pow 10 (- decimal)))
+  (var ratio (xtm/pow 10 (- decimal)))
   (var min (* 1 ratio))
   (var max (* (- allotment 1) ratio))
   (return

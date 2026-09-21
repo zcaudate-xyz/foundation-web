@@ -9,7 +9,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react.ext-model :as ext-view]
              [js.react.ext-route :as ext-route]
@@ -154,7 +154,7 @@
    [:% ui-section/CardBoundary
     {:style style}
     (r/% ui-swiper/Swiper
-         (j/assign #{design} swipeProps)
+         (Object.assign #{design} swipeProps)
          children)]))
 
 (defn.js TableListCardFold
@@ -177,7 +177,7 @@
   
   (var detailElem
        (r/% DetailComponent
-            (j/assign {:impl (. display ["detail"])}
+            (Object.assign {:impl (. display ["detail"])}
                       props)))
   
   (return
@@ -208,7 +208,7 @@
            slim-table-common/TableDefaultNotFound))
   (var briefElem
        (r/% BriefComponent
-            (j/assign {:impl (. display ["brief"])}
+            (Object.assign {:impl (. display ["brief"])}
                       props
                       (. custom ["brief"]))))
   (var #{[(:= card {})]}  (or (. display ["brief"])
@@ -245,12 +245,12 @@
         [:% n/View
          {:key (. entry id)}
          (r/% -/TableListCard
-              (j/assignNew rprops
+              (Object.assign {} rprops
                            {:entry entry
                             :list  impl}))
          (:? (and join
                   (< (+ 1 i) (xt/x:len entries)))
-             (r/% slim-entry/Entry (j/assignNew rprops {:impl join})))]))}]))
+             (r/% slim-entry/Entry (Object.assign {} rprops {:impl join})))]))}]))
 
 (defn.js TableListViewGroup
   "creates a group row of sheets"
@@ -268,13 +268,13 @@
      {:style {:marginHorizontal 10}}
      (r/% (or component
               slim-sheet/SheetGroupHeader) props)]
-    (r/% -/TableListViewEntries (j/assign rprops #{entries impl}))]))
+    (r/% -/TableListViewEntries (Object.assign rprops #{entries impl}))]))
 
 (defn.js TableListViewBase
   [props]
   (var #{impl
          entries} props)
-  (var itemsImpl   (j/assign {:reverse false
+  (var itemsImpl   (Object.assign {:reverse false
                               :sort xtl/identity
                               :filter xtl/identity}
                              (. impl items)))
@@ -290,7 +290,7 @@
                  (var [name entries] (. iprops item))
                  (return
                   (r/% -/TableListViewGroup
-                       (j/assignNew props
+                       (Object.assign {} props
                                     {:key name
                                      :group #{name entries
                                               {:format (. impl groups format)}}}))))}]))
@@ -307,7 +307,7 @@
           (:= displayKey "list")]} props)
   (var #{[(:= filterFn xtl/identity)
           (:= sortFn xtl/identity)]} impl)
-  (var page (j/assign {:display 20}
+  (var page (Object.assign {:display 20}
                       (xtd/get-in impl ["page"])))
   (var [showPage setShowPage] (:? (xtd/get-in control ["setShowPage"])
                                   [(. control showPage) (. control setShowPage)]
@@ -337,7 +337,7 @@
          entries} (-/usePageEntries props))
   (return
    [:% n/View
-    (r/% ListComponent (j/assignNew props #{entries}))
+    (r/% ListComponent (Object.assign {} props #{entries}))
     (:? (> (xt/x:len entriesAll)
            (. page display))
         [:% ui-static/Div
@@ -358,7 +358,7 @@
   (var ListComponent -/TableListViewBase)
   (return
    (r/% -/TableListViewPagedScaffold
-        (j/assignNew props #{ListComponent}))))
+        (Object.assign {} props #{ListComponent}))))
 
 ;;
 ;; REMOTE
@@ -372,7 +372,7 @@
           (:= displayKey "list")]} props)
   (var #{[(:= filterFn xtl/identity)
           (:= sortFn xtl/identity)]} impl)
-  (var page (j/assign {:display 20
+  (var page (Object.assign {:display 20
                        :total 0
                        :argsFn xtl/identity}
                       (xtd/get-in impl ["page"])))
@@ -456,7 +456,7 @@
         [:% ui-static/ScrollView
          #{design}
          (r/% ListComponent
-              (j/assignNew props #{entries}))])
+              (Object.assign {} props #{entries}))])
     
     (:? (> (. page total)
            (. page display))
@@ -491,7 +491,7 @@
   (var ListComponent -/TableListViewBase)
   (return
    (r/% -/TableListViewRemotePagedScaffold
-        (j/assignNew props #{ListComponent}))))
+        (Object.assign {} props #{ListComponent}))))
 
 (defn.js TableListView
   "creates a table list view"
@@ -529,7 +529,7 @@
   (var impl (or (xtd/get-in display ["list"])
                 {}))
   (:= impl (:? (. impl props)
-               (j/assignNew impl ((. impl props) impl props))
+               (Object.assign {} impl ((. impl props) impl props))
                impl))
   (var #{[top
           bottom
@@ -541,16 +541,16 @@
                   (sortFn (. control orderBy))))
 (var topElem
        (:? top
-         (r/% slim-entry/Entry (j/assignNew props {:impl top}))))
+         (r/% slim-entry/Entry (Object.assign {} props {:impl top}))))
   (var bottomElem
        (:? bottom
-           (r/% slim-entry/Entry (j/assignNew props {:impl bottom}))))
+           (r/% slim-entry/Entry (Object.assign {} props {:impl bottom}))))
   (var centerElem
        (:? (== "row" (. impl type))
-           (r/% slim-sheet/Sheet (j/assignNew props #{impl entries}))
+           (r/% slim-sheet/Sheet (Object.assign {} props #{impl entries}))
 
            :else
-           (r/% -/TableListView (j/assignNew props #{impl entries}))))
+           (r/% -/TableListView (Object.assign {} props #{impl entries}))))
   (return
    [:% n/View
     {:style style}

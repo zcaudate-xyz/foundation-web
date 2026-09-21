@@ -9,7 +9,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [js.react-native.ui-notify :as ui-notify-events]
@@ -57,7 +57,7 @@
   (var [current setCurrent]  [routeKey setRouteKey])
   (return
    [:% ui-console/Console
-    #{[:design (j/assignNew design {:invert true})
+    #{[:design (Object.assign {} design {:invert true})
        current setCurrent
        :screens {"one"   (fn:> [:% n/Text "ONE"])
                  "two"   (fn:> [:% n/Text "TWO"])
@@ -140,14 +140,14 @@
                 :icon  "sound"
                 :label "NOTIFY"
                 :onPress  (fn []
-                            (var id (j/randomId 6))
+                            (var id (xts/str-rand 6))
                             (var msg
                                  {:id    id
                                   :topic "user.account/notify"
                                   :title id
                                   :message (+ "Notify: " id)
                                   :time (xt/x:now-ms)})
-                            (setInbox (j/assign {id msg} inbox))
+                            (setInbox (Object.assign {id msg} inbox))
                             (setShowNotify true))}
                ]}}]))
 
@@ -160,7 +160,7 @@
   (var isMounted (r/useIsMounted))
   (var refresh   (r/useRefresh))
   (var [index setIndex] (r/local 0))
-  (var data (xtd/arr-sort (j/values inbox)
+  (var data (xtd/arr-sort (xtd/obj-vals inbox)
                         (xtd/key-fn "time")
                         xtl/gt))
   (r/watch [inbox refresh]
@@ -169,13 +169,13 @@
         (when (isMounted)
           (refresh))))
     (var outdated (-> inbox
-                      (j/values)
-                      (j/filter (fn [e]
+                      (xtd/obj-vals)
+                      (xtd/arr-filter (fn [e]
                                   (return
                                    (and (not (. e sticky))
                                         (< (+ 5000 (. e time))
                                            (xt/x:now-ms))))))
-                      (j/map xtd/id-fn)))
+                      (xtd/arr-map xtd/id-fn)))
     (when (xtd/not-empty? outdated)
       (var out (xtd/obj-omit inbox outdated))
       (cond (xtd/is-empty? out)
@@ -279,7 +279,7 @@
      {:style {:marginVertical 3}}
      [:% ui-button/Button
       {:refLink buttonRef
-       :design (j/assignNew design {:mode ["primary"] })
+       :design (Object.assign {} design {:mode ["primary"] })
        :text "DELETE MODAL"
        :onPress (fn:> (setVisible true))}]]
     [:% slim-dialog/Dialog
@@ -329,7 +329,7 @@
       #_[:% ui-static/Breadcrumb
        {:design design
         :root ["HOME"]
-        :path (:? routeKey (j/toUpperCase (+ "" routeKey)))}]
+        :path (:? routeKey (xts/to-uppercase (+ "" routeKey)))}]
       [:% n/Row
        {:style {:paddingVertical 10}}
        [:% ui-static/Text

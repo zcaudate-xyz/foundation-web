@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-util :as ui-util]
@@ -69,7 +69,7 @@
             :data ["name" "time"]
             :value (. control orderBy)
             :setValue (. control setOrderBy)
-            :format j/toUpperCase]}]])
+            :format xts/to-uppercase]}]])
   (return
    [:% ui-toolbar/Toolbar
     #{design

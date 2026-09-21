@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
@@ -36,7 +36,7 @@
   (var [visible setVisible] (r/local (fn:> false)))
   
   (var buttonRef (r/ref))
-  (var buttonLabel (+ (j/toUpperCase (base-text/tag-string (or tag "")))
+  (var buttonLabel (+ (base-text/to-uppercase (base-text/tag-string (or tag "")))
                       (:? message (+ " - " message) "")))
   (var errorText (n/format-entry result))
   (var errorVariant {:bg {:key "error"}
@@ -49,7 +49,7 @@
               :opacity 0.9
               :alignItems "center"
               :paddingHorizontal 10}
-             (:.. (j/arrayify style))]}
+             (:.. (xtd/arrayify style))]}
     [:<>
      [:% ui-button/Button
       {:refLink buttonRef

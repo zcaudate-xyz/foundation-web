@@ -6,7 +6,7 @@
   {:require [[xt.lang.spec-base :as xt]
              [xt.lang.common-lib :as xtl]
              [js.react-native :as n]
-             [js.core :as j]]
+             ]
    :export [MODULE]})
 
 (def.js fontH1
@@ -61,7 +61,7 @@
    :fontWeight "800"})
 
 (def.js fontCaption
-  (j/assign
+  (Object.assign
    {:fontSize 11
     :fontWeight "500"}
    (n/PlatformSelect {:ios     {:fontFamily "Courier"}

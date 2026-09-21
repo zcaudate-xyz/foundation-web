@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [js.react-native.ui-notify :as ui-notify-events]
@@ -28,13 +28,13 @@
   [events duration]
   (return
    (-> events
-       (j/values)
-       (j/filter (fn [e]
+       (xtd/obj-vals)
+       (xtd/arr-filter (fn [e]
                    (return
                     (and (not (. e sticky))
                          (< (+ duration (. e time))
                             (xt/x:now-ms))))))
-       (j/map xtd/id-fn))))
+       (xtd/arr-map xtd/id-fn))))
 
 (defn.js useOutdated
   [#{events
@@ -72,7 +72,7 @@
   (var bgMix {:key  "neutral"
               :mix  "primary"
               :ratio 1})
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:bg bgMix
                    :fg fgMix
                    :hovered  {:fg {:raw 1}
@@ -92,7 +92,7 @@
                  {:borderRadius 0}
                  {:borderRadius 3
                   :width 350})
-             (:.. (j/arrayify style))]}
+             (:.. (xtd/arrayify style))]}
     [:% n/Row
      [:% ui-button/Button
       {:design design
@@ -116,7 +116,7 @@
         :design design
         :variant __variant
         :items (:? (xtd/not-empty? data)
-                   (j/map data (xtd/key-fn "title"))
+                   (xtd/arr-map data (xtd/key-fn "title"))
                    ["NO NOTIFICATIONS"])
         :style {:width 300}
         :styleText {:width 300

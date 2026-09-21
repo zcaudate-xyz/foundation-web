@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react-native.ui-swiper :as ui-swiper]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
@@ -19,7 +19,7 @@
       theme
       (:.. rprops)]}]
   (var __variant
-       (j/assign
+       (Object.assign
         {:fg   {:key "primary"
                 :tone "flatten"}
          :bg   {:key "primary"
@@ -29,7 +29,7 @@
                    :bg {:key "primary"
                         :tone "sharpen"}}}
         variant))
-  (var __theme  (j/assign (base-theme/themeUiButton
+  (var __theme  (Object.assign (base-theme/themeUiButton
                            (base-palette/designPalette design)
                            __variant)
                           theme))

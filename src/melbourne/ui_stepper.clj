@@ -6,7 +6,7 @@
   {:require [[xt.lang.spec-base :as xt]
              [xt.lang.common-data :as xtd]
              [xt.lang.common-math :as xtm]
-             [js.core :as j]
+             
              [js.react :as r]
              [js.react-native :as n]
              [js.react-native.animate :as a]
@@ -37,7 +37,7 @@
                 :borderRadius 10
                 :padding 2
                 :marginHorizontal 6}
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        :items (xtd/arr-repeat "" total)
        (:.. rprops)]}]))
 
@@ -65,7 +65,7 @@
       (:= offsetFn -/stepperOffset)
       (:= pages [])
       (:.. rprops)]}]
-  (var total (j/max (xt/x:len pages) 1))
+  (var total (xtm/max (xt/x:len pages) 1))
   (var iindicator   (a/useCircularIndicator
                      index
                      {:default {:type "timing"
@@ -83,7 +83,7 @@
           [:% physical-base/Box
            {:key (+ "page" i)
             :style [{:position "absolute"}
-                    (:.. (j/arrayify pageStyle))]
+                    (:.. (xtd/arrayify pageStyle))]
             :indicators {:offset iindicator}
             :children [[:% n/View
                         {:key "parent"}
@@ -93,8 +93,8 @@
   (return
    [:% n/View
     {:style [{:overflow "hidden"}
-             (:.. (j/arrayify style))]}
-    (j/map pages pageFn)]))
+             (:.. (xtd/arrayify style))]}
+    (xtd/arr-map pages pageFn)]))
 
 (def.js MODULE (!:module))
 

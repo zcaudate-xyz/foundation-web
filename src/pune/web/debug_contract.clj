@@ -4,7 +4,8 @@
 
 (l/script :js
   {:require [[xt.lang.spec-base :as xt]
-             [js.core :as j]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]
              [js.react-native :as n :include [:fn]]
              ]
    :export [MODULE]})
@@ -23,7 +24,7 @@
     {:style {:flex 1}}
     [:% n/Text
      {:style []}
-     (j/padEnd (+ " " (or latestPrice "- "))
+     (xts/pad-right (+ " " (or latestPrice "- "))
                6
                " ")]
     [:% n/Text
@@ -45,7 +46,7 @@
     {:style {:flex 1}}
     [:% n/Text
      {:style []}
-      (j/padEnd (+ " " (or price "- "))
+      (xts/pad-right (+ " " (or price "- "))
                 6
                 " ")]
     [:% n/Text
@@ -80,7 +81,7 @@
     [:% n/Row
      [:% n/View
       {:style {:flex 1}}
-      (j/map buy (fn:> [[rate line]]
+      (xtd/arr-map buy (fn:> [[rate line]]
                    [:% -/ContractSingleLine
                     {:key (+ "buy-" rate)
                      :design design
@@ -88,7 +89,7 @@
      [:% n/Padding {:style {:width 10}}]
      [:% n/View
       {:style {:flex 1}}
-      (j/map sell (fn:> [[rate line]]
+      (xtd/arr-map sell (fn:> [[rate line]]
                     [:% -/ContractSingleLine
                      {:key (+ "sell-" rate)
                       :design design

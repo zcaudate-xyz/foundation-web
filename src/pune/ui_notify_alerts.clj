@@ -9,7 +9,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react.ext-box :as ext-box]
              [melbourne.ui-static :as ui-static]
@@ -44,7 +44,7 @@
   
   (return
    [:% slim-dialog/Dialog
-    {:design (j/assignNew design {:invert true})
+    {:design (Object.assign {} design {:invert true})
      :title  title
      :body   body
      :submitProps {:text (or submitText "OK")}

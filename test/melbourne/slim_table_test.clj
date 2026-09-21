@@ -22,7 +22,7 @@
              [melbourne.slim-entry :as slim-entry]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
-             [js.core :as j]
+             
              [xt.lang.spec-base :as xt]
              [xt.event.base-route :as event-route]]
    :export [MODULE]})
@@ -325,7 +325,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   {:impl {:type "card"
                           :body {:title {:template ["currency_id"]}}}}
@@ -334,7 +334,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew  props #{impl})))))
+                 (Object.assign {}  props #{impl})))))
     (var components {:entry-brief  EntryBrief
                      :entry-detail EntryDetail
                      :create (r/const (fn:> [props] (r/% ui-static/Text props "CREATE")))})
@@ -438,7 +438,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew props
+                 (Object.assign {} props
                               {:impl {:type "card"
                                       :body {:title {:template ["currency_id"]}}}})))))
     (var components {:entry-brief  EntryBrief
@@ -513,7 +513,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew props
+                 (Object.assign {} props
                               {:impl {:type "card"
                                       :body {:title {:template ["currency_id"]}}}})))))
     (var components {:entry-brief  EntryBrief
@@ -588,7 +588,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew props
+                 (Object.assign {} props
                               {:impl {:type "card"
                                       :body {:title {:template ["currency_id"]}}}})))))
     (var components {:entry-brief  EntryBrief

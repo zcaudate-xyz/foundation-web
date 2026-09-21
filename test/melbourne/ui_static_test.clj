@@ -14,7 +14,8 @@
              [js.react :as r]
              [melbourne.ui-static :as ui-static]
              [melbourne.base-palette :as base-palette]
-             [js.core :as j]]
+             [xt.lang.common-data :as xtd]
+    [xt.lang.common-string :as xts]]
    :export [MODULE]})
 
 ^{:refer melbourne.ui-static/Div :added "4.0"}
@@ -145,10 +146,10 @@
        {:style {:backgroundColor (base-palette/getColorRaw
                                   palette
                                   (or foil "background"))}}
-       (j/flatMap
+       (xtd/arr-mapcat
         ["primary" "background" "neutral" "error"]
         (fn [key]
-          (return (j/map ["flatten" "diminish" "default" "augment" "sharpen"]
+          (return (xtd/arr-map ["flatten" "diminish" "default" "augment" "sharpen"]
                          (fn [tone]
                            (return
                             [:% ui-static/Text
@@ -159,7 +160,7 @@
                               :variant {:font "h4"
                                         :fg {:key  key
                                              :tone tone}}}
-                             (j/toUpperCase (+ key " " tone))]))))))]))))
+                             (xts/to-uppercase (+ key " " tone))]))))))]))))
 
 ^{:refer melbourne.ui-static/Separator :added "4.0"}
 (fact "creates a seperator"

@@ -12,7 +12,7 @@
             :notify {:type :webpage :path "dev/notify"}}
    :require [[js.react :as r]
              [js.react-native :as n :include [:fn]]
-             [js.core :as j]
+             [xt.lang.common-string :as xts]
              [melbourne.ui-spinner-basic :as ui-spinner-basic]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-input :as ui-input]
@@ -107,19 +107,19 @@
     (var [max min step decimal] [10000 0 2 2])
     (var [editShow  setEditShow] (r/local true))
     (var [editText  setEditText] (r/local
-                                  (j/toFixed (/ value
-                                                (j/pow 10 decimal))
+                                  (xts/to-fixed (/ value
+                                                (xtm/pow 10 decimal))
                                              decimal)))
     (var setEditTextNumber
          (fn [v]
            (var hasDot (== "." (xtd/last v)))
-           (var num (j/parseFloat v))
+           (var num (parseFloat v))
            (cond (xtd/is-empty? v)
                  (setEditText v)
                  
                  (xtl/not-nil? num)
                  (setEditText
-                  (+ (j/toString num)
+                  (+ (xtl/to-string num)
                      (:? hasDot "." "")))
 
                  :else
@@ -130,14 +130,14 @@
     (r/watch [editShow]
       (cond editShow
             (setEditText
-             (j/toFixed (/ value
-                           (j/pow 10 decimal))
+             (xts/to-fixed (/ value
+                           (xtm/pow 10 decimal))
                         decimal))
             :else
             (setValue
              (xtm/round
               (* (xtl/to-number editText)
-                 (j/pow 10 decimal))))))
+                 (xtm/pow 10 decimal))))))
     (return
      (n/EnclosedCode 
       {:label "melbourne.ui-spinner-basic/SpinnerBasicEdit"} 

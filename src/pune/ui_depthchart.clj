@@ -11,7 +11,7 @@
             :notify {:type :webpage :path "dev/notify"}}
    :require [[js.react-native :as n :include [:fn :svg]]
              [js.react :as r :include [:fn]]
-             [js.core :as j]
+             [xt.lang.common-math :as xtm]
              [melbourne.base-palette :as base-palette]
              [pune.ui-sparkline :as ui-sparkline]
              [xt.lang.spec-base :as xt]
@@ -44,7 +44,7 @@
   (var sell-domain (:? (xtd/is-empty? sell) []
                        [(xtd/first (xtd/last sell))
                         (xtd/first (xtd/first sell))]))
-  (var max-steps  (j/max (:? (xtd/is-empty? buy-domain)
+  (var max-steps  (xtm/max (:? (xtd/is-empty? buy-domain)
                              0
                              (- (xtd/second buy-domain)
                                 (xtd/first buy-domain)))
@@ -53,7 +53,7 @@
                              (- (xtd/second sell-domain)
                                 (xtd/first sell-domain)))
                          10))
-  (var max-depth  (j/max (xtd/arr-foldl buy
+  (var max-depth  (xtm/max (xtd/arr-foldl buy
                                       (fn:> [acc [_ vol]]
                                         (+ acc vol))
                                       0)

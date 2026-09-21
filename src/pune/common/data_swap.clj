@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :xtalk
-  {:require [[js.core :as j]
+  {:require [
              [xt.lang.spec-base :as xt]
              [xt.lang.common-lib :as xtl]
              [xt.lang.common-string :as xts]
@@ -15,14 +15,14 @@
   {:added "0.1"}
   [fprice]
   (var decimal-floor
-       (j/floor (j/log10 fprice)))
+       (xtm/floor (xtm/log10 fprice)))
   (when (< decimal-floor -8)
     (xt/x:throw (xt/x:ex "floor too small" {:input fprice})))
   (cond (>= decimal-floor -4)
         (do (var units (xtm/round
                           (/ fprice
-                             (j/pow 10
-                                    (- (j/floor (j/log10 fprice))
+                             (xtm/pow 10
+                                    (- (xtm/floor (xtm/log10 fprice))
                                        4)))))
             (return [(+ 4 decimal-floor)
                      units]))
@@ -45,7 +45,7 @@
   (when (not (or (== power 0)
                  (>= units 10000)))
     (xt/x:throw (xt/x:ex "units too low" {:input vprice})))
-  (return (* (j/pow 10 (- power 8))
+  (return (* (xtm/pow 10 (- power 8))
              units)))
 
 (defn.xt vprice-to-position
@@ -77,7 +77,7 @@
   {:added "0.1"}
   [position]
   (var units (xtm/mod position 100000))
-  (var power (j/floor (xtl/div position 100000)))
+  (var power (xtm/floor (xtl/div position 100000)))
   (return [power
            units]))
 
@@ -86,16 +86,16 @@
   {:added "0.1"}
   [position]
   (var units (xtm/mod position 100000))
-  (var power (j/floor (/ position 100000)))
-  (return (* (j/pow 10 (- power 8))
+  (var power (xtm/floor (/ position 100000)))
+  (return (* (xtm/pow 10 (- power 8))
              units)))
 
 (defn.xt position-to-fdecimal
   "trade position to float price"
   {:added "0.1"}
   [position]
-  (var power (j/floor (/ position 100000)))
-  (return (j/max 0 (- 8 power))))
+  (var power (xtm/floor (/ position 100000)))
+  (return (xtm/max 0 (- 8 power))))
 
 (defn.xt position-to-fstr
   "trade position to float price"
@@ -111,6 +111,6 @@
   [position]
   (return
    (* (-/position-to-fprice position)
-      (j/pow 10 (-/position-to-fdecimal position)))))
+      (xtm/pow 10 (-/position-to-fdecimal position)))))
 
 (def.xt MODULE (!:module))

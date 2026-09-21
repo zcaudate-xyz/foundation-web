@@ -15,7 +15,7 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.base-palette :as base-palette]
              [melbourne.ui-chip :as ui-chip]
-             [js.core :as j]]
+             ]
    :export [MODULE]})
 
 ^{:refer melbourne.ui-chip/Chip :added "4.0"}

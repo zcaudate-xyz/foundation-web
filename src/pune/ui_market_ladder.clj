@@ -4,7 +4,9 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]
+             [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-static :as ui-static]
@@ -19,7 +21,7 @@
       allotment
       decimal
       prediction]}]
-  (var frac (j/pow 10 (- decimal)))
+  (var frac (xtm/pow 10 (- decimal)))
   (var offers   (base-market/live-offers-rate market
                                               allotment
                                               prediction 6))
@@ -60,7 +62,7 @@
                                   "error"
                                   "primary")}}
                    {:font "h6"})}
-     (j/toFixed (* rate fraction) decimal)]
+     (xts/to-fixed (* rate fraction) decimal)]
     [:% n/Fill]
     [:% ui-static/Text
      {:design design}
@@ -103,7 +105,7 @@
               :flex 1
               :flexDirection "column-reverse"
               :overflow "hidden"}}
-     (j/map (j/reverse [(:.. (. offers buy))])
+     (xtd/arr-map (xtd/arr-reverse [(:.. (. offers buy))])
             lineFn)]
     [:% ui-section/SectionSeparator
      {:design design
@@ -114,7 +116,7 @@
               :flex 1
               :flexDirection "column"
               :overflow "hidden"}}
-     (j/map (. offers sell)
+     (xtd/arr-map (. offers sell)
             lineFn)]]))
 
 

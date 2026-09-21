@@ -15,7 +15,7 @@
              [melbourne.base-palette :as base-palette]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-section :as ui-section]
-             [js.core :as j]]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 ^{:refer melbourne.ui-text/EnumMinor :adopt true :added "0.1"}
@@ -157,7 +157,7 @@
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (j/map [ui-text/H1
+        (xtd/arr-map [ui-text/H1
                 ui-text/H2
                 ui-text/H3
                 ui-text/H4
@@ -175,7 +175,7 @@
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (j/map [ui-text/H1
+        (xtd/arr-map [ui-text/H1
                 ui-text/H2
                 ui-text/H3
                 ui-text/H4
@@ -195,7 +195,7 @@
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (j/map [ui-text/H1
+        (xtd/arr-map [ui-text/H1
                 ui-text/H2
                 ui-text/H3
                 ui-text/H4
@@ -215,7 +215,7 @@
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (j/map [ui-text/H1
+        (xtd/arr-map [ui-text/H1
                 ui-text/H2
                 ui-text/H3
                 ui-text/H4
@@ -263,7 +263,7 @@
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (j/map [ui-text/P
+        (xtd/arr-map [ui-text/P
                 ui-text/Caption]
                (fn [Component i]
                  (return
@@ -277,7 +277,7 @@
         {:style {:backgroundColor (base-palette/getColorRaw
                                    palette
                                    (or foil "background"))}}
-        (j/map [ui-text/P
+        (xtd/arr-map [ui-text/P
                 ui-text/Caption]
                (fn [Component i]
                  (return
@@ -434,7 +434,7 @@
         :value foil
         :setValue setFoil}] 
 [:% n/Row
-       (j/map
+       (xtd/arr-map
         overrides
         (fn [override i]
           (return
@@ -443,7 +443,7 @@
              :style {:backgroundColor (base-palette/getColorRaw
                                        palette
                                        (or foil "background"))}}
-            (j/map components
+            (xtd/arr-map components
                    (fn [Component i]
                      (return
                       [:% n/View
@@ -516,7 +516,7 @@
         :value foil
         :setValue setFoil}] 
 [:% n/Row
-       (j/map
+       (xtd/arr-map
         overrides
         (fn [override i]
           (return
@@ -525,7 +525,7 @@
              :style {:backgroundColor (base-palette/getColorRaw
                                        palette
                                        (or foil "background"))}}
-            (j/map components
+            (xtd/arr-map components
                    (fn [Component i]
                      (return
                       [:% n/View

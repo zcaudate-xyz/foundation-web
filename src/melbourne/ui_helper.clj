@@ -5,7 +5,7 @@
 
 (l/script :js
   {:require [[js.react-native :as n :include [:fn [:icon :entypo]]]
-             [js.core :as j]
+             [xt.lang.common-data :as xtd]
              [melbourne.ui-button :as ui-button]]
    :export [MODULE]})
 
@@ -40,7 +40,7 @@
         {:pressing {:default {:duration 50}}}
         :onPress onLeft
         :style [{:paddingVertical 5}
-                (:..  (j/arrayify style))]
+                (:..  (xtd/arrayify style))]
         (:.. leftProps)]}]
     (or children
         [:% n/Padding {:style {:width 3}}])
@@ -56,7 +56,7 @@
         {:pressing {:default {:duration 50}}}
         :onPress onRight
         :style [{:paddingVertical 5}
-                (:..  (j/arrayify style))]
+                (:..  (xtd/arrayify style))]
         (:.. rightProps)]}]]))
 
 (def.js MODULE (!:module))

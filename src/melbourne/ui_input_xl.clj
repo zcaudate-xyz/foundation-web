@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-data :as xtd]
              [js.react-native.helper-color :as c]
              [js.react-native :as n :include [:fn]]
              [xt.lang.spec-base :as xt]
@@ -36,7 +36,7 @@
            (fn [#{emptying
                   focusing
                   highlighted}]
-             (var active (j/max (- 1 emptying)
+             (var active (xtm/max (- 1 emptying)
                                 focusing))
              (var color (c/interpolateColor
                          mainNeutral
@@ -66,13 +66,13 @@
               :style [{:height 50
                        :paddingLeft 8
                        :fontSize 20}
-                      (:.. (j/arrayify style))]
+                      (:.. (xtd/arrayify style))]
               :styleContainer [{:flex 1
                                 :borderRadius 5
                                 :height 50}
-                               (:.. (j/arrayify styleContainer))]
+                               (:.. (xtd/arrayify styleContainer))]
               :inner [(-/inputPlaceHolder placeholder design)
-                      (:.. (j/arrayify inner))]
+                      (:.. (xtd/arrayify inner))]
               :outlined true
               (:.. rprops)]}]))
 

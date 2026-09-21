@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-math :as xtm]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.ui-text :as ui-text]
@@ -31,7 +31,7 @@
   (var setShowPage (xtd/get-in control ["setShowPage"]))
   (var showPage    (or (xtd/get-in control ["showPage"])
                        1))
-  (var pageCount (+ (j/floor (/ (- total 1) display))
+  (var pageCount (+ (xtm/floor (/ (- total 1) display))
                     1))
 
   (var isMini (< pageCount 7))
@@ -49,7 +49,7 @@
                          [:% n/Icon
                           {:key  (+ idx 1)
                            :name "dots-three-horizontal"}]
-                         (j/toString (+ idx 1)))
+                         (xtl/to-string (+ idx 1)))
                :onPress (fn:> (setShowPage (+ idx 1)))})))
   
   (return
@@ -137,9 +137,9 @@
                  (:.. rprops)]} (or (xtd/get-in custom [key])
                                     {}))
          (var Component slim-entry/EntryContentTitleH5)
-         (var oprops (j/assignNew
+         (var oprops (Object.assign {}
                       #{[design
-                         :impl  (j/assignNew
+                         :impl  (Object.assign {}
                                  column
                                  header
                                  {:variant variant
@@ -164,7 +164,7 @@
                 :paddingHorizontal 10
                 :alignItems "center"}
                (:.. (xtd/arrayify style))]]}
-    (j/map columns columnFn)]))
+    (xtd/arr-map columns columnFn)]))
 
 (defn.js SheetRow
   "creates a sheet row"
@@ -185,7 +185,7 @@
          (var Component (or (and (. column type)
                                  slim-entry/Entry)
                             slim-entry/EntryContentParagraph))
-         (var oprops (j/assignNew
+         (var oprops (Object.assign {}
                       iprops
                       #{[design
                          variant
@@ -209,7 +209,7 @@
                 :paddingLeft 10
                 :paddingRight 20}
                (:.. (xtd/arrayify style))]]}
-    (j/map columns columnFn)]))
+    (xtd/arr-map columns columnFn)]))
 
 (defn.js SheetBasicRows
   "creates a basic sheet"
@@ -222,10 +222,10 @@
   (return
    [:% n/View
     {:style {:flex 1}}
-    (j/map entries
+    (xtd/arr-map entries
            (fn:> [entry i]
              (r/% -/SheetRow
-                  (j/assignNew
+                  (Object.assign {}
                    props
                    {:key (+ (or (. entry id)
                                 "")
@@ -256,15 +256,15 @@
   (return
    [:% n/View
     (r/% -/SheetGroupHeader props)
-    (r/% -/SheetBasicRows (j/assign rprops #{entries}))]))
+    (r/% -/SheetBasicRows (Object.assign rprops #{entries}))]))
 
 (defn.js groupEntries
   [entries impl]
-  (var itemsImpl   (j/assign {:reverse false
+  (var itemsImpl   (Object.assign {:reverse false
                               :sort xtl/identity
                               :filter xtl/identity}
                              (. impl items)))
-  (var groupsImpl  (j/assign {:reverse false
+  (var groupsImpl  (Object.assign {:reverse false
                               :split  xtd/id-fn
                               :sort   xtl/identity
                               :filter xtl/T}
@@ -284,7 +284,7 @@
   (var #{noHeader
          impl
          entries} props)
-  (var itemsImpl   (j/assign {:reverse false
+  (var itemsImpl   (Object.assign {:reverse false
                               :sort xtl/identity
                               :filter xtl/identity}
                              (. impl items)))
@@ -296,10 +296,10 @@
             (return [:% n/View
                      (:? (not noHeader)
                          (r/% -/SheetHeader props))
-                     (j/map groups
+                     (xtd/arr-map groups
                             (fn:> [[name entries]]
                               (r/% -/SheetGroupRows
-                                   (j/assignNew props
+                                   (Object.assign {} props
                                                 {:group #{name entries
                                                           {:format (. impl groups format)}}}
                                                 ))))]))
@@ -311,7 +311,7 @@
         (do (return [:% n/View
                      (:? (not noHeader)
                          (r/% -/SheetHeader props))
-                     (r/% -/SheetBasicRows (j/assignNew props {:entries (. itemsImpl (sort entries))}))])))
+                     (r/% -/SheetBasicRows (Object.assign {} props {:entries (. itemsImpl (sort entries))}))])))
   
   
   (return

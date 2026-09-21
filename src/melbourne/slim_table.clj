@@ -9,7 +9,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react.ext-model :as ext-view]
              [js.react.ext-route :as ext-route]
@@ -87,7 +87,7 @@
        [:% r/Suspense
         {:fallback [:% slim-table-common/TableDefaultIsLoading #{design}]}
         (r/% routeComponent
-             (j/assignNew props (. custom [routeKey])))])
+             (Object.assign {} props (. custom [routeKey])))])
   #_(r/watch [(xt/x:json-encode display)
             routeKey
             displayKey]
@@ -111,7 +111,7 @@
   (var #{control} props)
   (var routeComponentFn (fn:> -/TableRouterView))
   (var routePropsFn (fn:> [routeKey]
-                      (j/assign #{routeKey} props)))
+                      (Object.assign #{routeKey} props)))
   (var transitionMap {:list   {:detail "from_right"
                                :create "from_left"}
                       :detail {:list   "from_left"

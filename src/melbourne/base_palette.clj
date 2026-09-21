@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react-native.helper-color :as c]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-lib :as xtl]
@@ -193,7 +193,7 @@
   {:added "4.0"}
   [design]
   (var #{invert} design)
-  (return (j/assign {} design {:invert (not invert)})))
+  (return (Object.assign {} design {:invert (not invert)})))
 
 
 (defn.js designPalette
@@ -206,7 +206,7 @@
                    "light"
                    "dark")
                (or type "light")))
-  (return (j/assign (-/createPalette type color)
+  (return (Object.assign (-/createPalette type color)
                     override)))
 
 (defn.js getPalette

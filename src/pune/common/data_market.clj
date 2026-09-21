@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :xtalk
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-math :as xtm]
              [xt.lang.spec-base :as xt]
              [xt.lang.common-lib :as xtl]
              [xt.lang.common-data :as xtd]
@@ -22,13 +22,13 @@
   "converts frac to decimal"
   {:added "4.0"}
   [frac]
-  (return (j/floor (+ 0.5 (- (j/log10 frac))))))
+  (return (xtm/floor (+ 0.5 (- (xtm/log10 frac))))))
 
 (defn.xt decimal-to-frac
   "converts decimal to frac"
   {:added "4.0"}
   [decimal]
-  (return (j/pow 10 (- decimal))))
+  (return (xtm/pow 10 (- decimal))))
 
 (defn.xt position-to-rate
   "converts position to rate"
@@ -57,15 +57,15 @@
    frac
    price]
   (if (== prediction "yes")
-    (return (j/floor (+ 0.5 (/ (-/price-to-float price) frac))))
-    (return (- allotment (j/floor (+ 0.5  (/ (-/price-to-float price) frac)))))))
+    (return (xtm/floor (+ 0.5 (/ (-/price-to-float price) frac))))
+    (return (- allotment (xtm/floor (+ 0.5  (/ (-/price-to-float price) frac)))))))
 
 (defn.xt book-enrich
   "gets the book max value"
   {:added "4.0"}
   ([book]
    (var #{decimal allotment} book)
-   (var frac (j/pow 10 (- decimal)))
+   (var frac (xtm/pow 10 (- decimal)))
    (var max  (* allotment frac))
    (return (xtd/obj-assign {:frac frac
                           :max  max}
@@ -112,11 +112,11 @@
   (var bvol (xtd/arr-sort (or (xt/x:get-key bid "volume") [])
                         xtd/first xtl/lt))
   (var buy-offers    (:? (== prediction "yes")
-                         (xtd/arr-rslice avol 0 (j/min retrieve (xt/x:len avol)))
-                         (xtd/arr-slice bvol (j/max 0 (- (xt/x:len bvol) retrieve)) (xt/x:len bvol))))
+                         (xtd/arr-rslice avol 0 (xtm/min retrieve (xt/x:len avol)))
+                         (xtd/arr-slice bvol (xtm/max 0 (- (xt/x:len bvol) retrieve)) (xt/x:len bvol))))
   (var sell-offers  (:? (== prediction "yes")
-                        (xtd/arr-rslice bvol (j/max 0 (- (xt/x:len bvol) retrieve)) (xt/x:len bvol))
-                        (xtd/arr-slice avol 0 (j/min retrieve (xt/x:len avol)))))
+                        (xtd/arr-rslice bvol (xtm/max 0 (- (xt/x:len bvol) retrieve)) (xt/x:len bvol))
+                        (xtd/arr-slice avol 0 (xtm/min retrieve (xt/x:len avol)))))
   (return {:buy  buy-offers
            :sell sell-offers}))
 
@@ -248,7 +248,7 @@
     book
     summary]
    (var #{allotment frac} book)
-   (var pos (j/floor (+ 0.5  (/ (-/price-to-float price) frac))))
+   (var pos (xtm/floor (+ 0.5  (/ (-/price-to-float price) frac))))
    (return (-/position-can-trade pos trade prediction
                                  book
                                  summary))))

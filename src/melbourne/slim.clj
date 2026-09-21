@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [js.react.ext-model :as ext-view]
              [js.react.ext-route :as ext-route]
@@ -47,7 +47,7 @@
 (defn.js entry
   [props impl opts]
   (return
-   (r/% slim-entry/Entry (j/assignNew props #{impl} opts))))
+   (r/% slim-entry/Entry (Object.assign {} props #{impl} opts))))
 
 (defn.js useLocalPrimitives
   "creates crud control primitives"
@@ -178,7 +178,7 @@
   {:added "4.0"}
   [route override m]
   (var control (-/useRoutePrimitives route override))
-  (return (j/assign (-/useListControl control)
+  (return (Object.assign (-/useListControl control)
                     control)))
 
 (defn.js useLocalControl
@@ -186,7 +186,7 @@
   {:added "4.0"}
   [m]
   (var control (-/useLocalPrimitives))
-  (return (j/assign (-/useListControl control)
+  (return (Object.assign (-/useListControl control)
                     control
                     m)))
 

@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react.ext-model :as ext-view]
@@ -98,8 +98,8 @@
                       (fn [init f]
                         (var out (f init))
                         (return
-                         (j/assign init out)))
-                      (j/assign {} props)))))
+                         (Object.assign init out)))
+                      (Object.assign {} props)))))
 
 (defn.js TableProgressBack
   [props]
@@ -148,7 +148,7 @@
           (ext-form/listenFormData form)))
   
   (var hooks (. components [(+ "hooks_" page)]))
-  (var hprops (-/tablePageHooks (j/assignNew
+  (var hprops (-/tablePageHooks (Object.assign {}
                                  props
                                  #{entry})
                                 hooks))
@@ -160,7 +160,7 @@
   (if (and (xtd/is-empty? entry)
            (== page "detail"))
     (return
-     (r/% -/TableProgressBack (j/assignNew props #{entry}))))
+     (r/% -/TableProgressBack (Object.assign {} props #{entry}))))
 
 
   ;;
@@ -195,18 +195,18 @@
   (var headerElem
        (:? HeaderComponent
            (r/% HeaderComponent
-                (j/assignNew
+                (Object.assign {}
                  props
                  hprops
                  {:entry entry
                   :form form
                   :impl (:? (xtd/get-in impl ["header" "link"])
-                            (j/assign {:type "link"}
+                            (Object.assign {:type "link"}
                                       (. impl header))
 
                             implHeader
                             {:type "card"
-                             :body (j/assign {:isHeader true}
+                             :body (Object.assign {:isHeader true}
                                              implHeader)}
 
                             :else nil)}))))
@@ -217,7 +217,7 @@
            [:% n/View
             {:style {}}
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   hprops
                   {:entry entry
@@ -226,7 +226,7 @@
   
   (var pageElem
        (r/% PageComponent
-            (j/assignNew
+            (Object.assign {}
              props
              hprops
              {:entry entry

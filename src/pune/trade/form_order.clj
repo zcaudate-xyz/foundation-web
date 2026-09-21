@@ -10,7 +10,7 @@
             :emit   {:native {:suppress true}
                      :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [js.lib.datetime :as dt]
@@ -239,7 +239,7 @@
     (var under (/ lcm (- allotment rate)))
     (var over  (/ lcm rate))
     (return
-     (j/round
+     (xtm/round
       (:? (< over under)
           (- (* 100 (/ under over)))
           (* 100 (/ over under))))))
@@ -285,17 +285,17 @@
                      (:? (xtl/nil? rate-lo-ask)
                          "No Offers"
                          (+ "@ "
-                            (j/toFixed (* fraction rate-lo-ask)
+                            (xts/to-fixed (* fraction rate-lo-ask)
                                        decimal)
-                            " (" (j/toFixed (* fraction (- rate rate-lo-ask))
+                            " (" (xts/to-fixed (* fraction (- rate rate-lo-ask))
                                             decimal)
                             ")"))
                      (:? (xtl/nil? rate-hi-bid)
                          "No Offers"
                          (+ "@ "
-                            (j/toFixed (* fraction rate-hi-bid)
+                            (xts/to-fixed (* fraction rate-hi-bid)
                                        decimal)
-                            " (" (j/toFixed (* fraction (- rate rate-hi-bid))
+                            " (" (xts/to-fixed (* fraction (- rate rate-hi-bid))
                                             decimal)
                             ")"))))
   
@@ -400,7 +400,7 @@
                              "Spend"
                              "Gain")}
               {:style {:fontFamily "monospace"}
-               :template (+ (j/toFixed
+               :template (+ (xts/to-fixed
                              spend
                              decimal)
                             " "
@@ -415,7 +415,7 @@
                              (+ (:? (== trade "sell")
                                     "-"
                                     "")
-                                (j/toFixed
+                                (xts/to-fixed
                                  fee
                                  decimal)
                                 " "
@@ -425,7 +425,7 @@
        :body [{:type "bold"
                :template "Total"}
               {:style {:fontFamily "monospace"}
-               :template (+ (j/toFixed
+               :template (+ (xts/to-fixed
                              (:? (== trade "buy")
                                  (+ spend fee)
                                  (- spend fee))
@@ -469,7 +469,7 @@
                :template "Avg Cost"}
               {:style {:fontFamily "monospace"}
                :template (:? avgCost
-                             (j/toFixed
+                             (xts/to-fixed
                               avgCost
                               decimal)
                              " - ")}]}
@@ -479,7 +479,7 @@
                :template "P/L"}
               {:style {:fontFamily "monospace"}
                :template (:? avgCost
-                             (j/toFixed
+                             (xts/to-fixed
                               (* amount (- avgCost (* rate fraction)))
                               decimal)
                              " - ")}]}
@@ -489,7 +489,7 @@
                :template "New Spend"}
               {:style {:fontFamily "monospace"}
                :template (:? spend
-                             (j/toFixed
+                             (xts/to-fixed
                               (- spend (* amount rate fraction))
                               2)
                              " - ")}]}]})))
@@ -520,7 +520,7 @@
        :body [{:type "bold"
                :template "Payout"}
               {:style {:fontFamily "monospace"}
-               :template (+ (j/toFixed
+               :template (+ (xts/to-fixed
                              (* amount
                                 allotment
                                 fraction)
@@ -532,7 +532,7 @@
        :body [{:type "bold"
                :template "Yield"}
               {:style {:fontFamily "monospace"}
-               :template (+ (j/toFixed
+               :template (+ (xts/to-fixed
                              (* 100 (/ (- allotment rate)
                                        rate))
                              0)
@@ -691,7 +691,7 @@
                      :body [{:type "bold"
                              :template (or home-name "Y")}
                             {:type "fill"}
-                            {:template (j/toString yesContracts)
+                            {:template (xtl/to-string yesContracts)
                              :style {:width 55
                                      :textAlign "right"
                                      :fontFamily "monospace"}}
@@ -715,7 +715,7 @@
                      :body [{:type "bold"
                              :template (or away-name "N")}
                             {:type "fill"}
-                            {:template (j/toString noContracts)
+                            {:template (xtl/to-string noContracts)
                              :style {:width 55
                                      :textAlign "right"
                                      :fontFamily "monospace"}}
@@ -753,7 +753,7 @@
            [:% n/Fill]
            (r/% ui-text/Bold staticProps "SELLING")]
           (r/% ui-section/SectionSeparator staticProps)
-          (j/map sell (fn:> [[rate e]]
+          (xtd/arr-map sell (fn:> [[rate e]]
                         [:% n/Row {:key rate :style {:marginHorizontal 5}}
                          [:% ui-text/P #{design} (. e price)]
                          [:% n/Fill]
@@ -762,7 +762,7 @@
          [:<> (r/% ui-section/SectionSeparator staticProps)
           [:% n/Row [:% n/Fill] (r/% ui-text/Bold staticProps "BUYING")]
           (r/% ui-section/SectionSeparator staticProps)
-          (j/map buy (fn:> [[rate e]]
+          (xtd/arr-map buy (fn:> [[rate e]]
                        [:% n/Row {:key rate :style {:marginHorizontal 5}}
                         [:% ui-text/P #{design}
                          (. e price)]
@@ -786,7 +786,7 @@
   
   (when (not currentOrder)
     (return (slim/entry {:type "v"})))
-  (var filtered (j/filter orders (fn:> [o] (== prediction (. o ["prediction"])))))
+  (var filtered (xtd/arr-filter orders (fn:> [o] (== prediction (. o ["prediction"])))))
   (var order    (j/find filtered (fn:> [o] (== currentOrder (. o  id)))))
   (when (not order)
     (return (slim/entry {:type "v"})))
@@ -848,7 +848,7 @@
                      (+ (. order contract-sent)
                         (. order contract-received)
                         " of " (. order amount)
-                        " @ " (j/toFixed (* fraction (. order rate))
+                        " @ " (xts/to-fixed (* fraction (. order rate))
                                          decimal))}
                     {:template (. order ["time_created"])
                      :style {:fontSize 9}
@@ -958,7 +958,7 @@
            (xtd/obj-from-pairs)))
   (var orderFn
        (fn [o]
-         (var price (j/toFixed (* (. o rate) fraction)
+         (var price (xts/to-fixed (* (. o rate) fraction)
                                (. o decimal)))
          (var unfilled (- (. o amount)
                           (. o contract_received)
@@ -989,17 +989,17 @@
                             :template price}
                            {:template (+ " (" (:? (== prediction "yes")
                                                   (:? (== (. o trade) "buy")
-                                                      (j/toFixed (* (- (. o rate) rate-lo-ask)
+                                                      (xts/to-fixed (* (- (. o rate) rate-lo-ask)
                                                                     fraction)
                                                                  decimal)
-                                                      (+ "+" (j/toFixed (* (- (. o rate) rate-hi-bid)
+                                                      (+ "+" (xts/to-fixed (* (- (. o rate) rate-hi-bid)
                                                                            fraction)
                                                                         decimal)))
                                                   (:? (== (. o trade) "buy")
-                                                      (j/toFixed (* (- rate-hi-bid (- allotment (. o rate)))
+                                                      (xts/to-fixed (* (- rate-hi-bid (- allotment (. o rate)))
                                                                     fraction)
                                                                  decimal)
-                                                      (+ "+" (j/toFixed (* (-  rate-lo-ask (- allotment (. o rate)))
+                                                      (+ "+" (xts/to-fixed (* (-  rate-lo-ask (- allotment (. o rate)))
                                                                            fraction)
                                                                         decimal))))
                                          ")")
@@ -1026,7 +1026,7 @@
                          :variant {:fg {:key "neutral"}}
                          :style {:marginHorizontal -5
                                  :marginVertical 3}}
-                        (:.. (j/map (. filtered ["sell"]) orderFn))]})
+                        (:.. (xtd/arr-map (. filtered ["sell"]) orderFn))]})
             (:? (xtd/not-empty?
                  (. filtered ["buy"]))
                 {:type "v"
@@ -1038,7 +1038,7 @@
                          :variant {:fg {:key "neutral"}}
                          :style {:marginHorizontal -5
                                  :marginVertical 3}}
-                        (:.. (j/map (. filtered ["buy"])
+                        (:.. (xtd/arr-map (. filtered ["buy"])
                                     orderFn))]})]})))
 
 
@@ -1098,7 +1098,7 @@
        :text (:? waiting
                  [:% ui-text/ActivityIndicator
                   #{design}]
-                 (j/toUpperCase
+                 (xts/to-uppercase
                   (+ trade
                      " "
                      (:? (== prediction "yes")

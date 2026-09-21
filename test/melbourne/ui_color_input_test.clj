@@ -15,7 +15,7 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.base-palette :as base-palette]
              [melbourne.ui-color-input :as ui-color-input]
-             [js.core :as j]]
+             ]
    :export [MODULE]})
 
 ^{:refer melbourne.ui-color-input/ColorInput :added "4.0"}

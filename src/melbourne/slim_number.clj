@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
              [xt.event.base-form :as event-form]
@@ -36,7 +36,7 @@
       step
       decimal]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "spinner"
+                                          (Object.assign {:slim/type "spinner"
                                                      :fn/type   "field"}
                                                     meta)))
   (return 
@@ -92,7 +92,7 @@
       step
       decimal]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "spinner"
+                                          (Object.assign {:slim/type "spinner"
                                                      :fn/type   "field"}
                                                     meta)))
   (return 
@@ -149,7 +149,7 @@
       step
       decimal]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "slider"
+                                          (Object.assign {:slim/type "slider"
                                                      :fn/type   "field"}
                                                     meta)))
   (return 

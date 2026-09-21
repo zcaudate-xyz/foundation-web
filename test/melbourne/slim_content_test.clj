@@ -13,7 +13,7 @@
    :require [[js.react :as r]
              [js.react-native :as n :include [:fn]]
              [melbourne.slim-content :as slim-content]
-             [js.core :as j]
+             
              [xt.lang.spec-base :as xt]
              [xt.lang.common-data :as xtd]
              [xt.lang.common-string :as xts]]

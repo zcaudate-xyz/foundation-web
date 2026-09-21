@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
@@ -37,7 +37,7 @@
                 :alignItems "center"
                 :padding 3
                 :height 30}
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        (:.. rprops)]}
     children]))
 
@@ -52,7 +52,7 @@
      (return
       [:% ui-static/Text
        #{[:design design
-          :variant (j/assign
+          :variant (Object.assign
                     {:font  font
                      :fg {:key "primary"
                           :tone "flatten"}}
@@ -71,7 +71,7 @@
      (return
       [:% ui-static/Text
        #{[:design design
-          :variant (j/assign
+          :variant (Object.assign
                     {:font font
                      :fg {:key "neutral"
                           :tone "flatten"}}
@@ -79,7 +79,7 @@
                     variant)
           :style [{:fontFamily "Lato"}
                   fontStyle
-                  (:.. (j/arrayify style))]
+                  (:.. (xtd/arrayify style))]
           (:.. rprops)]}]))))
 
 (def.js ^{:arglists '([#{[design
@@ -126,7 +126,7 @@
                           variant
                          (:.. rprops)]}])}
   Caption (-/createTextFn "caption"
-                          (j/assign
+                          (Object.assign
                            {:opacity 0.8
                             :fontSize 10
                             :fontWeight "500"
@@ -148,7 +148,7 @@
       variant
       (:.. rprops)]}]
   (var palette  (base-palette/designPalette design))
-  (var #{fg} (j/assign
+  (var #{fg} (Object.assign
                  {:fg {:key "primary"}}
                  variant))
   (return
@@ -170,7 +170,7 @@
       variant
       (:.. rprops)]}]
   (var palette  (base-palette/designPalette design))
-  (var #{fg bg} (j/assign
+  (var #{fg bg} (Object.assign
                  {:fg {:key "neutral"}}
                  variant))
   (return
@@ -178,7 +178,7 @@
     #{[:ref refLink
        :style [{:backgroundColor (:? bg (base-palette/getColor palette bg))
                 :color (base-palette/getColor palette fg)}
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        :size size
        :name name
        (:.. rprops)]}]))
@@ -213,19 +213,19 @@
                      
                      [:% ui-static/Text
                       #{[:design design
-                         :variant (j/assign {:fg {:key "background"}}
+                         :variant (Object.assign {:fg {:key "background"}}
                                             (xtd/get-in design ["variant" "text"]))
                          :style [(n/PlatformSelect {:web {:cursor "default" :userSelect "none"}})
                                  {:fontWeight 500}
-                                 (:.. (j/arrayify styleText))]
+                                 (:.. (xtd/arrayify styleText))]
                          (:.. textProps)]}
-                      (j/toUpperCase (or text ""))]))
+                      (xts/to-uppercase (or text ""))]))
   (var styleInput [{:height size
                     :width size
                     :borderRadius (/ size 2)
                     :justifyContent "center"
                     :alignItems "center"}
-                   (:.. (j/arrayify style))])
+                   (:.. (xtd/arrayify style))])
   (cond color
         (return [:% n/View
                  {:style styleInput}
@@ -235,7 +235,7 @@
         (return
          [:% ui-static/Div
           {:design design
-           :variant (j/assign
+           :variant (Object.assign
                      (:? (xtd/not-empty? image)
                          {}
                          {:bg {:key "neutral" :mix "primary" :ratio 2}})
@@ -310,11 +310,11 @@
            icon
            (:.. rprops)]}]
      (:= text (:? icon
-                  (r/% n/Icon (j/assign {:key "icon"} icon))
+                  (r/% n/Icon (Object.assign {:key "icon"} icon))
                   text))
-     (var mprops (j/assign
+     (var mprops (Object.assign
                   {:design design
-                   :variant (j/assign
+                   :variant (Object.assign
                              {:font "text"}
                              (variantFn)
                              variant)
@@ -327,14 +327,14 @@
                             :borderStyle "solid" 
                             :borderWidth 1}
                            styleOverride
-                           (:.. (j/arrayify style))]
+                           (:.. (xtd/arrayify style))]
                    :transformations {:bg nil}
                    :outlined (or themeSelected selected)
                    :selected selected}
                   propsOverride))
      (return
       (r/% component
-           (j/assign mprops rprops))))))
+           (Object.assign mprops rprops))))))
 
 (def.js ^{:arglists '([#{[design
                           variant
@@ -452,10 +452,10 @@
            icon
            (:.. rprops)]}]
      (:= text (:? icon
-                  (r/% n/Icon (j/assign {:key "icon"} icon))
+                  (r/% n/Icon (Object.assign {:key "icon"} icon))
                   text))
      (var mprops {:design design
-                  :variant (j/assign
+                  :variant (Object.assign
                             {:font "text"}
                             (variantFn)
                             variant)
@@ -468,13 +468,13 @@
                            :borderStyle "solid" 
                            :borderWidth 1}
                           styleOverride
-                          (:.. (j/arrayify style))]
+                          (:.. (xtd/arrayify style))]
                   :transformations {:bg nil}
                   :outlined (or themeSelected selected)
                   :selected selected})
      (return
       (r/% component
-           (j/assign mprops propsOverride rprops))))))
+           (Object.assign mprops propsOverride rprops))))))
 
 
 
@@ -584,18 +584,18 @@
   (var [fgColor
         bgColor] (base-theme/themeBase
                   palette
-                  (j/assign {:fg {:key "neutral"}
+                  (Object.assign {:fg {:key "neutral"}
                              :bg {:key "primary"
                                   #_#_:tone "flatten"}}
                             (. arrow variant))))
   (return
    (r/% ui-tooltip/Tooltip
-        (j/assign
+        (Object.assign
          #{visible setVisible
            {:hostRef hostRef
             :position "bottom"
             :alignment "center"
-            :arrow  (j/assign {:placement "host"
+            :arrow  (Object.assign {:placement "host"
                                :baseHeight 5
                                :baselength 30
                                :color bgColor
@@ -633,10 +633,10 @@
             :selected visible
             :onPress (fn:> (setVisible (not visible)))]})
     (r/% -/ButtonTooltipOverlay
-         (j/assign
+         (Object.assign
           #{hostRef
             {:design design
-             :variant (j/assign
+             :variant (Object.assign
                        {}
                        (xtd/get-in design ["variant" "tooltip"])
                        (xtd/get-in tooltip ["overlay" "variant"]))}
@@ -675,7 +675,7 @@
                                      (then (fn:> (setVisible false)))))]}]))))
   (return
    (r/% -/ButtonTooltip
-        (j/assign #{mainComponent}
+        (Object.assign #{mainComponent}
                   props))))
 
 (defn.js TextAltImpl

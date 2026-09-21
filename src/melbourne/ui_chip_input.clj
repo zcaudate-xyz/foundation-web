@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-util :as ui-util]
@@ -61,8 +61,8 @@
                 (setShowInput false)))
         :onChangeText
         (fn [text]
-          (cond (j/endsWith text ",")
-                (do (var out (xts/trim (xtd/first (j/split text ","))))
+          (cond (xts/ends-with? text ",")
+                (do (var out (xts/trim (xtd/first (xts/split text ","))))
                     (when (xtd/not-empty? out)
                       (setValues [(:.. values) out])
                       (setCurrentText "")))
@@ -74,7 +74,7 @@
       {:style {:flexWrap "wrap"
                :maxWidth 400
                :alignItems "center"}}
-      (j/map values
+      (xtd/arr-map values
              (fn:> [value i]
                [:% ui-chip/Chip
                 #{design

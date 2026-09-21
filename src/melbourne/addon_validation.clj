@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react-native.helper-color :as c]
              [js.react :as r]
              [js.react-native :as n]
@@ -37,7 +37,7 @@
   (:= palette (base-palette/getPalette design palette))
   (var [fgColor bgColor] (base-theme/themeBase
                           palette
-                          (j/assign
+                          (Object.assign
                            {:fg {:key "neutral"}
                             :bg {:key "primary"}}
                            (xtd/get-in design
@@ -57,7 +57,7 @@
                       :paddingHorizontal 5
                       :borderRadius 3
                       :backgroundColor mainBackground}
-                     (:.. (j/arrayify styleText))]
+                     (:.. (xtd/arrayify styleText))]
              :transformations
              {:focusing
               (fn [focusing]
@@ -72,7 +72,7 @@
              :overflow "hidden"
              :marginHorizontal 2
              :height 0}
-            (:.. (j/arrayify style))]
+            (:.. (xtd/arrayify style))]
     :transformations
     {:highlighted (fn [highlighted]
                     (return {:style {:height (:? (< 0.3 highlighted)

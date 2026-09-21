@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n]
@@ -39,7 +39,7 @@
       minWidth
       (:= options [])]}]
   (var #{value result} (ext-form/listenField form field
-                                             (j/assign {:slim/type "image"
+                                             (Object.assign {:slim/type "image"
                                                         :fn/type   "field"}
                                                        meta)))
   (when (xtd/is-empty? value)

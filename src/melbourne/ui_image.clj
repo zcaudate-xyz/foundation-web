@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.spec-promise :as promise]
              [js.core.style :as css]
              [js.react-native :as n :include [:fn]]
              [js.lib.rn-expo :as x :include [:image-picker]]
@@ -33,14 +33,14 @@
    (new Promise
     (fn [resolve reject]
       (-> (x/imageLibraryLaunch)
-          (j/then
+          (promise/x:promise-then
            (fn [res]
              (if (not res.cancelled)
                (do (setPhoto res)
-                   (-> (j/fetch res.uri)
-                       (j/then (fn [res]
+                   (-> (fetch res.uri)
+                       (promise/x:promise-then (fn [res]
                                  (return (res.blob))))
-                       (j/then (fn [blob]
+                       (promise/x:promise-then (fn [blob]
                                  (var reader (new FileReader))
                                  (:= reader.onload
                                      (fn []
@@ -117,10 +117,10 @@
                     :transformations
                     (fn:> [#{position pressing}]
                       {:style {:opacity (* (xtm/mix 1 0.8 pressing)
-                                           (xtm/mix 1 0 (/ (j/abs position)
+                                           (xtm/mix 1 0 (/ (xtm/abs position)
                                                          (* 2 subSize))))
-                               :transform [{:scale (xtm/mix 1 2 (/ (j/abs position) subSize))}]}})}
-                   (:.. (j/arrayify inner))]
+                               :transform [{:scale (xtm/mix 1 2 (/ (xtm/abs position) subSize))}]}})}
+                   (:.. (xtd/arrayify inner))]
            (:.. rprops)]}])
   (return
    [:% n/View
@@ -187,9 +187,9 @@
           (state/token)
           form)
          (j/toJson)
-         (j/then (fn [res]
-                   (setData (j/assign res {:type "imagekit"}))))
-         (j/finally (fn []
+         (promise/x:promise-then (fn [res]
+                   (setData (Object.assign res {:type "imagekit"}))))
+         (promise/x:promise-finally (fn []
                       (setUploading false)
                        (setUploaded true)))))))
   )

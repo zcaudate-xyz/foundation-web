@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
@@ -73,7 +73,7 @@
                :size 24}]
        :tooltip {:text  label
                  :position "top"}
-       (:.. (j/assign rprops ritems))]}]))
+       (:.. (Object.assign rprops ritems))]}]))
 
 (defn.js MainMenuToggle
   "creates the main menu toggle"
@@ -88,7 +88,7 @@
   (return
    [:% ui-toggle-button/ToggleButton
     #{[:design design
-       :variant (j/assign
+       :variant (Object.assign
                  {:bg {:key "background"
                        :tone (:? mini "sharpen" "diminish")}
                   :active  {:bg {:key "neutral"}}
@@ -104,7 +104,7 @@
                :size 24}]
        :tooltip {:text  label
                  :position "top"}
-       (:.. (j/assign rprops ritems))]}]))
+       (:.. (Object.assign rprops ritems))]}]))
 
 (defn.js MainMenuRoute
   "creates the main menu routes"
@@ -122,7 +122,7 @@
      #{theme mini
        {:design design
         :variant {:active  {:bg {:key "primary"}}}
-        :item (j/assign
+        :item (Object.assign
                {:selected (== routeKey key)
                 :onPress (fn []
                            (setRouteKey key)
@@ -176,7 +176,7 @@
       setRouteKey
       (:= design {})
       (:= items [])]}]
-  (:= items (j/filter items xtl/identity))
+  (:= items (xtd/arr-filter items xtl/identity))
   (var [visible setVisible] (r/local false))
   (var itemFn
        (fn [mini]
@@ -203,8 +203,8 @@
                     :flexDirection "row"
                     :justifyContent "space-between"}]}
           (-> items
-              (j/filter (xtd/key-fn "mini"))
-              (j/map    (itemFn true)))
+              (xtd/arr-filter (xtd/key-fn "mini"))
+              (xtd/arr-map    (itemFn true)))
           [:% -/MainMenuMiniContext
            #{design visible setVisible}
            [:% ui-static/Div
@@ -212,7 +212,7 @@
              :variant {:bg {:key "background"
                             :tone "sharpen"}}
              :style [{:padding 2}]}
-            (j/map (j/filter items
+            (xtd/arr-map (xtd/arr-filter items
                              (fn:> [e]
                                (and (not (. e mini))
                                     (. e key))))
@@ -228,7 +228,7 @@
            :style [{:padding 2
                     :flex 1
                     :overflow "hidden"}]}
-          (j/map items (itemFn mini))])))
+          (xtd/arr-map items (itemFn mini))])))
 
 (def.js MODULE (!:module))
 

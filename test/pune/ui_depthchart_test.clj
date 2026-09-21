@@ -8,7 +8,7 @@
    :runtime :basic
    :config  {:emit {:native {:suppress true}
                     :lang/jsx false}}
-   :require [[js.core :as j]
+   :require [
              [js.core.style :as css]
              [js.react-native.helper-color :as c]
              [js.react :as r]

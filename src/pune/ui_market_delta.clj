@@ -9,7 +9,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react-native.helper-color :as c]
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
@@ -32,7 +32,7 @@
       (setColor (:? (< prev value) "green" "firebrick"))
       (setPrev value)
       (setChanged true)
-      (j/setTimeout (fn []
+      (setTimeout (fn []
                       (r/curr:set count (- (r/curr count) 1))
                       (when (< (r/curr count) 1)
                         (setChanged false)))
@@ -95,5 +95,5 @@
   (def +++
     (h/suppress
      (!.js
-      (j/assign play.web-001-rn.main/I01_FORM
+      (Object.assign play.web-001-rn.main/I01_FORM
                 {"02h-ui-market"  play.web-001-rn.main-demo/UiDeltaExamples})))))
