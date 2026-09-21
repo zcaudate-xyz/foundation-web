@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.core.style :as css]
              [js.react-native.helper-color :as c]
              [js.react :as r]
@@ -18,7 +19,7 @@
              [js.react-native.animate :as a]
              [js.react-native.physical-base :as ui]
              [pune.ui-market-live :as market-live]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (def.js CHART
@@ -61,13 +62,13 @@
 [:% n/Row
        {:style {:height 350}}
        (r/% market-live/MarketLive
-            (j/assign {:orderFn
+            (Object.assign {:orderFn
                        (fn [orderId orderLookup]
                          (return
-                          (. (j/future-delayed [200]
-                               (return (. orderLookup [orderId])))
+                          (. (promise/x:with-delay 200 (fn []
+                               (return (. orderLookup [orderId]))))
                              (then (fn [data]
-                                     (alert (k/json-encode data)))))))}
+                                     (alert (xt/x:json-encode data)))))))}
                       -/CHART))] 
 [:% n/Row
        {:style {:height 400}}

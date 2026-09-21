@@ -13,7 +13,7 @@
    :require [[js.react :as r]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-radio :as ui-radio]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              ]
    :export [MODULE]})
 
@@ -95,7 +95,7 @@
           :index index
           :setIndex setIndex}]]] 
 [:% n/TextDisplay
-       {:content (k/json-encode index)}]))))
+       {:content (xt/x:json-encode index)}]))))
 
 ^{:refer melbourne.ui-radio/RadioGroup :added "0.1"}
 (fact "creates a group of radio boxes"
@@ -131,7 +131,7 @@
           :setValue setValue
           :format (fn:> [s] (+ "  " s))}]]] 
 [:% n/TextDisplay
-       {:content (k/json-encode value)}])))
+       {:content (xt/x:json-encode value)}])))
 
   (def.js MODULE (!:module))
   )

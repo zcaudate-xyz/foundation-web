@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
@@ -12,7 +12,9 @@
              [melbourne.ui-group :as ui-group]
              [melbourne.ui-toggle-button :as ui-toggle-button]
              [melbourne.base-palette :as base-palette]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js DropdownIndexedModal
@@ -53,14 +55,14 @@
            index
            :styleContainer [{:overflow "auto"
                              :flex 1}
-                            (:.. (j/arrayify styleMenu))]
+                            (:.. (xtd/arrayify styleMenu))]
            :style   [{:marginVertical 0
                       :borderRadius 0
                       :fontSize 13
                       :width (. dims width)
                       #_#_:maxWidth (. dims width)
                       :fontWeight "400"}
-                     (:.. (j/arrayify styleMenuItem))]
+                     (:.. (xtd/arrayify styleMenuItem))]
            :onPress (fn:> (setVisible false))
            :format format
            :transformations (or {:bg nil}
@@ -114,7 +116,7 @@
        styleMenu
        styleMenuItem
        itemTransformations
-       (:= format k/identity)
+       (:= format xtl/identity)
        (:.. rprops)]}]
    (var [visible setVisible] (r/local (fn:> false)))
    (var hostRef (r/ref))
@@ -124,7 +126,7 @@
      [:% ui-toggle-button/ToggleButton
       #{[design
          theme
-         :variant (j/assign {:bg   {:key "background"
+         :variant (Object.assign {:bg   {:key "background"
                                     :mix "primary"
                                     :ratio 1}
                              :hovered {:bg {:raw 1}}}
@@ -148,7 +150,7 @@
                   :justifyContent "center"
                   :fontSize 13
                   :fontWeight "400"}
-                 (:.. (j/arrayify style))]
+                 (:.. (xtd/arrayify style))]
          :transformations {:bg nil}
          (:.. rprops)]}]
      [:% -/DropdownIndexedModal
@@ -184,10 +186,10 @@
                                    value
                                    setValue}))
    (r/watch [value index data]
-     (when (and (k/is-empty? value)
-                (k/not-nil? index)
-                (k/not-empty? data))
-       (setValue ((or valueFn k/identity)
+     (when (and (xtd/is-empty? value)
+                (xtl/not-nil? index)
+                (xtd/not-empty? data))
+       (setValue ((or valueFn xtl/identity)
                   (. data [index])))))
    (return [:% -/DropdownIndexed
             #{[setIndex

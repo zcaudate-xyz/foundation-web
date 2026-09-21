@@ -4,11 +4,13 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.helper-color :as c]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [xt.lang.common-string :as text]
              [melbourne.ui-static :as ui-static]
              [melbourne.base-palette :as base-palette]]
@@ -16,20 +18,20 @@
 
 (defn-.js getProps
   [entry propsInput]
-  (cond (k/fn? propsInput)
+  (cond (xtl/is-function? propsInput)
         (return (propsInput entry))
 
         :else (return propsInput)))
 
 (defn-.js getField
   [entry field]
-  (cond (k/nil? field)
+  (cond (xtl/nil? field)
         (return nil)
         
-        (k/fn? field)
+        (xtl/is-function? field)
         (return (field entry))
         
-        :else (return (k/get-in entry (k/arrayify field)))))
+        :else (return (xtd/get-in entry (xtd/arrayify field)))))
 
 (defn.js ContentTitle
   "creates the content title"
@@ -56,7 +58,7 @@
     (:? title
         [:% ui-static/Text
          #{[palette
-            :design (j/assignNew design {:theme {:fg {:key "primary"}}})
+            :design (Object.assign {} design {:theme {:fg {:key "primary"}}})
             :style  [{:fontSize 14 :fontWeight "600"}
                      styleTitle]
             (:.. (-/getProps entry titleProps))]}
@@ -70,7 +72,7 @@
     (:? actionComponent
         [:% n/View {:style styleAction}
          (r/createElement actionComponent
-                          (j/assign #{design entry palette}
+                          (Object.assign #{design entry palette}
                                     (-/getProps entry actionProps)))])]))
 
 (defn.js ContentAvatar
@@ -90,7 +92,7 @@
   (:= palette (base-palette/getPalette design palette))
   (return
    [:% ui-static/Div
-    {:design (j/assignNew
+    {:design (Object.assign {}
               design
               {:theme {:bg {:key "primary"
                             :mix "neutral"
@@ -100,7 +102,7 @@
               :borderRadius 25
               :justifyContent "center"
               :alignItems "center"}
-             (:.. (j/arrayify style))]}
+             (:.. (xtd/arrayify style))]}
     (:? image
         [:% n/Image
          #{[:style [{:height 50 :width 50} styleImage]
@@ -110,7 +112,7 @@
          #{[:style [{:color (base-palette/getColor palette {:key "background"})}
                     (n/PlatformSelect {:web {:cursor "default"
                                              :userSelect "none"}})
-                    (:.. (j/arrayify styleText))]
+                    (:.. (xtd/arrayify styleText))]
             (:.. (-/getProps entry textProps))]}
          (-/getField entry textField)])]))
 
@@ -142,7 +144,7 @@
      (:? leftComponent
          [:% n/View {:style styleLeft}
           (r/createElement leftComponent
-                           (j/assign #{design entry palette}
+                           (Object.assign #{design entry palette}
                                      (-/getProps entry leftProps)))])
      [:% n/View
       {:style {:flex 1}}
@@ -151,7 +153,7 @@
        (:? titleComponent
            (r/createElement
             titleComponent
-            (j/assign
+            (Object.assign
              #{design palette entry}
              (-/getProps entry titleProps))))]
       [:% n/View
@@ -159,13 +161,13 @@
        (:? contentComponent
            (r/createElement
             contentComponent
-            (j/assign
+            (Object.assign
              #{design palette entry}
              (-/getProps entry contentProps))))]]
      (:? rightComponent
          [:% n/View {:style styleRight}
           (r/createElement rightComponent
-                           (j/assign #{design entry palette}
+                           (Object.assign #{design entry palette}
                                      (-/getProps entry rightProps)))])]]))
 
 (defn.js HeroCard
@@ -192,7 +194,7 @@
      (:? headerComponent
          (r/createElement
           headerComponent
-          (j/assign
+          (Object.assign
            #{design palette entry}
            (-/getProps entry headerProps))))]
     [:% n/View
@@ -200,7 +202,7 @@
      (:? contentComponent
          (r/createElement
           contentComponent
-          (j/assign
+          (Object.assign
            #{design palette entry}
            (-/getProps entry contentProps))))]]))
 

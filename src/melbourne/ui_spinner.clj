@@ -3,14 +3,15 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-math :as xtm]
              [js.react-native :as n :include [:fn]]
              [js.react-native.ui-spinner :as ui-spinner]
              [melbourne.ui-helper :as ui-helper]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
              [melbourne.base-font :as base-font]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js SpinnerControls
@@ -26,8 +27,8 @@
    [:% ui-helper/HelperControl
     #{[:leftDisabled (<= value min)
        :rightDisabled (>= value max)
-       :onLeft  (fn:> (setValue (j/max min (j/min max (-  value step)))))
-       :onRight (fn:> (setValue (j/max min (j/min max (+  value step)))))
+       :onLeft  (fn:> (setValue (xtm/max min (xtm/min max (-  value step)))))
+       :onRight (fn:> (setValue (xtm/max min (xtm/min max (+  value step)))))
        (:.. rprops)]}]))
 
 (defn.js SpinnerValues
@@ -46,7 +47,7 @@
       styleDecimal
       styleDecimalText
       (:.. rprops)]}]
-  (var __variant (k/obj-assign-nested
+  (var __variant (xtd/obj-assign-nested
                   {:fg   {:key "primary"
                           :tone "flatten"}
                    :bg   {:key "background"
@@ -54,7 +55,7 @@
                   variant))
   (var __style (base-font/getFontStyle (or (. __variant font)
                                            "h6")))
-  (var __theme  (j/assign (base-theme/themeNormal
+  (var __theme  (Object.assign (base-theme/themeNormal
                            (base-palette/designPalette design)
                            __variant)
                           theme))
@@ -65,21 +66,21 @@
     {:style [{:padding 0
               :backgroundColor bgNormal}
              __style
-             (:.. (j/arrayify style))]}
+             (:.. (xtd/arrayify style))]}
     [:% ui-spinner/SpinnerValues
      #{[max
         min
         value
         :styleDigit     [{:backgroundColor nil}
-                         (:.. (j/arrayify styleDigit))]
+                         (:.. (xtd/arrayify styleDigit))]
         :styleDigitText [{:color fgNormal
                           :backgroundColor nil}
-                         (:.. (j/arrayify styleDigitText))]
+                         (:.. (xtd/arrayify styleDigitText))]
         :styleDecimal   [{:backgroundColor nil}
-                         (:.. (j/arrayify styleDecimal))]
+                         (:.. (xtd/arrayify styleDecimal))]
         :styleDecimalText [{:color fgNormal
                             :backgroundColor nil}
-                           (:.. (j/arrayify styleDecimalText))]
+                           (:.. (xtd/arrayify styleDecimalText))]
         (:.. rprops)]}]]))
 
 (defn.js Spinner
@@ -100,7 +101,7 @@
       styleDecimalText
       (:.. rprops)]}]
   (var __variant
-       (j/assign
+       (Object.assign
         {:fg   {:key "primary"
                 :tone "flatten"}
          :bg   {:key "background"
@@ -118,7 +119,7 @@
         variant))
   (var __style (base-font/getFontStyle (or (. __variant font)
                                            "h6")))
-  (var __theme  (j/assign (base-theme/themeUiInput
+  (var __theme  (Object.assign (base-theme/themeUiInput
                            (base-palette/designPalette design)
                            __variant)
                           theme))
@@ -128,22 +129,22 @@
     #{[:theme __theme
        :style [{:padding 0}
                __style
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        max
        min
        step
        value
        setValue
        :styleDigit     [{:backgroundColor nil}
-                        (:.. (j/arrayify styleDigit))]
+                        (:.. (xtd/arrayify styleDigit))]
        :styleDigitText [{:color fgNormal
                          :backgroundColor nil}
-                        (:.. (j/arrayify styleDigitText))]
+                        (:.. (xtd/arrayify styleDigitText))]
        :styleDecimal   [{:backgroundColor nil}
-                        (:.. (j/arrayify styleDecimal))]
+                        (:.. (xtd/arrayify styleDecimal))]
        :styleDecimalText [{:color fgNormal
                            :backgroundColor nil}
-                          (:.. (j/arrayify styleDecimalText))]
+                          (:.. (xtd/arrayify styleDecimalText))]
        (:.. rprops)]}]))
 
 (def.js MODULE (!:module))

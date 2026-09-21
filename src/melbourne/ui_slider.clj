@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-data :as xtd]
              [js.react-native.ui-slider :as ui-slider]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
@@ -31,7 +31,7 @@
       (:= length 150)
       (:.. rprops)]}]
   
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:fg   {:key "primary"}
                    :bg   {:key "background"
                           :tone "diminish"}
@@ -47,7 +47,7 @@
                   variant))
   (var __style (base-font/getFontStyle (or (. __variant font)
                                            "h6")))
-  (var __theme  (j/assign (base-theme/themeUiInput
+  (var __theme  (Object.assign (base-theme/themeUiInput
                            (base-palette/designPalette design)
                            __variant)
                           theme))
@@ -57,7 +57,7 @@
     #{[:theme __theme
        :style [{:padding 0}
                __style
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        max
        min
        step

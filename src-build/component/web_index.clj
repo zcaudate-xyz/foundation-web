@@ -11,12 +11,13 @@
             :emit   {:native {:suppress true}
                      :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
+             [js.module :as jm]
              [js.react.ext-box :as ext-box]
              [js.react :as r]
              [js.react-native :as n :include [:fn]]
              [js.lib.rn-expo :as x :include [:lib]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [xt.event.base-box :as base-box]
              [component.web-melbourne :as web-melbourne]
              [component.web-pune-frame :as web-pune-frame]]
@@ -24,8 +25,8 @@
    :file   "App.js"})
 
 (defrun.js __import__
-  (j/import-missing)
-  (j/import-set-global))
+  (jm/import-missing)
+  (jm/import-set-global))
 
 (defglobal.js Global
   (base-box/make-box

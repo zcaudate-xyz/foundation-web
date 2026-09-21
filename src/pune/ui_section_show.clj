@@ -9,10 +9,11 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.react :as r]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [xt.event.base-form :as event-form]
              [melbourne.ui-button :as ui-button]
              [melbourne.ui-section :as ui-section]
@@ -31,11 +32,11 @@
      form}]
   (var closeFn
        (fn:>
-         (j/future-delayed [100]
+         (promise/x:with-delay 100 (fn []
            (. control (setRouteKey nil))
            (when form
-             (event-form/reset-all form)))))
-  (var enabled (k/get-key routeEnabled (. control routeKey)))
+             (event-form/reset-all form))))))
+  (var enabled (xt/x:get-key routeEnabled (. control routeKey)))
   (var showButton
        (:? enabled
            [:% ui-button/Button
@@ -66,7 +67,7 @@
          routeEnabled
          children
          mini})
-  (var enabled (k/get-key routeEnabled (. control routeKey)))
+  (var enabled (xt/x:get-key routeEnabled (. control routeKey)))
   (var showButton (r/% -/SectionShowButton props))
   (return
    [:% ui-section/SectionFold

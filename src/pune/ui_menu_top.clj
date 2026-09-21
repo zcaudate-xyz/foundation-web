@@ -4,10 +4,10 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-data :as xtd]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [xt.lang.common-string :as text]
              [js.react-native.ui-tooltip :as ui-tooltip]
              [melbourne.base-palette :as base-palette]
@@ -56,7 +56,7 @@
       floating
       (:.. rprops)]}]
   (var __design design)
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:font "h4"
                    :bg {:key "background"
                         :tone "diminish"}
@@ -73,7 +73,7 @@
    [:% n/Row
     {:style [{:width 160 #_(:? mini 160 140)
               :minHeight 80}
-             (:.. (j/arrayify styleContainer))]}
+             (:.. (xtd/arrayify styleContainer))]}
     [:% ui-static/Div
      {:design __design
       :variant __variant
@@ -91,7 +91,7 @@
                  :fontWeight "900"
                  :fontSize 12.5
                  :borderRadius 1}
-         :format (fn:> [s] (k/capitalize (text/tag-string s)))
+         :format (fn:> [s] (text/capitalize (text/tag-string s)))
          :transformations {:bg nil}
          :data data
          (:.. rprops)]}]
@@ -141,7 +141,7 @@
                 :size 18}]]}]
     
     (r/% ui-tooltip/Tooltip
-         (j/assign
+         (Object.assign
           {:hostRef buttonRef
            :visible visible
            :setVisible setVisible
@@ -173,7 +173,7 @@
       setVisible
       (:.. rprops)]}]
   (var listProps
-       (j/assign
+       (Object.assign
         #{design
           routeKey
           setRouteKey
@@ -200,4 +200,3 @@
        (r/% -/TopMenuList listProps)}})))
 
 (def.js MODULE (!:module))
-

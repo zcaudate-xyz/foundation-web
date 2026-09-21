@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react.ext-model :as ext-view]
              [js.react.ext-route :as ext-route]
@@ -19,7 +19,7 @@
              [melbourne.slim-number :as slim-number]
              [melbourne.slim-select :as slim-select]
              [melbourne.slim-submit :as slim-submit]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 

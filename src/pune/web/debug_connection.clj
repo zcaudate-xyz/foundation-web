@@ -9,8 +9,10 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[xt.lang.base-lib :as k]
-             [js.core :as j]
+   :require [[xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]
              [js.react :as r :include [:fn]]
              [js.cell :as cl]
              [js.react.ext-cell :as cr]
@@ -45,12 +47,12 @@
                 (cl/view-update mc/C_DEBUG_PING context))
      :styleText {:textAlign "center"
                  :width 150}
-     :content   (:? (k/nil? updated)
+     :content   (:? (xtl/nil? updated)
                     "initialising"
-                    (+ "" (j/floor (/ (- (k/now-ms) updated)
+                    (+ "" (xtm/floor (/ (- (xt/x:now-ms) updated)
                                       1000))
                        " - "
-                       (j/floor (/ updated 1000))))}]))
+                       (xtm/floor (/ updated 1000))))}]))
 
 (defn.js LoginControl
   "creates a login panel"
@@ -60,8 +62,8 @@
   (var cell  (cl/get-cell context))
   (var token (cr/listenCell mc/C_AUTH_TOKEN "success" {} context))
   (var dash  (cr/listenCell mc/C_AUTH_DASHBOARD "success" {} context))
-  (var active (k/is-string? token))
-  (var nickname (:? (k/is-empty? dash)
+  (var active (xtl/is-string? token))
+  (var nickname (:? (xtd/is-empty? dash)
                     " - "
                     (. dash ["nickname"])))
   
@@ -94,10 +96,10 @@
   (var cell (cl/get-cell context))
   (var summary (cr/listenCell mc/C_UTIL_SUMMARY "success" {} context))
   (var active (:? summary
-                  (k/get-in summary ["streams" "ticker"])
+                  (xtd/get-in summary ["streams" "ticker"])
                   false))
   (var [change setChange] (r/local nil))
-  (var stable (and (or (k/nil? change)
+  (var stable (and (or (xtl/nil? change)
                        (== active change))
                    (not waiting)))
   (return
@@ -120,10 +122,10 @@
   (var cell (cl/get-cell context))
   (var summary (cr/listenCell mc/C_UTIL_SUMMARY "success" {} context))
   (var active (:? summary
-                  (k/get-in summary ["streams" "user"])
+                  (xtd/get-in summary ["streams" "user"])
                   false))
   (var [change setChange] (r/local nil))
-  (var stable (and (or (k/nil? change)
+  (var stable (and (or (xtl/nil? change)
                        (== active change))
                    (not waiting)))
   (return
@@ -146,10 +148,10 @@
   (var cell (cl/get-cell context))
   (var summary (cr/listenCell mc/C_UTIL_SUMMARY "success" {} context))
   (var active (:? summary
-                  (k/get-in summary ["streams" "delta" book])
+                  (xtd/get-in summary ["streams" "delta" book])
                   false))
   (var [change setChange] (r/local nil))
-  (var stable (and (or (k/nil? change)
+  (var stable (and (or (xtl/nil? change)
                        (== active change))
                    (not waiting)))
   (return
@@ -172,10 +174,10 @@
   (var cell (cl/get-cell context))
   (var summary (cr/listenCell mc/C_UTIL_SUMMARY "success" {} context))
   (var active (:? summary
-                  (k/get-in summary ["streams" "harness"])
+                  (xtd/get-in summary ["streams" "harness"])
                   false))
   (var [change setChange] (r/local nil))
-  (var stable (and (or (k/nil? change)
+  (var stable (and (or (xtl/nil? change)
                        (== active change))
                    (not waiting)))
   (return

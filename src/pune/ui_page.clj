@@ -10,13 +10,14 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-static :as ui-static]
              [pune.ui-sidemenu :as ui-sidemenu]
              [pune.ui-breadcrumb :as ui-breadcrumb]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js PageLayoutHeader
@@ -36,16 +37,16 @@
       children]}]
   (var [toolbar setToolbar] (r/local))
   (var bprops
-       (j/assign
+       (Object.assign
         #{design mini actions noBanner}
         (:? singleRoute
             {:root []
-             :path (k/first routeRoot)}
+             :path (xtd/first routeRoot)}
             {:root routeRoot
-             :path (:? routeKey (j/toUpperCase (+ "" routeKey)))})
+             :path (:? routeKey (xts/to-uppercase (+ "" routeKey)))})
         overrideBreadcrumb))
   (var tprops
-       (j/assign
+       (Object.assign
         {:design design
          #_#_:variant {:bg (:? noBanner
                            {:key "background"
@@ -53,19 +54,19 @@
                            {:key "primary"})}}
         overrideToolbar
         {:style [{;;:paddingTop 1
-                  #_#_:height (:? (k/not-empty? toolbar)
+                  #_#_:height (:? (xtd/not-empty? toolbar)
                               70
                               35)
                   :zIndex 100
                   :overflow "hidden"}
-                 (:.. (k/arrayify (. overrideToolbar style)))]}))
+                 (:.. (xtd/arrayify (. overrideToolbar style)))]}))
   
   (return
    (r/% ui-static/Div
         tprops
         (:? (not noBreadcrumb)
             (r/% ui-breadcrumb/Breadcrumb
-                 (j/assign bprops {:variant {:bg {:key "primary"}}
+                 (Object.assign bprops {:variant {:bg {:key "primary"}}
                                    :style
                                    {:padding 10}}))
             children)
@@ -89,13 +90,13 @@
      appendId}]
   (var dimensions (n/useWindowDimensions))
   (var override (:? overrideSideMenu (overrideSideMenu routeKey mini)))
-  (var menuProps (j/assign
+  (var menuProps (Object.assign
                   #{design
                     mini
                     actions
                     routeKey
                     setRouteKey
-                    {:miniTitle (and routeRoot (j/toUpperCase (or (k/first routeRoot) ""))) 
+                    {:miniTitle (and routeRoot (xts/to-uppercase (or (xtd/first routeRoot) "")))
                      :data sections
                      :narrowed (< (. dimensions width)
                                   720)}}
@@ -134,8 +135,8 @@
        noBreadcrumb]}]
    (var headerId (r/id))
    (var appendId (r/id))
-   (var Component  (k/get-key sectionRoutes routeKey))
-   (var cprops (j/assign #{design mini route actions
+   (var Component  (xt/x:get-key sectionRoutes routeKey))
+   (var cprops (Object.assign #{design mini route actions
                            headerId
                            appendId}
                          (sectionPropsFn routeKey)))

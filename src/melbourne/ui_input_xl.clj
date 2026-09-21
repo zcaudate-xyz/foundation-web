@@ -4,10 +4,11 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-data :as xtd]
              [js.react-native.helper-color :as c]
              [js.react-native :as n :include [:fn]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-math :as xtm]
              [melbourne.ui-input :as ui-input]
              [melbourne.ui-input-xl :as ui-input-xl]
              [melbourne.base-palette :as base-palette]]
@@ -35,19 +36,19 @@
            (fn [#{emptying
                   focusing
                   highlighted}]
-             (var active (j/max (- 1 emptying)
+             (var active (xtm/max (- 1 emptying)
                                 focusing))
              (var color (c/interpolateColor
                          mainNeutral
                          mainBackground
                          (:? #_(< 0.01 highlighted)
                              (- 1 active))))
-             (return {:style {:fontSize   (k/mix 18  10  active)
+             (return {:style {:fontSize   (xtm/mix 18  10  active)
                               :opacity 0.6
                               :color (c/toHSL color)
                               :transform
-                              [{:translateY (k/mix 15 53 active)}
-                               {:translateX (k/mix 10 -5  active)}]}}))}))
+                              [{:translateY (xtm/mix 15 53 active)}
+                               {:translateX (xtm/mix 10 -5  active)}]}}))}))
 
 (defn.js InputXL
   "creates the large input"
@@ -65,13 +66,13 @@
               :style [{:height 50
                        :paddingLeft 8
                        :fontSize 20}
-                      (:.. (j/arrayify style))]
+                      (:.. (xtd/arrayify style))]
               :styleContainer [{:flex 1
                                 :borderRadius 5
                                 :height 50}
-                               (:.. (j/arrayify styleContainer))]
+                               (:.. (xtd/arrayify styleContainer))]
               :inner [(-/inputPlaceHolder placeholder design)
-                      (:.. (j/arrayify inner))]
+                      (:.. (xtd/arrayify inner))]
               :outlined true
               (:.. rprops)]}]))
 

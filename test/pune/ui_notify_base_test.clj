@@ -13,7 +13,7 @@
    :require [[js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [pune.ui-notify-base :as ui-topnotify]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 ^{:refer pune.ui-notify-base/getOutdated :added "0.1"}
@@ -34,12 +34,12 @@
                                    :title "Order Placed"
                                    :message "NBA-MVP-2022/S.CURRY @ Y 1.34"
                                    :detail {:id "001-order"}
-                                   :time (k/now-ms)}
+                                   :time (xt/x:now-ms)}
                                   {:id    "01"
                                    :topic "user.account/password-changed"
                                    :title "Password Changed"
                                    :message "user: test00001"
-                                   :time (k/now-ms)}
+                                   :time (xt/x:now-ms)}
                                   ]))
     (return
      (n/EnclosedCode 
@@ -58,7 +58,7 @@
                  :topic "user.account/password-changed"
                  :title "Password Changed"
                  :message "user: test00001"
-                 :time (k/now-ms)}]
+                 :time (xt/x:now-ms)}]
          :design {:type "light"}}]] 
 [:% n/View
        [:% n/Row
@@ -81,12 +81,12 @@
                                    :title "Order Placed"
                                    :message "NBA-MVP-2022/S.CURRY @ Y 1.34"
                                    :detail {:id "001-order"}
-                                   :time (k/now-ms)}
+                                   :time (xt/x:now-ms)}
                                   {:id    "01"
                                    :topic "user.account/password-changed"
                                    :title "Password Changed"
                                    :message "user: test00001"
-                                   :time (k/now-ms)}
+                                   :time (xt/x:now-ms)}
                                   ]))
     (return
      (n/EnclosedCode 
@@ -105,7 +105,7 @@
                   :topic "user.account/password-changed"
                   :title "Password Changed"
                   :message "user: test00001"
-                  :time (k/now-ms)}]
+                  :time (xt/x:now-ms)}]
           :design {:type "dark"}}]]] 
 [:% n/Isolation
        [:% n/Row

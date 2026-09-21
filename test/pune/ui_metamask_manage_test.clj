@@ -14,11 +14,12 @@
 
 (l/script :js
   {:runtime :basic
-   :require [[xt.lang.base-lib :as k]
+   :require [[xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
              [xt.lang.common-repl :as repl]
              [js.lib.eth-lib :as eth-lib :include [:fn]]
              [js.lib.eth-bench :as eth-bench]
-             [js.core :as j]]})
+             ]})
 
 (fact:global
  {:setup    [(env/stop-ganache-server)
@@ -64,7 +65,7 @@
                   ~(:bytecode contract)
                   ~(:args contract)
                   {})
-                 (catch k/identity))))]
+                 (catch xtl/identity))))]
     (swap! +address+ assoc key contractAddress)
     contractAddress))
 
@@ -92,7 +93,7 @@
 
 (comment
 
-  (j/<!
+  (repl/<!
    (eth-bench/contract-run
     (@! (str "http://127.0.0.1:" env/+default-port+))
     (@! (last env/+default-private-keys+))
@@ -103,7 +104,7 @@
      "1000000"]
     {:gasLimit 10000000}))
   
-  (j/<!
+  (repl/<!
    (eth-bench/contract-run
     (@! (str "http://127.0.0.1:" env/+default-port+))
     (@! (last env/+default-private-keys+))
@@ -113,7 +114,7 @@
     [(nth env/+default-addresses-raw+ 9)]
     {}))
 
-  (j/<!
+  (repl/<!
    (eth-bench/contract-run
     (@! (str "http://127.0.0.1:" env/+default-port+))
     (@! (last env/+default-private-keys+))
@@ -126,7 +127,7 @@
   
   
   
-  (j/<! (eth-bench/send-wei
+  (repl/<! (eth-bench/send-wei
          (@! (str "http://127.0.0.1:" env/+default-port+))
          (@! (last env/+default-private-keys+))
          "0xf4f4B19C7216a7b94f5136E2DC9fc553Ac280cFd"
@@ -135,7 +136,7 @@
   (eth-lib/send-wei
    )
 
-  (j/<! (eth-lib/getBalance
+  (repl/<! (eth-lib/getBalance
          (eth-lib/new-rpc-provider
           (@! (str "http://127.0.0.1:" env/+default-port+)))
          "0xf4f4B19C7216a7b94f5136E2DC9fc553Ac280cFd"))
@@ -171,18 +172,18 @@
             +counter-contract+
             (System/getenv "TEST_GOERLI_KEY")))
   
-  (j/<!
+  (repl/<!
    (web3.eth.getBalance (@! (System/getenv "TEST_GOERLI_ADDRESS")
                          "0x1111c0AaB6941781d81B8EE493A1A0538455E966")))
   
-  (j/<!
+  (repl/<!
    (eth/send-wei web3
                  (System/getenv "TEST_GOERLI_ADDRESS")
                  1000000000000000000
                  0
                  (@! (last env/+default-private-keys+))))
 
-  (j/<!
+  (repl/<!
    (eth/send-wei LOCAL
                  "0x1111c0AaB6941781d81B8EE493A1A0538455E966"
                  1000000000000000000
@@ -190,7 +191,7 @@
                  (@! (last env/+default-private-keys+))))
   
   
-  (j/<!
+  (repl/<!
    (eth/send-wei LOCAL
                  "0xf4f4B19C7216a7b94f5136E2DC9fc553Ac280cFd"
                  1000000000000000000
@@ -198,7 +199,7 @@
                  (@! (last env/+default-private-keys+))))
   
   
-  (j/<!
+  (repl/<!
    (eth/send-wei LOCAL
                  "0xEB6e3a852b2Dfd80bCeDD109251A42C9F15DE5e4"
                  1000000000000
@@ -212,24 +213,24 @@
   
   
   (def +counter-deployed+
-    (j/<!
+    (repl/<!
      (. (eth/contract-deploy-single
          web3
          (@! (:abi +counter-contract+))
          (@! (:bytecode +counter-contract+))
          (@! (System/getenv "TEST_GOERLI_KEY"))
          [])
-        (catch k/identity))))
+        (catch xtl/identity))))
   
   (def +counter-deployed+
-    (j/<!
+    (repl/<!
      (. (eth/contract-deploy-single
          web3
          (@! (:abi +counter-contract+))
          (@! (:bytecode +counter-contract+))
          (@! (last env/+default-private-keys+))
          [])
-        (catch k/identity))))
+        (catch xtl/identity))))
   
   (eth/get-past-events)
 
@@ -237,7 +238,7 @@
   => "0x9e1Afda502f420F063f019c0ccDf3e9ce775F01f"
   
   (def +erc20-deployed+
-    (j/<!
+    (repl/<!
      (eth/contract-deploy-single
       web3
       (@! (:abi +erc20-contract+))
@@ -250,10 +251,10 @@
   "0x5ddCf4AfD5E53c3144e24D4aDf103021166171c2"
   => "0x53493D041B313a87dE7bbf16D6ac74F994E06d12"
 
-  (j/<!
+  (repl/<!
    (. (new eth/Contract (@! (:abi +erc20-contract+)))
       methods
       (balanceOf "0x1111c0aab6941781d81b8ee493a1a0538455e966")
       (call {:from "0x1111c0aab6941781d81b8ee493a1a0538455e966"})
-      (catch k/identity)))
+      (catch xtl/identity)))
   )

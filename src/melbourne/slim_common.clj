@@ -10,11 +10,13 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [xt.event.base-form :as event-form]
              [melbourne.base-font :as base-font]
              [melbourne.base-palette :as base-palette]
@@ -61,7 +63,7 @@
                                    :mix "neutral"
                                    :ratio 5}})
                 :style [(:? mini {} {:paddingBottom 0, :width 110})
-                        (:.. (j/arrayify styleLabel))]]} label]]))
+                        (:.. (xtd/arrayify styleLabel))]]} label]]))
   (var formElem
        [:% n/View
         {:key "form"
@@ -100,7 +102,7 @@
           template
           fieldProps
           minWidth]} props)
-  (var value (k/template-entry entry template props))
+  (var value (xtd/template-entry entry template props))
   (when (and value format)
     (:= value (format value)))
   (var #{[style
@@ -108,7 +110,7 @@
   (return
    [:% -/FormEnclosed
     #{design mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -116,11 +118,11 @@
     [:% n/View
      {:style {:margin 5}}
      (r/% ui-static/Text
-          (j/assign #{design variant}
+          (Object.assign #{design variant}
                     {:style [{:fontSize 13}
-                             (:.. (k/arrayify style))]}
+                             (:.. (xtd/arrayify style))]}
                     rprops)
-          (j/toString (or value " - ")))]]))
+          (xtl/to-string (or value " - ")))]]))
 
 (defn.js FormInput
   "creates an Input"
@@ -138,13 +140,13 @@
       minWidth
       hideValidation]}]
   (var #{value result} (ext-form/listenField form field
-                                             (j/assign {:slim/type "input"
+                                             (Object.assign {:slim/type "input"
                                                         :fn/type   "field"}
                                                        meta)))
   (return
    [:% -/FormEnclosed
     #{design mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -154,7 +156,7 @@
         :indicatorParams {:focusing {:default {:duration 100}}}
         :highlighted (== (. result ["status"])
                          "errored")
-        :value (j/toString (:? (k/nil? value) "" value))
+        :value (xtl/to-string (:? (xtl/nil? value) "" value))
         :onFocus (fn []
                    (event-form/validate-field form field))
         :onChangeText (fn [v]
@@ -182,7 +184,7 @@
       minWidth
       hideValidation]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "input_xl"
+                                          (Object.assign {:slim/type "input_xl"
                                                      :fn/type   "field"}
                                                     meta)))
   (var #{placeholder} fieldProps)
@@ -198,7 +200,7 @@
        variant
        placeholder
        :highlighted (== (. result ["status"]) "errored")
-       :value (j/toString (or value ""))
+       :value (xtl/to-string (or value ""))
        :onFocus (fn [] (event-form/validate-field form field))
        :onChangeText (fn
                        [v]
@@ -244,7 +246,7 @@
        variant
        mini
        form
-       :meta (j/assign {:slim/type "textarea"}
+       :meta (Object.assign {:slim/type "textarea"}
                        meta)
        label
        styleLabel
@@ -252,12 +254,12 @@
        field
        minWidth
        hideValidation
-       :fieldProps     (j/assign {:multiline true
+       :fieldProps     (Object.assign {:multiline true
                                   :style  {:height 60
                                            :flex nil}}
                                  fieldProps)
        :styleContainer [{:flexDirection "column"}
-                        (:.. (j/arrayify styleContainer))]]}]))
+                        (:.. (xtd/arrayify styleContainer))]]}]))
 
 (defn.js FormCheckBox
   "creates a check box"
@@ -275,14 +277,14 @@
       fieldProps
       (:.. rprops)]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "checkbox"
+                                          (Object.assign {:slim/type "checkbox"
                                                      :fn/type   "field"}
                                                     meta)))
   (return
    [:% n/Row
     [:% n/Padding
      {:style [{:width 5 #_(:? mini 5 115)}
-              (:.. (j/arrayify stylePadding))]}]
+              (:.. (xtd/arrayify stylePadding))]}]
     [:% n/Row
      {:style {:paddingVertical 3}}
      [:% ui-checkbox/CheckBox
@@ -297,10 +299,10 @@
      [:% n/Padding {:style {:width 15}}]
      [:% ui-static/Text
       #{[design
-         :variant (k/get-in design ["variant" "label"])
+         :variant (xtd/get-in design ["variant" "label"])
          :style [base-font/fontH6
                  {:padding 3}
-                 (:.. (j/arrayify styleLabel))]]}
+                 (:.. (xtd/arrayify styleLabel))]]}
       label]]]))
 
 (defn.js FormToggleButton
@@ -319,14 +321,14 @@
       text
       minWidth]}]
   (var #{value result} (ext-form/listenField form field
-                                             (j/assign {:slim/type "toggle_button"
+                                             (Object.assign {:slim/type "toggle_button"
                                                         :fn/type   "field"}
                                                        meta)))
   (return
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -360,14 +362,14 @@
       text
       minWidth]}]
   (var #{value result} (ext-form/listenField form field
-                                             (j/assign {:slim/type "toggle_switch"
+                                             (Object.assign {:slim/type "toggle_switch"
                                                         :fn/type   "field"}
                                                        meta)))
   (return
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -402,18 +404,18 @@
       (:= options [])]}]
   (var #{value result}
        (ext-form/listenField form field
-                             (j/assign {:slim/type "enum_single"
+                             (Object.assign {:slim/type "enum_single"
                                         :fn/type   "field"}
                                        meta)))
   (var #{mainNeutral} (base-palette/designPalette design))
-  (var Component (or (k/get-in fieldProps
+  (var Component (or (xtd/get-in fieldProps
                                ["component"])
                      ui-text/TabsMinor))
   (return 
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide
@@ -448,18 +450,18 @@
       minWidth
       (:= options [])]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "enum_multi"
+                                          (Object.assign {:slim/type "enum_multi"
                                                      :fn/type   "field"}
                                                     meta)))
   (var #{mainNeutral} (base-palette/designPalette design))
-  (var Component (or (k/get-in fieldProps
+  (var Component (or (xtd/get-in fieldProps
                                ["component"])
                      ui-text/EnumMinor))
   (return 
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -490,7 +492,7 @@
       minWidth
       (:= options [])]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "color_input"
+                                          (Object.assign {:slim/type "color_input"
                                                      :fn/type   "field"}
                                                     meta)))
   (var #{mainNeutral} (base-palette/designPalette design))
@@ -498,7 +500,7 @@
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -528,7 +530,7 @@
       minWidth
       (:= options [])]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "chip_input"
+                                          (Object.assign {:slim/type "chip_input"
                                                      :fn/type   "field"}
                                                     meta)))
   (var #{mainNeutral} (base-palette/designPalette design))
@@ -536,7 +538,7 @@
    [:% -/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -568,26 +570,26 @@
                field
                (:.. rprops)]}
             i]
-         (var props (j/assign rprops
+         (var props (Object.assign rprops
                               #{design mini form field 
-                                {:meta (j/assign {} meta rprops.meta)}}))
-         (var style (k/arr-append
-                     [(:.. (j/arrayify rowStyle))]
-                     (j/arrayify (. fieldStyle field))))
+                                {:meta (Object.assign {} meta rprops.meta)}}))
+         (var style (xtd/arr-assign
+                     [(:.. (xtd/arrayify rowStyle))]
+                     (xtd/arrayify (. fieldStyle field))))
          (return
           [:% n/Row
            #{[:key (or field i)
               :style [{:marginVertical 4}
-                      (:.. (j/arrayify style))]
+                      (:.. (xtd/arrayify style))]
               (:.. (or (. fieldProps [field])
                        {}))]}
            (r/createElement component props)])))
   (return
    [:% n/View
     #{(:.. rprops)}
-    (j/map (j/filter (j/arrayify rows) j/identity)
+    (xtd/arr-map (xtd/arr-filter (xtd/arrayify rows) xtl/identity)
            formElement)
-    (:? (k/not-empty? children)
+    (:? (xtd/not-empty? children)
         [:% n/Padding {:style {:height 16}}])
     children]))
 

@@ -15,7 +15,7 @@
              [pune.ui-notify-alerts :as ui-notify-alerts]
              [melbourne.ui-text :as ui-text]
              [xt.event.base-box :as event-box]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 ^{:refer pune.ui-notify-alerts/NotifyAlerts :added "0.1"}

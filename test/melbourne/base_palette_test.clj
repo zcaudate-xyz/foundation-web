@@ -5,7 +5,7 @@
 
 (l/script :js
   {:runtime :basic
-   :require [[xt.lang.base-lib :as k]
+   :require [[xt.lang.spec-base :as xt]
              [js.react-native.helper-color :as c]
              [melbourne.base-palette :as base-palette]]
    :export [MODULE]})

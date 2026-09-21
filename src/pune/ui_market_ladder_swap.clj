@@ -4,7 +4,8 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.spec-promise :as promise]
+             [xt.lang.common-math :as xtm]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [melbourne.slim :as slim]
@@ -12,7 +13,9 @@
              [melbourne.ui-section :as ui-section]
              [pune.common.data-market :as base-market]
              [pune.common.data-swap :as base-swap]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]]
    :export [MODULE]})
 
 (defn.js MarketLadderRow
@@ -32,9 +35,9 @@
   (var [prevAmount setPrevAmount] (r/local amount))
   (var isMounted (r/useIsMounted))
   (r/watch [amount]
-    (j/delayed [1000]
+    (setTimeout (fn []
       (when (isMounted)
-        (setPrevAmount amount))))
+        (setPrevAmount amount))) 1000))
   (var price (base-swap/position-to-fstr position))  
   (return
    (slim/entry
@@ -73,7 +76,7 @@
                                      #_#_:mix "background"
                                      #_#_:ratio 4}
                                :fg  {:key "background"}}
-                     :template (or (k/to-fixed (* 0.001 amount)
+                     :template (or (xts/to-fixed (* 0.001 amount)
                                                1)
                                    "")}]}]})))
 
@@ -92,12 +95,12 @@
                                               nil
                                               "yes"
                                               steps))
-  (var amountMax (k/max (:.. (k/arr-map (. offers buy) k/second))
-                        (:.. (k/arr-map (. offers sell) k/second))))
+  (var amountMax (xtm/max (:.. (xtd/arr-map (. offers buy) xtd/second))
+                        (:.. (xtd/arr-map (. offers sell) xtd/second))))
   (var lineFn
        (fn [side]
          (return
-          (fn [[position amount] i]
+          (fn [[position amount]]
             (return
              [:% -/MarketLadderRow
               #{{:key position}
@@ -117,7 +120,7 @@
               :flex 1
               :flexDirection "column-reverse"
               :overflow "hidden"}}
-     (j/map (j/reverse [(:.. (. offers buy))])
+     (xtd/arr-map (xtd/arr-reverse [(:.. (. offers buy))])
             (lineFn "ask"))]
     [:% ui-section/SectionSeparator
      {:design design
@@ -130,7 +133,7 @@
               :flex 1
               :flexDirection "column"
               :overflow "hidden"}}
-     (j/map (. offers sell)
+     (xtd/arr-map (. offers sell)
             (lineFn "bid"))]]))
 
 (def.js MODULE (!:module))

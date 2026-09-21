@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
@@ -19,7 +19,8 @@
              [melbourne.slim-error :as slim-error]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-font :as base-font]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js SubmitButton
@@ -46,7 +47,7 @@
            :style  [#_base-font/fontH6
                     {:textAlign "center"
                      :minWidth 100}
-                    (:.. (j/arrayify style))]
+                    (:.. (xtd/arrayify style))]
            :text   (:? reset
                        (or resetText "BACK")
                        (:? waiting
@@ -102,7 +103,7 @@
      {:style [(:? mini
                   {:flexDirection "column"}
                   {:flexDirection "row-reverse"})
-              (:.. (j/arrayify styleContainer))]}
+              (:.. (xtd/arrayify styleContainer))]}
      (:? (not errored)
          [:% -/SubmitButton
           #{[design
@@ -144,11 +145,11 @@
          [:% n/Padding {:style {:width 10}}]
          [:% ui-text/ButtonMinor
           #{[design
-             :variant (j/assign
+             :variant (Object.assign
                        {:bg {:key "background"}, :fg {:key "neutral"}}
-                       (k/get-in design ["variant" "clear"]))
+                       (xtd/get-in design ["variant" "clear"]))
              :style [base-font/fontH6
-                     (:.. (j/arrayify clearStyle))]
+                     (:.. (xtd/arrayify clearStyle))]
              :text (or clearText "Clear")
              :onPress onClear
              (:.. clearProps)]}]])
@@ -157,11 +158,11 @@
          [:% n/Padding {:style {:width 10}}]
          [:% ui-text/ButtonAccent
           #{[design
-             :variant (k/get-in
+             :variant (xtd/get-in
                         design
                         ["variant" "cancel"])
              :style [base-font/fontH6
-                     (:.. (j/arrayify cancelStyle))]
+                     (:.. (xtd/arrayify cancelStyle))]
              :text (or cancelText "Cancel")
              :onPress onCancel
              (:.. cancelProps)]}]])]))
@@ -246,7 +247,7 @@
                            keep
                            isMounted
                            onCheck
-                           {:meta (j/assign {:slim/type "submit_field"
+                           {:meta (Object.assign {:slim/type "submit_field"
                                              :fn/type   "submit"
                                              :validation/changes true}
                                             meta)}}))
@@ -293,7 +294,7 @@
                            keep
                            onCheck
                            isMounted
-                           {:meta (j/assign {:slim/type "submit_form"
+                           {:meta (Object.assign {:slim/type "submit_form"
                                              :fn/type   "submit"}
                                             meta)}}))
   (var onActionPress (:? errored

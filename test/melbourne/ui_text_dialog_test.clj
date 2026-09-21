@@ -15,7 +15,7 @@
              [melbourne.base-palette :as base-palette]
              [melbourne.ui-text-dialog :as ui-text-dialog]
              [melbourne.ui-section :as ui-section]
-             [js.core :as j]]
+             ]
    :export [MODULE]})
 
 ^{:refer melbourne.ui-text-dialog/ConfirmDialog :added "4.0"}

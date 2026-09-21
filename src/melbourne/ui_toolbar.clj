@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-data :as xtd]
              [js.react :as r]
              [js.react-native :as n :include [:fn]]
              [js.react-native.ui-tooltip :as ui-tooltip]
@@ -50,7 +50,7 @@
   [noChange]
   (return
    (ui-text/accentToggleTheme
-    (j/assign {:key "primary"}
+    (Object.assign {:key "primary"}
               (:? noChange
                   {:mix "background"
                    :ratio 1}))
@@ -183,7 +183,7 @@
   (return
    [:% ui-static/Div
     {:design design
-     :variant (j/assign
+     :variant (Object.assign
                {:bg (:? noBanner
                         {:key "background"
                          :tone "augment"}
@@ -192,7 +192,7 @@
      :style [{:flexDirection "row"
               #_#_:alignItems "center"
               :flex 1}
-             (:.. (j/arrayify style))]}
+             (:.. (xtd/arrayify style))]}
     children]))
 
 (defn.js ToolbarAnnex
@@ -205,7 +205,7 @@
       setVisible
       (:.. rprops)]}]
   (var onClose (fn:> (setVisible false)))
-  (var cprops (j/assign #{design
+  (var cprops (Object.assign #{design
                           mini
                           onClose}
                         rprops))

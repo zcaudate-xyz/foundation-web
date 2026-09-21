@@ -28,7 +28,7 @@
              #_#_
              [pune.ui-metamask-contract-test :as ui-metamask-contract-test]
              [pune.ui-metamask-user-test :as ui-metamask-user-test]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              #_[component.web-pune-frame-demo :as web-pune-frame-demo]
              [component.web-pune-frame-graph :as web-pune-frame-graph]]
    :export [MODULE]})

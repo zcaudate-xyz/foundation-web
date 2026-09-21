@@ -3,7 +3,10 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]]
+  {:require [[xt.lang.common-string :as xts]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (comment
@@ -22,11 +25,11 @@
                 #_{:color designNeutral}]}
        (:? noCurrencyLabel
            ""
-           (+ (j/padEnd currencyId 6 " ")
+           (+ (xts/pad-right currencyId 6 " ")
               " "))
        (:? notFound
            "NOT FOUND"
-           (+ "(" (j/toFixed
+           (+ "(" (xts/to-fixed
                    (or activeEscrow
                        escrow)
                    decimal) ")"))]
@@ -36,7 +39,7 @@
                 #_{:color designNeutral}]}
        (:? notFound
            "-"
-           (j/toFixed balance decimal))]]))
+           (xts/to-fixed balance decimal))]]))
   
   (defn.js AssetControlLabel
     "constructs an asset control label"
@@ -45,14 +48,14 @@
         active
         assets
         (:.. rprops)]}]
-    (var activeEscrow (and active (k/get-key active currencyId)))
-    (var currency  (k/get-key assets currencyId))
+    (var activeEscrow (and active (xt/x:get-key active currencyId)))
+    (var currency  (xt/x:get-key assets currencyId))
     (return [:% -/AssetRawLabel
              #{[:currency (or currency {})
                 :currencyId currencyId
                 :activeEscrow activeEscrow
                 :decimal 2
-                :notFound (k/nil? currency)
+                :notFound (xtl/nil? currency)
                 (:.. rprops)]}]))
 
   (defn.js AssetControl
@@ -63,10 +66,10 @@
     (var assets  (cr/listenCell mc/C_ASSET_MAIN "success" {} context))
     (var active  (model-trade/get-active-asset-escrow context))
     (:= currencies (or currencies ["STC" "USD" "DOGE"]))
-    (when (k/is-empty? assets)
+    (when (xtd/is-empty? assets)
       (return nil))
     (var currencyFn
-         (fn [currencyId i]
+         (fn [currencyId]
            (return [:% -/AssetControlLabel
                     #{[:key currencyId
                        design
@@ -77,10 +80,8 @@
                                   (cl/view-update mc/C_ASSET_MAIN context))]}])))
     (return
      [:% n/View
-      (j/map currencies currencyFn)])))
+      (xtd/arr-map currencies currencyFn)])))
 
 
 (def.js MODULE (!:module))
-
-
 

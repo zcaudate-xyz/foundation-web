@@ -10,13 +10,15 @@
             :emit   {:native {:suppress true}
                      :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-math :as xtm]
+             [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-spinner :as ui-spinner]
              [melbourne.slim-submit :as slim-submit]
              [melbourne.ui-text :as ui-text]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-trace :as trace]]
    :export [MODULE]})
 
 (def.js styleLargeDigit
@@ -259,7 +261,7 @@
       onResult
       submitProps
       (:= showSlider true)]}]
-  (var __submitProps (j/assign (r/useSubmitResult
+  (var __submitProps (Object.assign (r/useSubmitResult
                                 #{onSubmit
                                   onSuccess
                                   onError
@@ -275,7 +277,7 @@
          :variant {:pressed {:fg {:key "primary"
                                   :tone "sharpen"}
                              :bg {:key "neutral"}}}
-         :text (j/toUpperCase (+ trade " " prediction))
+         :text (xts/to-uppercase (+ trade " " prediction))
          :style {:width 110}
          :onPress (. __submitProps onActionPress)
          (:.. __submitProps)]}]]
@@ -315,7 +317,7 @@
       onSubmit
       onSuccess
       onError]}]
-  (var ratio (j/pow 10 (- decimal)))
+  (var ratio (xtm/pow 10 (- decimal)))
   (var min (* 1 ratio))
   (var max (* (- allotment 1) ratio))
   (return
@@ -329,7 +331,7 @@
        :data ["buy" "sell"]
        :value trade
        :setValue (fn [s]
-                   (k/LOG! s)
+                   (trace/LOG! s)
                    (setTrade s))}]
      [:% ui-text/TabsAccent
       {:design design

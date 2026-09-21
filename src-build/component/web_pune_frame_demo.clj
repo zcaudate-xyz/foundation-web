@@ -9,7 +9,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.spec-promise :as promise]
+             [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [js.react-native.ui-notify :as ui-notify-events]
@@ -24,7 +25,9 @@
              [pune.ui-menu-vert :as ui-menu-vert]
              [pune.ui-notify-base :as ui-topnotify]
              [statsweb.admin.index.base-layout :as base-layout]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (def.js SampleText
@@ -55,7 +58,7 @@
   (var [current setCurrent]  [routeKey setRouteKey])
   (return
    [:% ui-console/Console
-    #{[:design (j/assignNew design {:invert true})
+    #{[:design (Object.assign {} design {:invert true})
        current setCurrent
        :screens {"one"   (fn:> [:% n/Text "ONE"])
                  "two"   (fn:> [:% n/Text "TWO"])
@@ -103,9 +106,9 @@
                 :icon  "browser"
                 :label "CONSOLE"
                 :design    design
-                :selected (k/not-nil? frameConsole)
+                :selected (xtl/not-nil? frameConsole)
                 :onPress  (fn:> (setFrameConsole
-                                 (:? (k/nil? frameConsole)
+                                 (:? (xtl/nil? frameConsole)
                                      true
                                      nil)))}
                {:component ui-menu-vert/MainMenuToggle
@@ -121,9 +124,9 @@
                 :icon  "tag"
                 :label "DARK MODE"
                 :design   design
-                :selected (== "dark" (k/get-in design ["type"]))
+                :selected (== "dark" (xtd/get-in design ["type"]))
                 :onPress  (fn:> (setDesign
-                                 {:type (:? (== "dark" (k/get-in design ["type"]))
+                                 {:type (:? (== "dark" (xtd/get-in design ["type"]))
                                             "light"
                                             "dark")}))}
                {:component ui-menu-vert/MainMenuToggle
@@ -138,14 +141,14 @@
                 :icon  "sound"
                 :label "NOTIFY"
                 :onPress  (fn []
-                            (var id (j/randomId 6))
+                            (var id (xts/str-rand 6))
                             (var msg
                                  {:id    id
                                   :topic "user.account/notify"
                                   :title id
                                   :message (+ "Notify: " id)
-                                  :time (k/now-ms)})
-                            (setInbox (j/assign {id msg} inbox))
+                                  :time (xt/x:now-ms)})
+                            (setInbox (Object.assign {id msg} inbox))
                             (setShowNotify true))}
                ]}}]))
 
@@ -158,29 +161,29 @@
   (var isMounted (r/useIsMounted))
   (var refresh   (r/useRefresh))
   (var [index setIndex] (r/local 0))
-  (var data (k/arr-sort (j/values inbox)
-                        (k/key-fn "time")
-                        k/gt))
+  (var data (xtd/arr-sort (xtd/obj-vals inbox)
+                        (xtd/key-fn "time")
+                        xtl/gt))
   (r/watch [inbox refresh]
-    (when (k/not-empty? inbox)
-      (j/future-delayed [500]
+    (when (xtd/not-empty? inbox)
+      (promise/x:with-delay 500 (fn []
         (when (isMounted)
-          (refresh))))
+          (refresh)))))
     (var outdated (-> inbox
-                      (j/values)
-                      (j/filter (fn [e]
+                      (xtd/obj-vals)
+                      (xtd/arr-filter (fn [e]
                                   (return
                                    (and (not (. e sticky))
                                         (< (+ 5000 (. e time))
-                                           (k/now-ms))))))
-                      (j/map k/id-fn)))
-    (when (k/not-empty? outdated)
-      (var out (k/obj-omit inbox outdated))
-      (cond (k/is-empty? out)
+                                           (xt/x:now-ms))))))
+                      (xtd/arr-map xtd/id-fn)))
+    (when (xtd/not-empty? outdated)
+      (var out (xtd/obj-omit inbox outdated))
+      (cond (xtd/is-empty? out)
             (do (setShowNotify false)
-                (j/future-delayed [500]
+                (promise/x:with-delay 500 (fn []
                     (when (isMounted)
-                      (setInbox out))))
+                      (setInbox out)))))
             
             :else
             (setInbox out))))
@@ -194,15 +197,15 @@
        index setIndex
        {:onClose (fn []
                    (var entry (. data [index]))
-                   (when (k/nil? entry)
+                   (when (xtl/nil? entry)
                      (setShowNotify false))
-                   (var out (k/obj-omit inbox [(and entry
+                   (var out (xtd/obj-omit inbox [(and entry
                                                     (. entry id))]))
-                   (cond (k/is-empty? out)
+                   (cond (xtd/is-empty? out)
                          (do (setShowNotify false)
-                             (j/future-delayed [200]
+                             (promise/x:with-delay 200 (fn []
                                (when (isMounted)
-                                 (setInbox out))))
+                                 (setInbox out)))))
                          
                          :else
                          (setInbox out)))
@@ -259,8 +262,8 @@
            :onPress (fn []
                      (setVisible false)
                      (setWaiting true)
-                     (j/delayed [500]
-                       (setWaiting false)))]}]
+                     (setTimeout (fn []
+                       (setWaiting false)) 500))]}]
        #_[:% slim-submit/SubmitLineHelpers
         #{[design
            :cancelShow true
@@ -277,7 +280,7 @@
      {:style {:marginVertical 3}}
      [:% ui-button/Button
       {:refLink buttonRef
-       :design (j/assignNew design {:mode ["primary"] })
+       :design (Object.assign {} design {:mode ["primary"] })
        :text "DELETE MODAL"
        :onPress (fn:> (setVisible true))}]]
     [:% slim-dialog/Dialog
@@ -327,7 +330,7 @@
       #_[:% ui-static/Breadcrumb
        {:design design
         :root ["HOME"]
-        :path (:? routeKey (j/toUpperCase (+ "" routeKey)))}]
+        :path (:? routeKey (xts/to-uppercase (+ "" routeKey)))}]
       [:% n/Row
        {:style {:paddingVertical 10}}
        [:% ui-static/Text
@@ -355,7 +358,7 @@
 (defn.js FrameMain
   []
   (var [design setDesign] (r/local {:type "dark"}))
-  (var bkey (k/json-encode design))
+  (var bkey (xt/x:json-encode design))
   (var [frameConsole
         setFrameConsole] (r/local false))
   (var [isGuest
@@ -370,12 +373,12 @@
                                 :message "NBA-MVP-2022/S.CURRY @ Y 1.34"
                                 :sticky true
                                 :detail {:id "001-order"}
-                                :time (k/now-ms)}
+                                :time (xt/x:now-ms)}
                           "01" {:id    "01"
                                 :topic "user.account/password-changed"
                                 :title "Password Changed"
                                 :message "user: test00001"
-                                :time (k/now-ms)}}))
+                                :time (xt/x:now-ms)}}))
   (return
    [:% n/View
     {:style {:position "absolute"

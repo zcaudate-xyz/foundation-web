@@ -11,7 +11,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.core.style :as css]
              
              [js.react-native.helper-color :as c]
@@ -20,7 +20,7 @@
              [js.react-native.animate :as a]
              [js.react-native.physical-base :as ui]
              [pune.ui-metamask-contract :as metamask-contract]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [xt.event.base-box :as event-box]]
    :import  [["@statstrade/interface/StatstradeGateway.json" :as GatewaySpec]]
    :export [MODULE]})

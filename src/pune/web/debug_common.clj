@@ -9,9 +9,11 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[xt.lang.base-lib :as k]
+   :require [[xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]
              [xt.event.base-log :as event-log]
-             [js.core :as j]
+             
              [js.cell :as cl]
              [js.react.ext-box :as ext-box]
              [js.react.ext-log :as ext-log]
@@ -30,8 +32,8 @@
   "displays a brief info"
   {:added "0.1"}
   [v branch parents]
-  (var header (k/arr-join [(:.. parents) branch]
-                          ", "))
+  (var header (xts/join ", "
+                        [(:.. parents) branch]))
   (return
    [:% n/View
     {:style {:flex 1
@@ -63,7 +65,7 @@
                  :listWidth 150}
                 {:type "list"
                  :branchesFn (fn:> [_tree parents schema]
-                               (model-system/schema-columns-fn schema (k/first parents))) 
+                               (model-system/schema-columns-fn schema (xtd/first parents)))
                  :initial column
                  :setInitial setColumn
                  :width 150
@@ -88,13 +90,13 @@
                  :setInitial setTable}
                 {:type "list"
                  :branchesFn (fn:> [_tree parents view]
-                               (model-system/view-entries-fn view (k/first parents))) 
+                               (model-system/view-entries-fn view (xtd/first parents)))
                  :initial view
                  :setInitial setView
                  :targetFn
                  (fn:> [_tree branch parents views]
-                   (k/get-in views [(k/first parents)
-                                    (k/unpack (k/json-decode (or branch "[null, null]")))]))
+                   (xtd/get-in views [(xtd/first parents)
+                                    (xt/x:unpack (xt/x:json-decode (or branch "[null, null]")))]))
                  :displayFn -/displayInfo}]
        (:.. rprops)]}]))
 
@@ -119,7 +121,7 @@
                  :initial group
                  :setInitial setGroup
                  :tabsFormat (fn:> [s] (+ " " s " "))
-                 :formatFn k/json-encode}
+                 :formatFn xt/x:json-encode}
                 {:type "list"
                  :initial route
                  :setInitial setRoute
@@ -181,7 +183,7 @@
                  :setInitial setModel
                  :branchesFn
                  (fn:> [cell]
-                   (k/sort (cl/list-models cell)))
+                   (. (cl/list-models cell) (sort)))
                  :targetFn
                  (fn [cell model]
                    (return (cl/get-model model cell)))}
@@ -191,18 +193,18 @@
                  :tabsFormat (fn:> [s] (+ " " s " "))
                  :branchesFn 
                  (fn [model parents cell]
-                   (when (and (k/first parents)
-                              (cl/get-model (k/first parents) cell))
-                     (return (cl/list-views (k/first parents) cell)))
+                   (when (and (xtd/first parents)
+                              (cl/get-model (xtd/first parents) cell))
+                     (return (cl/list-views (xtd/first parents) cell)))
                    (return []))
                  :targetFn
                  (fn [model modelKey parents cell]
                    (var #{output input} (or (cl/get-view
-                                             [(:.. (j/arrayify parents))
+                                             [(:.. (xtd/arrayify parents))
                                               modelKey]
                                              cell)
                                             {}))
-                   (return (j/assign #{input} output)))
+                   (return (Object.assign #{input} output)))
                  :displayFn -/displayInfo}]
        (:.. rprops)]}]))
 
@@ -218,7 +220,7 @@
     (var live    (v/val (live-market/LIVE)))
     (return [:% ui/KeyListPane
              {:tree live
-              :keysFn (fn:> [live] (k/sort (k/arr-filter (k/obj-keys live)
-                                                         (fn:> [k] (not= k "__reset__")))))}]))
+              :keysFn (fn:> [live] (. (xtd/arr-filter (xtd/obj-keys live)
+                            (fn:> [k] (not= k "__reset__"))) (sort)))}]))
 
   )

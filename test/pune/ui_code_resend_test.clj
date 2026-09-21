@@ -10,14 +10,15 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.react :as r :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-static :as ui-static]
              [pune.ui-code-resend :as ui-code-resend]
              [melbourne.base-validators :as validators]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 ^{:refer pune.ui-code-resend/CodeResendButton :added "0.1"}
@@ -30,7 +31,7 @@
     (var [result1 setResult1] (r/local (fn:>)))
     (var sink0Id (r/id))
     (var sink1Id (r/id))
-    (var [key setKey] (r/local (j/random)))
+    (var [key setKey] (r/local (xt/x:random)))
     (var form (ext-form/makeForm (fn:> {:email "test00001@statstrade.io"
                                         :code  "1234"})
                                  {:email []
@@ -40,7 +41,7 @@
 {:label "pune.ui-code-resend/CodeResendButton"} 
 [:% n/Row
        [:% n/Button {:title "R"
-                     :onPress (fn:> (setKey (j/random)))}]] 
+                     :onPress (fn:> (setKey (xt/x:random)))}]] 
 [:% n/View
        [:% n/View
         {:style {:backgroundColor "#eee"
@@ -52,10 +53,10 @@
             :sinkId sink0Id
             :submitProps {:onResult setResult0
                           :onSubmit (fn []
-                                      (return (j/future-delayed [300]
+                                      (return (promise/x:with-delay 300 (fn []
                                                (return
                                                 {:status "ok"
-                                                 :updated (k/now-ms)}))))}}}]
+                                                 :updated (xt/x:now-ms)})))))}}}]
         [:% n/PortalSink
          {:name sink0Id
           :style {:height 80}}]]
@@ -69,9 +70,9 @@
             :sinkId sink1Id
             :submitProps {:onResult setResult1
                           :onSubmit (fn []
-                                      (return (j/future-delayed [300]
+                                      (return (promise/x:with-delay 300 (fn []
                                                (return
-                                                {:status "error"}))))}}}]
+                                                {:status "error"})))))}}}]
         [:% n/PortalSink
          {:name sink1Id
           :style {:height 80}}]]] 

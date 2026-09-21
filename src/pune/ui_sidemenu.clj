@@ -4,10 +4,10 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-data :as xtd]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [xt.lang.common-string :as text]
              [js.react-native.ui-tooltip :as ui-tooltip]
              [melbourne.base-palette :as base-palette]
@@ -57,7 +57,7 @@
   (var __design design #_(:? floating
                              (base-palette/invertDesign design)
                              ))
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:font "h4"
                    :bg {:key "background"
                         :tone "diminish"}
@@ -74,7 +74,7 @@
    [:% n/Row
     {:style [{:width 140 #_(:? mini 160 140)
               :minHeight 80}
-             (:.. (j/arrayify styleContainer))]}
+             (:.. (xtd/arrayify styleContainer))]}
     [:% ui-static/Div
      {:design __design
       :variant __variant
@@ -90,7 +90,7 @@
                  :fontWeight "600"
                  :fontSize 12.5
                  :borderRadius 1}
-         :format (fn:> [s] (k/capitalize (text/tag-string s)))
+         :format (fn:> [s] (text/capitalize (text/tag-string s)))
          :transformations {:bg nil}
          :data data
          (:.. rprops)]}]
@@ -160,7 +160,7 @@
       (:.. rprops)]}]
   (var [visible setVisible] (r/local false))
   (var listProps
-       (j/assign
+       (Object.assign
         #{design
           routeKey
           setRouteKey

@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [melbourne.ui-helper :as ui-helper]
              [melbourne.base-palette :as base-palette]
@@ -20,7 +20,7 @@
    (var [month setMonth] (r/local "JAN"))
    (return
     (r/% ui-picker-basic/PickerBasic
-         (j/assignNew props
+         (Object.assign {} props
                       {:items ["JAN" "FEB" "MAR"]
                        :value month
                        :setMonth setMonth})))))
@@ -32,7 +32,7 @@
    (var [month setMonth] (r/local "JAN"))
    (return
     (r/% ui-picker-basic/PickerBasic
-         (j/assignNew props
+         (Object.assign {} props
                       {:items ["JAN" "FEB" "MAR"]
                        :value month
                        :setMonth setMonth})))))

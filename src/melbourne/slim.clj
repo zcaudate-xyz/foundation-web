@@ -3,12 +3,13 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [js.react.ext-model :as ext-view]
              [js.react.ext-route :as ext-route]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [melbourne.ui-toolbar :as ui-toolbar]
              [melbourne.ui-static :as ui-static]
              [melbourne.slim-table-list :as slim-table-list]
@@ -46,7 +47,7 @@
 (defn.js entry
   [props impl opts]
   (return
-   (r/% slim-entry/Entry (j/assignNew props #{impl} opts))))
+   (r/% slim-entry/Entry (Object.assign {} props #{impl} opts))))
 
 (defn.js useLocalPrimitives
   "creates crud control primitives"
@@ -177,7 +178,7 @@
   {:added "4.0"}
   [route override m]
   (var control (-/useRoutePrimitives route override))
-  (return (j/assign (-/useListControl control)
+  (return (Object.assign (-/useListControl control)
                     control)))
 
 (defn.js useLocalControl
@@ -185,7 +186,7 @@
   {:added "4.0"}
   [m]
   (var control (-/useLocalPrimitives))
-  (return (j/assign (-/useListControl control)
+  (return (Object.assign (-/useListControl control)
                     control
                     m)))
 
@@ -197,7 +198,7 @@
                    "display"
                    "control"
                    "actions"])
-  (return (k/obj-pick props parentKeys)))
+  (return (xtd/obj-pick props parentKeys)))
 
 (defn.js useParentControl
   "packages parent props"
@@ -215,11 +216,11 @@
             showCreate
             showModify]
     (cond (or (and showCreate
-                   (not= "disable" (k/get-in opts ["create"])))
+                   (not= "disable" (xtd/get-in opts ["create"])))
               (and showModify
-                   (not= "disable" (k/get-in opts ["modify"])))
+                   (not= "disable" (xtd/get-in opts ["modify"])))
               (and showDetail
-                   (not= "disable" (k/get-in opts ["detail"]))))
+                   (not= "disable" (xtd/get-in opts ["detail"]))))
           (do (. parent control (setShowHeader false)))
 
           :else

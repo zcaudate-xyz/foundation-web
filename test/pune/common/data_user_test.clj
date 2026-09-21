@@ -8,11 +8,11 @@
 (l/script- :js
   {:runtime :basic
    :require [[pune.common.data-user :as data-user]
-             [js.core :as j]
+             
              [statslink.full.link-local :as link-local]
              [statslink.full.link-remote :as link-remote]
              [statslink.test.setup-node-debug :as setup-debug]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              [xt.lang.common-repl :as repl]]
    :export [MODULE]})
 
@@ -32,27 +32,33 @@
               (l/rt:stop)]})
 
 ^{:refer pune.common.data-user/is-email-available :added "0.1"
-  :setup [(j/<! ((. (data-user/is-email-available "hello" nil)
-                    [1]
-                    ["check"])
-                 "a@a.com"))]}
+  :setup [(notify/wait-on :js
+            (. ((. (data-user/is-email-available "hello" nil)
+                  [1]
+                  ["check"])
+                "a@a.com")
+               (then (repl/>notify))))]}
 (fact "checks that email is available"
   ^:hidden
   
-  (j/<! ((. (data-user/is-email-available "hello" nil)
-            [1]
-            ["check"])
-         "a@a.com"))
+  (notify/wait-on :js
+    (. ((. (data-user/is-email-available "hello" nil)
+          [1]
+          ["check"])
+        "a@a.com")
+       (then (repl/>notify))))
   => boolean?)
 
 ^{:refer pune.common.data-user/is-nickname-available :added "0.1"}
 (fact "checks that nickname is available"
   ^:hidden
   
-  (j/<! ((. (data-user/is-nickname-available "hello" nil)
-            [1]
-            ["check"])
-         "a@a.com"))
+  (notify/wait-on :js
+    (. ((. (data-user/is-nickname-available "hello" nil)
+          [1]
+          ["check"])
+        "a@a.com")
+       (then (repl/>notify))))
   => boolean?)
 
 ^{:refer pune.common.data-user/account-new-validators :added "0.1"}

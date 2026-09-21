@@ -3,14 +3,16 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-math :as xtm]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
              [melbourne.base-font :as base-font]
              [melbourne.slim-entry :as slim-entry]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js SheetPagination
@@ -24,12 +26,12 @@
   (var #{[(:= page {})]} impl)
   (var #{[(:= display 20)
           (:= total (:? entries
-                        (k/len entries)
+                        (xt/x:len entries)
                         0))]} page)
-  (var setShowPage (k/get-in control ["setShowPage"]))
-  (var showPage    (or (k/get-in control ["showPage"])
+  (var setShowPage (xtd/get-in control ["setShowPage"]))
+  (var showPage    (or (xtd/get-in control ["showPage"])
                        1))
-  (var pageCount (+ (k/floor (/ (- total 1) display))
+  (var pageCount (+ (xtm/floor (/ (- total 1) display))
                     1))
 
   (var isMini (< pageCount 7))
@@ -47,7 +49,7 @@
                          [:% n/Icon
                           {:key  (+ idx 1)
                            :name "dots-three-horizontal"}]
-                         (j/toString (+ idx 1)))
+                         (xtl/to-string (+ idx 1)))
                :onPress (fn:> (setShowPage (+ idx 1)))})))
   
   (return
@@ -55,11 +57,11 @@
     {:key pageCount}
     (:? isMini
         [:% n/Row
-         (k/arr-map (k/arr-range pageCount) toggleFn)]
+         (xtd/arr-map (xtd/arr-range pageCount) toggleFn)]
         
         isLeftEdge
         [:% n/Row
-         (k/arr-map (k/arr-range 4) toggleFn)
+         (xtd/arr-map (xtd/arr-range 4) toggleFn)
          (toggleFn (+ showPage 1) true)
          (toggleFn (- pageCount 1))]
 
@@ -67,14 +69,14 @@
         [:% n/Row
          (toggleFn 0)
          (toggleFn (- showPage 3) true)
-         (k/arr-map (k/arr-range [(- pageCount 4) pageCount])
+         (xtd/arr-map (xtd/arr-range [(- pageCount 4) pageCount])
                     toggleFn)]
         
         :else
         [:% n/Row
          (toggleFn 0)
          (toggleFn (- showPage 3) true)
-         (k/arr-map (k/arr-range [(- showPage 2) (+ showPage 1)])
+         (xtd/arr-map (xtd/arr-range [(- showPage 2) (+ showPage 1)])
                     toggleFn)
          (toggleFn (+ showPage 1) true)
          (toggleFn (- pageCount 1))])]))
@@ -89,7 +91,7 @@
       styleContainer
       (:.. iprops)]}]
   (var #{[name
-          (:= format k/identity)]} group)
+          (:= format xtl/identity)]} group)
   (return
    [:% n/View
     {:style {:marginTop 10}}
@@ -102,7 +104,7 @@
          :style [{:fontWeight 900
                   :borderRadius 2
                   :paddingVertical 3}
-                 (:.. (k/arrayify style))]}}
+                 (:.. (xtd/arrayify style))]}}
       (format name)]]
     [:% ui-static/Separator
      #{design
@@ -132,12 +134,12 @@
        (fn [column i]
          (var #{key} column)
          (var #{[style
-                 (:.. rprops)]} (or (k/get-in custom [key])
+                 (:.. rprops)]} (or (xtd/get-in custom [key])
                                     {}))
          (var Component slim-entry/EntryContentTitleH5)
-         (var oprops (j/assignNew
+         (var oprops (Object.assign {}
                       #{[design
-                         :impl  (j/assignNew
+                         :impl  (Object.assign {}
                                  column
                                  header
                                  {:variant variant
@@ -145,7 +147,7 @@
                                  (. column header))
                          :style [{:paddingVertical 5
                                   :paddingHorizontal 10}
-                                 (:.. (k/arrayify style))]]}
+                                 (:.. (xtd/arrayify style))]]}
                       rprops))
          (return
           [:% n/View
@@ -161,8 +163,8 @@
                 :marginBottom 10
                 :paddingHorizontal 10
                 :alignItems "center"}
-               (:.. (k/arrayify style))]]}
-    (j/map columns columnFn)]))
+               (:.. (xtd/arrayify style))]]}
+    (. columns (map columnFn))]))
 
 (defn.js SheetRow
   "creates a sheet row"
@@ -178,18 +180,18 @@
        (fn [column i]
          (var #{key} column)
          (var #{[style
-                 (:.. rprops)]} (or (k/get-in custom [key])
+                 (:.. rprops)]} (or (xtd/get-in custom [key])
                                     {}))
          (var Component (or (and (. column type)
                                  slim-entry/Entry)
                             slim-entry/EntryContentParagraph))
-         (var oprops (j/assignNew
+         (var oprops (Object.assign {}
                       iprops
                       #{[design
                          variant
                          :impl  column
                          :style [{:paddingHorizontal 10}
-                                 (:.. (k/arrayify style))]]}
+                                 (:.. (xtd/arrayify style))]]}
                       rprops))
          (return
           [:% n/View
@@ -206,8 +208,8 @@
                 :marginBottom 3
                 :paddingLeft 10
                 :paddingRight 20}
-               (:.. (k/arrayify style))]]}
-    (j/map columns columnFn)]))
+               (:.. (xtd/arrayify style))]]}
+    (. columns (map columnFn))]))
 
 (defn.js SheetBasicRows
   "creates a basic sheet"
@@ -220,15 +222,15 @@
   (return
    [:% n/View
     {:style {:flex 1}}
-    (j/map entries
-           (fn:> [entry i]
-             (r/% -/SheetRow
-                  (j/assignNew
-                   props
-                   {:key (+ (or (. entry id)
-                                "")
-                            i)
-                    :entry entry}))))]))
+    (. entries
+       (map (fn:> [entry i]
+              (r/% -/SheetRow
+                   (Object.assign {}
+                    props
+                    {:key (+ (or (. entry id)
+                                 "")
+                             i)
+                     :entry entry})))))]))
 
 (defn.js SheetBasic
   "creates a basic sheet"
@@ -254,24 +256,24 @@
   (return
    [:% n/View
     (r/% -/SheetGroupHeader props)
-    (r/% -/SheetBasicRows (j/assign rprops #{entries}))]))
+    (r/% -/SheetBasicRows (Object.assign rprops #{entries}))]))
 
 (defn.js groupEntries
   [entries impl]
-  (var itemsImpl   (j/assign {:reverse false
-                              :sort k/identity
-                              :filter k/identity}
+  (var itemsImpl   (Object.assign {:reverse false
+                              :sort xtl/identity
+                              :filter xtl/identity}
                              (. impl items)))
-  (var groupsImpl  (j/assign {:reverse false
-                              :split  k/id-fn
-                              :sort   k/identity
-                              :filter k/T}
+  (var groupsImpl  (Object.assign {:reverse false
+                              :split  xtd/id-fn
+                              :sort   xtl/identity
+                              :filter xtl/T}
                              (. impl groups)))
   (var groups (-> (or entries [])
-                  (k/arr-group-by (k/template-fn (. groupsImpl split))
-                                  k/identity)
-                  (k/obj-map (. itemsImpl sort))
-                  (k/obj-pairs)
+                  (xtd/arr-group-by (xtd/template-fn (. groupsImpl split))
+                                  xtl/identity)
+                  (xtd/obj-map (. itemsImpl sort))
+                  (xtd/obj-pairs)
                   ((. groupsImpl sort))))
   (return groups))
 
@@ -282,22 +284,22 @@
   (var #{noHeader
          impl
          entries} props)
-  (var itemsImpl   (j/assign {:reverse false
-                              :sort k/identity
-                              :filter k/identity}
+  (var itemsImpl   (Object.assign {:reverse false
+                              :sort xtl/identity
+                              :filter xtl/identity}
                              (. impl items)))
-  (var isGrouped   (k/not-nil? (. impl groups)))
-  (var isPaged     (k/not-nil? (. impl page)))
+  (var isGrouped   (xtl/not-nil? (. impl groups)))
+  (var isPaged     (xtl/not-nil? (. impl page)))
 
   (cond isGrouped
         (do (var groups (-/groupEntries entries impl))
             (return [:% n/View
                      (:? (not noHeader)
                          (r/% -/SheetHeader props))
-                     (j/map groups
+                     (xtd/arr-map groups
                             (fn:> [[name entries]]
                               (r/% -/SheetGroupRows
-                                   (j/assignNew props
+                                   (Object.assign {} props
                                                 {:group #{name entries
                                                           {:format (. impl groups format)}}}
                                                 ))))]))
@@ -309,7 +311,7 @@
         (do (return [:% n/View
                      (:? (not noHeader)
                          (r/% -/SheetHeader props))
-                     (r/% -/SheetBasicRows (j/assignNew props {:entries (. itemsImpl (sort entries))}))])))
+                     (r/% -/SheetBasicRows (Object.assign {} props {:entries (. itemsImpl (sort entries))}))])))
   
   
   (return

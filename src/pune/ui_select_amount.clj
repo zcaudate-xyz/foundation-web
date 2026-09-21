@@ -9,14 +9,17 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-input :as ui-input]
              [melbourne.ui-spinner-basic :as ui-spinner-basic]
              [pune.common.data-swap :as data-swap]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]]
    :export [MODULE]})
 
 (defn.js SelectAmount
@@ -33,44 +36,43 @@
          decimal} props)
   (var [editShow  setEditShow] (r/local))
   (var [editText  setEditText] (r/local
-                                (j/toFixed (/ value
-                                              (j/pow 10 decimal))
-                                           (j/max 0 decimal))))
+                                (xts/to-fixed (/ value
+                                              (xtm/pow 10 decimal))
+                                           (xtm/max 0 decimal))))
   (var calcValue
        (fn [num]
-         (var val (k/round
+         (var val (xtm/round
                    (* num 
-                      (j/pow 10 decimal))))
-         (:= val (:? (k/not-nil? min)
-                     (k/max min val)
+                      (xtm/pow 10 decimal))))
+         (:= val (:? (xtl/not-nil? min)
+                     (xtm/max min val)
                      val))
-         (:= val (:? (k/not-nil? max)
-                     (k/min max val)
+         (:= val (:? (xtl/not-nil? max)
+                     (xtm/min max val)
                      val))
          (return val)))
   
   (var setEditTextNumber
        (fn [v]
-         (var isEnding (k/first (or (j/match v #"\.0+$")
+         (var isEnding (xtd/first (or (. v (match #"\.0+$"))
                                     [])))
-         (var isStarting (k/first (or (j/match v #"^\.")
-                                    [])))
-         (var hasDot (== "." (k/last v)))
-         (var isZero (or (k/nil? v)
-                         (k/not-empty? )))
-         (var num (j/parseFloat v))
-         (cond (k/is-empty? v)
+         (var isStarting (xtd/first (or (. v (match #"^\.")) [])))
+         (var hasDot (== "." (xtd/last v)))
+         (var isZero (or (xtl/nil? v)
+                         (xtd/not-empty? v)))
+         (var num (parseFloat v))
+         (cond (xtd/is-empty? v)
                (setEditText "0")
 
                (or isEnding isStarting)
                (setEditText v)
 
-               (k/nil? num)
+               (xtl/nil? num)
                (setEditText editText)
                
-               (k/not-nil? num)
+               (xtl/not-nil? num)
                (do (setEditText
-                    (+ (j/toString num)
+                    (+ (xtl/to-string num)
                        (:? hasDot "." "")))
                    (setValue (calcValue num)))
                
@@ -80,19 +82,19 @@
                    (:? hasDot "." ""))))))
   (r/watch [editShow]
     (cond setValueEdit
-          (do (var out (k/to-number editText))
-              (when (not (j/isNaN out))
+          (do (var out (xtl/to-number editText))
+              (when (not (Number.isNaN out))
                 (setValueEdit out editShow)))
 
           editShow
           (setEditText
-           (j/toFixed (/ value
-                         (j/pow 10 decimal))
-                      (j/max 0 decimal)))
+           (xts/to-fixed (/ value
+                         (xtm/pow 10 decimal))
+                      (xtm/max 0 decimal)))
 
           :else
-          (do (var out (k/to-number editText))
-              (when (not (j/isNaN out))
+          (do (var out (xtl/to-number editText))
+              (when (not (Number.isNaN out))
                 (setValue
                  (calcValue out))))))
   (return
@@ -172,11 +174,11 @@
       (setEditText posText)))
   (var setEditTextNumber
        (fn []
-         (var num (j/parseFloat editText))
-         (cond (or (k/nil? num)
+         (var num (parseFloat editText))
+         (cond (or (xtl/nil? num)
                    (== 0 num)
-                   (j/isNaN num)
-                   (k/is-empty? editText))
+                   (Number.isNaN num)
+                   (xtd/is-empty? editText))
                (setEditText (data-swap/position-to-fstr position))
 
                :else

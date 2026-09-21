@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react.ext-model :as ext-view]
@@ -13,7 +13,10 @@
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
              [melbourne.slim-entry :as slim-entry]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-trace :as trace]]
    :export [MODULE]})
 
 (defn.js useTableEntry
@@ -21,13 +24,13 @@
   {:added "4.0"}
   [props]
   (var #{views displayKey control} props)
-  #_(k/LOG! {:out (k/get-in views ["topic_archive"
+  #_(trace/LOG! {:out (xtd/get-in views ["topic_archive"
                                  "output"
                                  "current"])
-           :remote (k/get-in views ["topic_archive"
+           :remote (xtd/get-in views ["topic_archive"
                                  "remote"
                                  "current"])
-           :in  (k/get-in views ["topic_archive"
+           :in  (xtd/get-in views ["topic_archive"
                                  "input"
                                  "current"
                                  "data"])}
@@ -37,14 +40,14 @@
   (var entries (or (. props entries)
                    (ext-view/listenView (. views [(or displayKey "list")]) "success")
                    []))
-  (var remote-entries (or (k/get-in views [displayKey
+  (var remote-entries (or (xtd/get-in views [displayKey
                                            "remote"
                                            "current"])
                           []))
-  (when (k/obj? remote-entries)
+  (when (xtl/is-object? remote-entries)
     (:= remote-entries []))
-  (var entry   (or (j/find entries (fn:> [e] (== entryId (. e id))))
-                   (j/find remote-entries (fn:> [e] (== entryId (. e id))))
+  (var entry   (or (. entries (find (fn:> [e] (== entryId (. e id)))))
+                   (. remote-entries (find (fn:> [e] (== entryId (. e id)))))
                    {}))
   (return entry))
 
@@ -86,17 +89,17 @@
 
 (defn.js tablePageHooks
   [props hooks]
-  (cond (k/fn? hooks)
+  (cond (xtl/is-function? hooks)
         (return (hooks props))
 
-        (k/arr? hooks)
+        (xtl/is-array? hooks)
         (return
-         (k/arr-foldl hooks
+         (xtd/arr-foldl hooks
                       (fn [init f]
                         (var out (f init))
                         (return
-                         (j/assign init out)))
-                      (j/assign {} props)))))
+                         (Object.assign init out)))
+                      (Object.assign {} props)))))
 
 (defn.js TableProgressBack
   [props]
@@ -104,7 +107,7 @@
          entry} props)
   (r/useCountdown 1
                   (fn []
-                    (when (k/is-empty? entry)
+                    (when (xtd/is-empty? entry)
                       (. control (setShowDetail nil)))))
   (return
    [:% n/View
@@ -133,19 +136,19 @@
                                          control}))
                  (. props entry)))
   (var impl (. display [page]))
-  (var implForm  (k/get-in impl ["form"]))
+  (var implForm  (xtd/get-in impl ["form"]))
   (var form (or (. props form)
                 implForm))
-  (cond (k/arr? form)
+  (cond (xtl/is-array? form)
         (do 
           (:= form (ext-form/makeForm
                     (fn:>
-                      ((k/first implForm) entry props))
-                    ((k/second implForm) entry props)))
+                      ((xtd/first implForm) entry props))
+                    ((xtd/second implForm) entry props)))
           (ext-form/listenFormData form)))
   
   (var hooks (. components [(+ "hooks_" page)]))
-  (var hprops (-/tablePageHooks (j/assignNew
+  (var hprops (-/tablePageHooks (Object.assign {}
                                  props
                                  #{entry})
                                 hooks))
@@ -154,10 +157,10 @@
   ;; Short Circuit
   ;;
   
-  (if (and (k/is-empty? entry)
+  (if (and (xtd/is-empty? entry)
            (== page "detail"))
     (return
-     (r/% -/TableProgressBack (j/assignNew props #{entry}))))
+     (r/% -/TableProgressBack (Object.assign {} props #{entry}))))
 
 
   ;;
@@ -186,24 +189,24 @@
                        :paddingBottom 5
                        :minHeight 30
                        :maxWidth 500}
-               :body (k/arrayify (. implHeader main))}})
+               :body (xtd/arrayify (. implHeader main))}})
   
   (var implHeaderActions (. impl header-actions))
   (var headerElem
        (:? HeaderComponent
            (r/% HeaderComponent
-                (j/assignNew
+                (Object.assign {}
                  props
                  hprops
                  {:entry entry
                   :form form
-                  :impl (:? (k/get-in impl ["header" "link"])
-                            (j/assign {:type "link"}
+                  :impl (:? (xtd/get-in impl ["header" "link"])
+                            (Object.assign {:type "link"}
                                       (. impl header))
 
                             implHeader
                             {:type "card"
-                             :body (j/assign {:isHeader true}
+                             :body (Object.assign {:isHeader true}
                                              implHeader)}
 
                             :else nil)}))))
@@ -214,7 +217,7 @@
            [:% n/View
             {:style {}}
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   hprops
                   {:entry entry
@@ -223,7 +226,7 @@
   
   (var pageElem
        (r/% PageComponent
-            (j/assignNew
+            (Object.assign {}
              props
              hprops
              {:entry entry
@@ -259,7 +262,7 @@
            #{design control}]]
       ])
   
-  #_(:? (== false (k/get-in display [routeKey "scroll"]))
+  #_(:? (== false (xtd/get-in display [routeKey "scroll"]))
         
         (r/% ui-static/ScrollView
              #{design}

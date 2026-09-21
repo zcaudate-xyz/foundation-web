@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
              [xt.event.base-form :as event-form]
@@ -12,7 +12,8 @@
              [melbourne.ui-spinner :as ui-spinner]
              [melbourne.ui-spinner-basic :as ui-spinner-basic]
              [melbourne.ui-slider :as ui-slider]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js FormSpinner
@@ -35,14 +36,14 @@
       step
       decimal]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "spinner"
+                                          (Object.assign {:slim/type "spinner"
                                                      :fn/type   "field"}
                                                     meta)))
   (return 
    [:% slim-common/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -91,14 +92,14 @@
       step
       decimal]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "spinner"
+                                          (Object.assign {:slim/type "spinner"
                                                      :fn/type   "field"}
                                                     meta)))
   (return 
    [:% slim-common/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone
@@ -148,14 +149,14 @@
       step
       decimal]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "slider"
+                                          (Object.assign {:slim/type "slider"
                                                      :fn/type   "field"}
                                                     meta)))
   (return 
    [:% slim-common/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       label
       labelHide labelNone

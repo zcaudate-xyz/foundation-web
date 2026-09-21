@@ -4,7 +4,8 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-math :as xtm]
+             [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [js.react-native.animate :as a]
@@ -14,7 +15,9 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-section :as ui-section]
              [pune.common.data-market :as base-market]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js live-priority-rate
@@ -28,14 +31,14 @@
          (var [pos vol] pair)
          (return [(base-market/position-to-rate prediction allotment pos)
                   vol])))
-  (var #{ask bid} (j/assign {:ask []
+  (var #{ask bid} (Object.assign {:ask []
                              :bid []}
                             market))
   (var [buy sell] (:? (== prediction "yes")
                       [bid ask]
                       [ask bid]))
-  (return {:buy  (k/arr-reverse (k/arr-map sell rate-fn))
-           :sell (k/arr-reverse (k/arr-map buy rate-fn))}))
+  (return {:buy  (xtd/arr-reverse (xtd/arr-map sell rate-fn))
+           :sell (xtd/arr-reverse (xtd/arr-map buy rate-fn))}))
 
 (def.js ORDER_IMPL
   {:type "v"
@@ -56,7 +59,7 @@
   (r/watch [amount]
     (when (not= prev amount)
       (setChanged true)
-      (j/setTimeout (fn []
+      (setTimeout (fn []
                       (setChanged false))
                     600)))
   (return
@@ -102,12 +105,12 @@
      {:design design
       :variant {:font "h6"}
       :style {:width 50}}
-     (j/toFixed (* rate fraction) decimal)]
+     (xts/to-fixed (* rate fraction) decimal)]
     [:% n/View
      {:style {:flex 1}}
      [:% n/Row
       {:style {:flexWrap "wrap"}}
-      (j/map priority
+      (xtd/arr-map priority
              (fn [[order-id amount]]
                (return
                 [:% -/MarketLiveOrder
@@ -132,8 +135,8 @@
           (:= prediction "yes")
           rate
           setRate]} control)
-  (var lookup   (k/arr-juxt published k/id-fn k/identity))
-  (var fraction (j/pow 10 (- decimal)))
+  (var lookup   (xtd/arr-juxt published xtd/id-fn xtl/identity))
+  (var fraction (xtm/pow 10 (- decimal)))
   (var priorities    (-/live-priority-rate market
                                            allotment
                                            prediction))
@@ -156,7 +159,7 @@
     [:% n/View
      {:style {:minHeight 60
               :flexDirection "column-reverse"}}
-     (j/map (j/reverse [(:.. (. priorities buy))])
+     (xtd/arr-map (xtd/arr-reverse [(:.. (. priorities buy))])
             lineFn)]
     [:% ui-section/SectionSeparator
      {:design design
@@ -165,7 +168,7 @@
     [:% n/View
      {:style {:minHeight 60
               :flexDirection "column"}}
-     (j/map (. priorities sell)
+     (xtd/arr-map (. priorities sell)
             lineFn)]]))
 
 (def.js MODULE (!:module))

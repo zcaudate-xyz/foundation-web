@@ -4,7 +4,8 @@
 
 (l/script :js
   {:runtime :websocket
-   :require [[js.core :as j]
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.react :as r]
              [js.react-native :as n :include [:fn]]
              [js.react-native.ui-frame :as ui-frame]
@@ -30,7 +31,7 @@
       (:.. rprops)]}]
   (var palette (base-palette/designPalette design))
   (var bodyView (r/% (or body n/View)
-                                 (j/assign #{design}
+                                 (Object.assign #{design}
                                            bodyProps)))
   (var headerVisible (and showGuest
                           (or (not mini)
@@ -40,7 +41,7 @@
   (var miniProps
        {:bottomSize 45
         :bottomComponent menu
-        :bottomProps (j/assign #{design mini} menuProps)
+        :bottomProps (Object.assign #{design mini} menuProps)
         :bottomVisible  menuVisible
         :bottomFade true
         :bottomStyle {:backgroundColor (base-palette/getColor
@@ -49,7 +50,7 @@
                                          :tone "sharpen"})}})
   (var normalProps
        {:leftComponent menu
-        :leftProps (j/assign #{design mini}
+        :leftProps (Object.assign #{design mini}
                             menuProps)
         :leftVisible  menuVisible
         :leftFade true
@@ -64,16 +65,16 @@
                            menuVisible
                            consoleShow)
         :bottomComponent consoleView
-        :bottomProps (j/assign #{design}
+        :bottomProps (Object.assign #{design}
                                consoleProps)})
   (var frameProps
        (:? mini
-           (j/assign miniProps rprops)
-           (j/assign normalProps rprops)))
+           (Object.assign miniProps rprops)
+           (Object.assign normalProps rprops)))
   (return
    [:% ui-frame/Frame
     #{[:topComponent header
-       :topProps (j/assign #{design}
+       :topProps (Object.assign #{design}
                            headerProps)
        :topStyle {:backgroundColor (base-palette/getColor
                                     palette
@@ -92,12 +93,12 @@
   (var [leftVisible setLeftVisible] (r/local (not showGuest)))
   (r/watch [showGuest]
     (when showGuest
-      (j/future-delayed [100]
-        (setLeftVisible (not showGuest)))
-      (j/future-delayed [300]
-        (setTopVisible showGuest)))
+      (promise/x:with-delay 100 (fn []
+        (setLeftVisible (not showGuest))))
+      (promise/x:with-delay 300 (fn []
+        (setTopVisible showGuest))))
     (when (not showGuest)
-      (j/future-delayed [100]
-          (setTopVisible showGuest))
-      (j/future-delayed [300]
-        (setLeftVisible (not showGuest))))))
+      (promise/x:with-delay 100 (fn []
+          (setTopVisible showGuest)))
+      (promise/x:with-delay 300 (fn []
+        (setLeftVisible (not showGuest)))))))

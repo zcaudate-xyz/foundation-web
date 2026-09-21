@@ -10,14 +10,16 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.spec-promise :as promise]
              [js.core.style :as css]
              [js.react-native :as n :include [:fn]]
              [js.lib.rn-expo :as x :include [:image-picker]]
              [melbourne.ui-swiper :as ui-swiper]
              [melbourne.ui-button :as ui-button]
              [melbourne.base-palette :as base-palette]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]]
    :export [MODULE]})
 
 (defn.js selectImage
@@ -31,14 +33,14 @@
    (new Promise
     (fn [resolve reject]
       (-> (x/imageLibraryLaunch)
-          (j/then
+          (promise/x:promise-then
            (fn [res]
              (if (not res.cancelled)
                (do (setPhoto res)
-                   (-> (j/fetch res.uri)
-                       (j/then (fn [res]
+                   (-> (fetch res.uri)
+                       (promise/x:promise-then (fn [res]
                                  (return (res.blob))))
-                       (j/then (fn [blob]
+                       (promise/x:promise-then (fn [blob]
                                  (var reader (new FileReader))
                                  (:= reader.onload
                                      (fn []
@@ -79,9 +81,9 @@
   (var subSize (- size (* 2 border)))
   (var #{fgNormal
          bgNormal} (base-palette/designPalette design))
-  (var uri (or (and (k/not-empty? photo)
+  (var uri (or (and (xtd/not-empty? photo)
                     (. photo ["uri"]))
-               (and (k/not-empty? data)
+               (and (xtd/not-empty? data)
                     (or (. data  ["url"])
                         (. data  ["thumbnailUrl"])))))
   (var swipeElem
@@ -114,11 +116,11 @@
                     :style  [{:borderRadius 4 :height subSize :width subSize}]
                     :transformations
                     (fn:> [#{position pressing}]
-                      {:style {:opacity (* (k/mix 1 0.8 pressing)
-                                           (k/mix 1 0 (/ (j/abs position)
+                      {:style {:opacity (* (xtm/mix 1 0.8 pressing)
+                                           (xtm/mix 1 0 (/ (xtm/abs position)
                                                          (* 2 subSize))))
-                               :transform [{:scale (k/mix 1 2 (/ (j/abs position) subSize))}]}})}
-                   (:.. (j/arrayify inner))]
+                               :transform [{:scale (xtm/mix 1 2 (/ (xtm/abs position) subSize))}]}})}
+                   (:.. (xtd/arrayify inner))]
            (:.. rprops)]}])
   (return
    [:% n/View
@@ -178,16 +180,16 @@
                                (split "/")
                                (pop))))
       (. (append "folder" "upload"))
-      (. (append "publicKey" (j/! imagekit/+public+))))
+      (. (append "publicKey" imagekit/+public+)))
     (setUploading true)
     (return
      (-> (base-imagekit/imagekit-upload
           (state/token)
           form)
-         (j/toJson)
-         (j/then (fn [res]
-                   (setData (j/assign res {:type "imagekit"}))))
-         (j/finally (fn []
+         (. (json))
+         (promise/x:promise-then (fn [res]
+                   (setData (Object.assign res {:type "imagekit"}))))
+         (promise/x:promise-finally (fn []
                       (setUploading false)
                        (setUploaded true)))))))
   )

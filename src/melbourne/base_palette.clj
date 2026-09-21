@@ -3,9 +3,11 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react-native.helper-color :as c]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-string :as xts]]
    :export [MODULE]})
 
 (def.js PaletteRatio
@@ -102,7 +104,7 @@
   "gets the tone ratio either for musical modes, ratios and whole tones"
   {:added "4.0"}
   [ratio]
-  (cond (k/is-number? ratio)
+  (cond (xtl/is-number? ratio)
         (cond (and (< 0 ratio)
                    (< ratio 1))
               (return ratio)
@@ -111,7 +113,7 @@
               (return (/ ratio 8)))
 
         :else
-        (return (or (k/get-key -/PaletteRatio
+        (return (or (xt/x:get-key -/PaletteRatio
                                ratio)
                     0))))
 
@@ -120,19 +122,19 @@
   {:added "4.0"}
   [palette colorKey tone mixKey ratio]
   (var #{isDark} palette)
-  (var color (or (. palette [(+ "main" (k/capitalize (or colorKey
+  (var color (or (. palette [(+ "main" (xts/capitalize (or colorKey
                                                          "primary")))])
                  colorKey))
   (cond (or mixKey
             (== tone "mix"))
-        (do (var colorTo (or (. palette [(+ "main" (k/capitalize (or mixKey
+        (do (var colorTo (or (. palette [(+ "main" (xts/capitalize (or mixKey
                                                                      "background")))])
                              mixKey
                              (. palette mainPrimary)))
             (return (c/mix [color colorTo]
                            (-/toneRatio ratio))))
         
-        (k/nil? tone)
+        (xtl/nil? tone)
         (return color)
 
         (== tone "sharpen")
@@ -171,7 +173,7 @@
   {:added "4.0"}
   [palette m]
   (var #{raw} m)
-  (cond (k/nil? raw)
+  (cond (xtl/nil? raw)
         (return
          (-/getColorRaw palette
                         (. m key)
@@ -191,7 +193,7 @@
   {:added "4.0"}
   [design]
   (var #{invert} design)
-  (return (j/assign {} design {:invert (not invert)})))
+  (return (Object.assign {} design {:invert (not invert)})))
 
 
 (defn.js designPalette
@@ -204,7 +206,7 @@
                    "light"
                    "dark")
                (or type "light")))
-  (return (j/assign (-/createPalette type color)
+  (return (Object.assign (-/createPalette type color)
                     override)))
 
 (defn.js getPalette

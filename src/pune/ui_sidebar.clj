@@ -4,7 +4,8 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]]
@@ -16,7 +17,7 @@
       setSectionKey
       (:= sections [])]}]
   (var itemProps
-       (j/map sections (fn:> {:styleContainer  {:width 52}
+       (xtd/arr-map sections (fn:> {:styleContainer  {:width 52}
                               :transformations {:bg nil}})))
   (return
    [:% ui-static/Div
@@ -47,7 +48,7 @@
               :paddingVertical 5
               :marginHorizontal 0
               :borderRadius 0}
-      :format j/toUpperCase}]]))
+      :format xts/to-uppercase}]]))
 
 (defn.js Sidebar
   [#{design

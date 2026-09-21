@@ -16,8 +16,9 @@
              [melbourne.ui-entry :as ui-entry]
              [melbourne.ui-group :as ui-group]
              [melbourne.ui-static :as ui-static]
-             [js.core :as j]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.common-string :as xts]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 ^{:refer melbourne.ui-entry/get-entry-data :added "4.0"}
@@ -39,7 +40,7 @@
         [:% ui-entry/EntryRowHeaderText
          {:design {:type "light"}
           :style {:padding 10}
-          :impl {:header {:format j/toUpperCase}}
+          :impl {:header {:format xts/to-uppercase}}
           :column {:name "currency"
                    :data  ["currency_id"]}}]]
        [:% ui-static/Div
@@ -48,7 +49,7 @@
         [:% ui-entry/EntryRowHeaderText
          {:design {:type "dark"}
           :style {:padding 10}
-          :impl {:header {:format j/toUpperCase}}
+          :impl {:header {:format xts/to-uppercase}}
           :column {:name "currency"
                    :data  ["currency_id"]}}]]]))))
 
@@ -69,7 +70,7 @@
          {:design {:type "light"}
           :style {:padding 10}
           :impl {:type "row"
-                 :header {:format j/toUpperCase}
+                 :header {:format xts/to-uppercase}
                  :columns [{:name "currency"
                             :data  ["currency_id"]}
                            {:name "balance"
@@ -84,7 +85,7 @@
          {:design {:type "dark"}
           :style {:padding 10}
           :impl {:type "row"
-                 :header {:format j/toUpperCase}
+                 :header {:format xts/to-uppercase}
                  :columns [{:name "currency"
                             :data  ["currency_id"]}
                            {:name "balance"
@@ -215,7 +216,7 @@
          {:design {:type "light"}
           :entry entry
           :section {:data  ["currency_id"]
-                    :format k/first}}]]
+                    :format xtd/first}}]]
        [:% ui-static/Div
         {:design {:type "dark"}
          :style {:flex 1}}
@@ -223,7 +224,7 @@
          {:design {:type "dark"}
           :entry entry
           :section {:data  ["currency_id"]
-                    :format k/first}}]]]))))
+                    :format xtd/first}}]]]))))
 
 ^{:refer melbourne.ui-entry/EntryCardBodyPair :added "4.0"}
 (fact "creates entry body pair"

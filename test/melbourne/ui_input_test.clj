@@ -10,13 +10,15 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.react-native :as n :include [:fn]]
              [melbourne.base-palette :as base-palette]
              [melbourne.ui-button :as ui-button]
              [melbourne.ui-input :as ui-input]
              [js.react.ext-form :as ext-form]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
              [xt.event.base-form :as event-form]]
    :export [MODULE]})
 
@@ -29,13 +31,13 @@
   
   (def.js RegistraionValidators
     {:first-name    [["is-not-empty" {:message "Must not be empty"
-                                      :check (fn:> [v rec] (and (k/not-nil? v)
-                                                                (< 0 (k/len v))))}]]
+                                      :check (fn:> [v rec] (and (xtl/not-nil? v)
+                                                                (< 0 (xt/x:len v))))}]]
      :last-name     [["is-not-empty" {:message "Must not be empty"
                                       :check (fn:> [v rec]
-                                               (j/future-delayed [100]
-                                                 (return (and (k/not-nil? v)
-                                                              (< 0 (k/len v))))))}]]})
+                                               (promise/x:with-delay 100 (fn []
+                                                 (return (and (xtl/not-nil? v)
+                                                              (< 0 (xt/x:len v)))))))}]]})
   
   (defn.js inputAsterix
     [design]
@@ -56,7 +58,7 @@
   
   (defn.js styleInputLabel
     [#{mainNeutral} m]
-    (return (j/assign {:fontFamily "Helvetica"
+    (return (Object.assign {:fontFamily "Helvetica"
                        :fontSize 12
                        :fontWeight "800"
                        :padding 8

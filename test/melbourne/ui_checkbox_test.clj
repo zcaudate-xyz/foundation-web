@@ -13,7 +13,7 @@
    :require [[js.react :as r]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-checkbox :as ui-checkbox]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
              ]
    :export [MODULE]})
 
@@ -114,7 +114,7 @@
           :indices indices
           :setIndices setIndices}]]] 
 [:% n/TextDisplay
-       {:content (k/json-encode indices)}]))))
+       {:content (xt/x:json-encode indices)}]))))
 
 ^{:refer melbourne.ui-checkbox/CheckGroup :added "0.1"}
 (fact "creates a group of check boxes"
@@ -150,6 +150,6 @@
           :setValues setValues
           :format (fn:> [s] (+ "  " s))}]]] 
 [:% n/TextDisplay
-       {:content (k/json-encode values)}])))
+       {:content (xt/x:json-encode values)}])))
 
   (def.js MODULE (!:module)))

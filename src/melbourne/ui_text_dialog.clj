@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
@@ -18,7 +18,7 @@
              [melbourne.base-theme :as base-theme]
              [melbourne.ui-text :as ui-text]
              [melbourne.slim-dialog :as slim-dialog]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js ConfirmDialog
@@ -51,7 +51,7 @@
                    (setVisible (not visible)))
         (:.. rprops)]})
     [:% slim-dialog/Dialog
-     {:design (j/assignNew design {:invert true})
+     {:design (Object.assign {} design {:invert true})
       :title (or (. confirm title)
                  "CONFIRM")
       :body  (or (. confirm body)

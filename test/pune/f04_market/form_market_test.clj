@@ -11,7 +11,7 @@
               :emit {:native {:suppress true}
                      :lang/jsx false}
               :notify {:type :webpage :path "dev/notify"}}
-     :require [[js.core :as j]
+     :require [
                [js.core.style :as css]
                [js.react :as r]
                [js.react-native :as n :include [:fn]]
@@ -20,7 +20,9 @@
                [melbourne.ui-group :as ui-group]
                [melbourne.ui-toggle-button :as ui-toggle-button]
                [pune.f04-market.form-market :as form-market]
-               [xt.lang.base-lib :as k]]
+               [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
      :export [MODULE]})
 
   (def.js HISTORY
@@ -35,14 +37,14 @@
            (var #{item index} e)
            (return
             [:% n/Row
-             (j/map columns
+             (xtd/arr-map columns
                     (fn:> [#{key}]
                       [:% n/Text
                        {:style {:width 80}}
                        (+ "" (. item [key]))]))])))
     (return [:% n/View
              [:% n/Row
-              (j/map columns
+              (xtd/arr-map columns
                      (fn:> [#{title}]
                        [:% n/Text
                         {:style {:width 80}}
@@ -50,7 +52,7 @@
              [:% n/FlatList
               {:style {}
                :data  data
-               :keyExtractor k/identity
+               :keyExtractor xtl/identity
                :renderItem itemFn}]]))
 
   ^{:refer pune.f04-market.form-market/MarketGraph :adopt true :added "0.1"}
@@ -62,7 +64,7 @@
       (var linear (db-history/get-linear -/HISTORY
                                          "30sec"
                                          nil
-                                         (. (k/last (. -/HISTORY ["exit"]))
+                                         (. (xtd/last (. -/HISTORY ["exit"]))
                                             ["t_end"])))
       (return
        (n/EnclosedCode 

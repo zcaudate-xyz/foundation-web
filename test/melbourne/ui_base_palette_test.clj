@@ -16,7 +16,8 @@
              [xt.event.base-form :as event-form]
              [melbourne.slim-common :as slim-common]
              [melbourne.base-palette :as base-palette]
-             [js.core :as j]]
+             [xt.lang.common-data :as xtd]
+    [xt.lang.common-string :as xts]]
    :export [MODULE]})
 
 ^{:refer melbourne.base-palette/PaletteBase :adopt true :added "0.1"}
@@ -50,7 +51,7 @@
        {:style {:backgroundColor (base-palette/getColorRaw
                                   palette
                                   (or foil "background"))}}
-       (j/map ["primary" "error" "neutral" "background"]
+       (xtd/arr-map ["primary" "error" "neutral" "background"]
               (fn [colorKey]
                 (return
                  [:% n/View
@@ -63,7 +64,7 @@
                                         "neutral"
                                         "background"))
                             :margin 5}}
-                   (j/toUpperCase colorKey)]
+                   (xts/to-uppercase colorKey)]
                   [:% n/Row
                    
                    [:% n/View
@@ -150,7 +151,7 @@
                   :margin 5}}
          "PRIMARY/BACKGROUND"]
         [:% n/Row
-         (j/map [0 1 2 3 4 5 6 7]
+         (xtd/arr-map [0 1 2 3 4 5 6 7]
                 (fn [i]
                   (return
                    [:% n/View
@@ -175,7 +176,7 @@
                   :margin 5}}
          "PRIMARY/NEUTRAL"]
         [:% n/Row
-         (j/map [0 1 2 3 4 5 6 7]
+         (xtd/arr-map [0 1 2 3 4 5 6 7]
                 (fn [i]
                   (return
                    [:% n/View
@@ -200,7 +201,7 @@
                   :margin 5}}
          "NEUTRAL/BACKGROUND"]
         [:% n/Row
-         (j/map [0 1 2 3 4 5 6 7]
+         (xtd/arr-map [0 1 2 3 4 5 6 7]
                 (fn [i]
                   (return
                    [:% n/View
@@ -226,7 +227,7 @@
                   :margin 5}}
          "PRIMARY/LIGHTEN"]
         [:% n/Row
-         (j/map [0 1 2 3 4 5 6 7]
+         (xtd/arr-map [0 1 2 3 4 5 6 7]
                 (fn [i]
                   (return
                    [:% n/View
@@ -251,7 +252,7 @@
                   :margin 5}}
          "PRIMARY/DARKEN"]
         [:% n/Row
-         (j/map [0 1 2 3 4 5 6 7]
+         (xtd/arr-map [0 1 2 3 4 5 6 7]
                 (fn [i]
                   (return
                    [:% n/View
@@ -276,7 +277,7 @@
                   :margin 5}}
          "PRIMARY/SATURATE"]
         [:% n/Row
-         (j/map [1 2 3 4 5 6 7]
+         (xtd/arr-map [1 2 3 4 5 6 7]
                 (fn [i]
                   (return
                    [:% n/View
@@ -301,7 +302,7 @@
                   :margin 5}}
          "PRIMARY/DESATURATE"]
         [:% n/Row
-         (j/map [1 2 3 4 5 6 7]
+         (xtd/arr-map [1 2 3 4 5 6 7]
                 (fn [i]
                   (return
                    [:% n/View

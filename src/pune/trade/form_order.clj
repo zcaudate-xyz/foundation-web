@@ -10,7 +10,8 @@
             :emit   {:native {:suppress true}
                      :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.spec-promise :as promise]
+             [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [js.lib.datetime :as dt]
@@ -22,7 +23,11 @@
              [melbourne.ui-section :as ui-section]
              [melbourne.slim :as slim]
              [iberia.table.common-display :as common-display]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]
+             [xt.lang.common-sort-by :as xtsort]]
    :export [MODULE]})
 
 (def.js styleLargeDigit
@@ -62,7 +67,7 @@
           (:= label "PRICE")]} props)
   (var [init setInit] (r/local))
   (r/init []
-    (j/future-delayed [500] (setInit true)))
+    (promise/x:with-delay 500 (fn [] (setInit true))))
   (var #{decimal
          trade
          prediction
@@ -143,7 +148,7 @@
       (:= label "AMOUNT")]}]
   (var [init setInit] (r/local))
   (r/init []
-    (j/future-delayed [500] (setInit true)))
+    (promise/x:with-delay 500 (fn [] (setInit true))))
   (var #{setAmount
          amount
          trade
@@ -218,9 +223,9 @@
 
 (defn.js getOdds
   [allotment rate]
-  (when (and (k/is-number? allotment)
-             (k/is-number? rate))
-    (var lcm (k/lcm (- allotment rate) rate))
+  (when (and (xtl/is-number? allotment)
+             (xtl/is-number? rate))
+    (var lcm (xtm/lcm (- allotment rate) rate))
     (var under (/ lcm (- allotment rate)))
     (var over  (/ lcm rate))
     (return
@@ -229,13 +234,13 @@
 
 (defn.js getMoneyLine
   [allotment rate]
-  (when (and (k/is-number? allotment)
-             (k/is-number? rate))
-    (var lcm (k/lcm (- allotment rate) rate))
+  (when (and (xtl/is-number? allotment)
+             (xtl/is-number? rate))
+    (var lcm (xtm/lcm (- allotment rate) rate))
     (var under (/ lcm (- allotment rate)))
     (var over  (/ lcm rate))
     (return
-     (j/round
+     (xtm/round
       (:? (< over under)
           (- (* 100 (/ under over)))
           (* 100 (/ over under))))))
@@ -278,20 +283,20 @@
                       (== rate rate-hi-bid)))
 
   (var offerText (:? (== trade "buy")
-                     (:? (k/nil? rate-lo-ask)
+                     (:? (xtl/nil? rate-lo-ask)
                          "No Offers"
                          (+ "@ "
-                            (j/toFixed (* fraction rate-lo-ask)
+                            (xts/to-fixed (* fraction rate-lo-ask)
                                        decimal)
-                            " (" (j/toFixed (* fraction (- rate rate-lo-ask))
+                            " (" (xts/to-fixed (* fraction (- rate rate-lo-ask))
                                             decimal)
                             ")"))
-                     (:? (k/nil? rate-hi-bid)
+                     (:? (xtl/nil? rate-hi-bid)
                          "No Offers"
                          (+ "@ "
-                            (j/toFixed (* fraction rate-hi-bid)
+                            (xts/to-fixed (* fraction rate-hi-bid)
                                        decimal)
-                            " (" (j/toFixed (* fraction (- rate rate-hi-bid))
+                            " (" (xts/to-fixed (* fraction (- rate rate-hi-bid))
                                             decimal)
                             ")"))))
   
@@ -335,7 +340,7 @@
 
 (defn.js get-rake-fee
   [entry trade spend amount fraction]
-  (var rake (k/get-in entry ["book" 0 "rake" 0]))
+  (var rake (xtd/get-in entry ["book" 0 "rake" 0]))
   (var #{buy-type buy-value
          sell-type sell-value} (or rake {}))
   (var fee 0)
@@ -396,7 +401,7 @@
                              "Spend"
                              "Gain")}
               {:style {:fontFamily "monospace"}
-               :template (+ (j/toFixed
+               :template (+ (xts/to-fixed
                              spend
                              decimal)
                             " "
@@ -411,7 +416,7 @@
                              (+ (:? (== trade "sell")
                                     "-"
                                     "")
-                                (j/toFixed
+                                (xts/to-fixed
                                  fee
                                  decimal)
                                 " "
@@ -421,7 +426,7 @@
        :body [{:type "bold"
                :template "Total"}
               {:style {:fontFamily "monospace"}
-               :template (+ (j/toFixed
+               :template (+ (xts/to-fixed
                              (:? (== trade "buy")
                                  (+ spend fee)
                                  (- spend fee))
@@ -433,9 +438,9 @@
   [#{design
      contracts
      control}]
-  (var contractLu (k/arr-juxt (or contracts [])
-                              (k/key-fn "prediction")
-                              k/identity))
+  (var contractLu (xtd/arr-juxt (or contracts [])
+                              (xtd/key-fn "prediction")
+                              xtl/identity))
   
   (var #{currencyId
          prediction
@@ -449,7 +454,7 @@
                    "primary"))
   (var fg {:key fgColor
            :tone "flatten"})
-  (var #{balance spend} (or (k/get-in contractLu [prediction])
+  (var #{balance spend} (or (xtd/get-in contractLu [prediction])
                             {}))
   (var avgCost (:? (and balance spend)
                    (/ spend balance)))
@@ -465,7 +470,7 @@
                :template "Avg Cost"}
               {:style {:fontFamily "monospace"}
                :template (:? avgCost
-                             (j/toFixed
+                             (xts/to-fixed
                               avgCost
                               decimal)
                              " - ")}]}
@@ -475,7 +480,7 @@
                :template "P/L"}
               {:style {:fontFamily "monospace"}
                :template (:? avgCost
-                             (j/toFixed
+                             (xts/to-fixed
                               (* amount (- avgCost (* rate fraction)))
                               decimal)
                              " - ")}]}
@@ -485,7 +490,7 @@
                :template "New Spend"}
               {:style {:fontFamily "monospace"}
                :template (:? spend
-                             (j/toFixed
+                             (xts/to-fixed
                               (- spend (* amount rate fraction))
                               2)
                              " - ")}]}]})))
@@ -516,7 +521,7 @@
        :body [{:type "bold"
                :template "Payout"}
               {:style {:fontFamily "monospace"}
-               :template (+ (j/toFixed
+               :template (+ (xts/to-fixed
                              (* amount
                                 allotment
                                 fraction)
@@ -528,7 +533,7 @@
        :body [{:type "bold"
                :template "Yield"}
               {:style {:fontFamily "monospace"}
-               :template (+ (j/toFixed
+               :template (+ (xts/to-fixed
                              (* 100 (/ (- allotment rate)
                                        rate))
                              0)
@@ -585,14 +590,14 @@
                     {:type "fill"}
                     {:style {:fontFamily "monospace"
                              }
-                     :template (k/get-in asset ["balance"])}]}
+                     :template (xtd/get-in asset ["balance"])}]}
             {:type "h"
              :style {:alignItems "center"}
              :body [{:type "bold"
                      :template "E"}
                     {:type "fill"}
                     {:style {:fontFamily "monospace"}
-                     :template (k/get-in asset ["escrow"])}]}]})))
+                     :template (xtd/get-in asset ["escrow"])}]}]})))
 
 ;;
 ;; Contract
@@ -615,14 +620,14 @@
   (var staticProps #{design
                      {:variant {:fg {:key fgColor
                                      :tone "flatten"}}}})
-  (var contractLu (k/arr-juxt (or contracts [])
-                              (k/key-fn "prediction")
-                              k/identity))
-  (var yesContracts (or (k/get-in contractLu ["yes" "balance"])
+  (var contractLu (xtd/arr-juxt (or contracts [])
+                              (xtd/key-fn "prediction")
+                              xtl/identity))
+  (var yesContracts (or (xtd/get-in contractLu ["yes" "balance"])
                         0))
-  (var yesEscrow (or (k/get-in contractLu ["yes" "escrow"])
+  (var yesEscrow (or (xtd/get-in contractLu ["yes" "escrow"])
                      0))
-  (var yesOrderEscrow (k/arr-foldl orders
+  (var yesOrderEscrow (xtd/arr-foldl orders
                                      (fn:> [acc order]
                                        (:? (and (== (. order ["prediction"]) "yes")
                                                 (== (. order ["trade"]) "buy"))
@@ -635,11 +640,11 @@
                                            :else
                                            acc))
                                      0))
-  (var noContracts (or (k/get-in contractLu ["no" "balance"])
+  (var noContracts (or (xtd/get-in contractLu ["no" "balance"])
                        0))
-  (var noEscrow    (or (k/get-in contractLu ["no" "escrow"])
+  (var noEscrow    (or (xtd/get-in contractLu ["no" "escrow"])
                        0))
-  (var noOrderEscrow (k/arr-foldl orders
+  (var noOrderEscrow (xtd/arr-foldl orders
                                   (fn:> [acc order]
                                     (:? (and (== (. order ["prediction"]) "no")
                                              (== (. order ["trade"]) "buy"))
@@ -687,7 +692,7 @@
                      :body [{:type "bold"
                              :template (or home-name "Y")}
                             {:type "fill"}
-                            {:template (j/toString yesContracts)
+                            {:template (xtl/to-string yesContracts)
                              :style {:width 55
                                      :textAlign "right"
                                      :fontFamily "monospace"}}
@@ -711,7 +716,7 @@
                      :body [{:type "bold"
                              :template (or away-name "N")}
                             {:type "fill"}
-                            {:template (j/toString noContracts)
+                            {:template (xtl/to-string noContracts)
                              :style {:width 55
                                      :textAlign "right"
                                      :fontFamily "monospace"}}
@@ -742,23 +747,23 @@
              :minWidth 100}}
     [:% n/View
      {:style {:margin 6}}
-     (:? (k/not-empty? sell)
+     (:? (xtd/not-empty? sell)
          [:<>
           (r/% ui-section/SectionSeparator staticProps)
           [:% n/Row
            [:% n/Fill]
            (r/% ui-text/Bold staticProps "SELLING")]
           (r/% ui-section/SectionSeparator staticProps)
-          (j/map sell (fn:> [[rate e]]
+          (xtd/arr-map sell (fn:> [[rate e]]
                         [:% n/Row {:key rate :style {:marginHorizontal 5}}
                          [:% ui-text/P #{design} (. e price)]
                          [:% n/Fill]
                          [:% ui-text/P #{design} (. e unfilled)]]))])
-     (:? (k/not-empty? buy)
+     (:? (xtd/not-empty? buy)
          [:<> (r/% ui-section/SectionSeparator staticProps)
           [:% n/Row [:% n/Fill] (r/% ui-text/Bold staticProps "BUYING")]
           (r/% ui-section/SectionSeparator staticProps)
-          (j/map buy (fn:> [[rate e]]
+          (xtd/arr-map buy (fn:> [[rate e]]
                        [:% n/Row {:key rate :style {:marginHorizontal 5}}
                         [:% ui-text/P #{design}
                          (. e price)]
@@ -782,8 +787,8 @@
   
   (when (not currentOrder)
     (return (slim/entry {:type "v"})))
-  (var filtered (j/filter orders (fn:> [o] (== prediction (. o ["prediction"])))))
-  (var order    (j/find filtered (fn:> [o] (== currentOrder (. o  id)))))
+  (var filtered (xtd/arr-filter orders (fn:> [o] (== prediction (. o ["prediction"])))))
+  (var order    (. filtered (find (fn:> [o] (== currentOrder (. o  id))))))
   (when (not order)
     (return (slim/entry {:type "v"})))
 
@@ -844,14 +849,14 @@
                      (+ (. order contract-sent)
                         (. order contract-received)
                         " of " (. order amount)
-                        " @ " (j/toFixed (* fraction (. order rate))
+                        " @ " (xts/to-fixed (* fraction (. order rate))
                                          decimal))}
                     {:template (. order ["time_created"])
                      :style {:fontSize 9}
                      :format (fn:> [t]
-                               (+  (j/toLocaleDateString (new Date (/ t 1000)))
+                               (+  (. (new Date (/ t 1000)) (toLocaleDateString))
                                    " "
-                                   (j/toLocaleTimeString (new Date (/ t 1000)))
+                                   (. (new Date (/ t 1000)) (toLocaleTimeString))
                                    "\n"
                                    (dt/agoVerbose t)))}]}
             
@@ -909,7 +914,7 @@
                   :template (. order id)}
                  {:style {:fontFamily "monospace"
                           :fontSize 9}
-                  :template (k/get-in order ["account" 0 "nickname"])}]})))}))
+                  :template (xtd/get-in order ["account" 0 "nickname"])}]})))}))
 
 (defn.js TradeOrdersView
   [props]
@@ -926,7 +931,7 @@
          setCurrentOrder
          rate-lo-ask
          rate-hi-bid} control)
-  (when (k/is-empty? orders)
+  (when (xtd/is-empty? orders)
     (return (slim/entry
              props
              {:type "h"
@@ -943,18 +948,18 @@
                                      :tone "flatten"}}}})
   (var filtered
        (-> orders
-           (k/arr-filter (fn:> [o] (== prediction (. o ["prediction"]))))
-           (k/arr-group-by (k/key-fn "trade") k/identity)
-           (k/obj-pairs)
-           (k/arr-map (fn:> [[trade arr]]
+           (xtd/arr-filter (fn:> [o] (== prediction (. o ["prediction"]))))
+           (xtd/arr-group-by (xtd/key-fn "trade") xtl/identity)
+           (xtd/obj-pairs)
+           (xtd/arr-map (fn:> [[trade arr]]
                         (:? (== trade "buy")
-                            [trade (k/sort-by arr [(fn:> [o] (- (. o rate))) "time_created"])]
-                            [trade (k/sort-by arr [(fn:> [o] (- (. o rate)))
+                            [trade (xtsort/sort-by arr [(fn:> [o] (- (. o rate))) "time_created"])]
+                            [trade (xtsort/sort-by arr [(fn:> [o] (- (. o rate)))
                                                    "time_created"])])))
-           (k/obj-from-pairs)))
+           (xtd/obj-from-pairs)))
   (var orderFn
        (fn [o]
-         (var price (j/toFixed (* (. o rate) fraction)
+         (var price (xts/to-fixed (* (. o rate) fraction)
                                (. o decimal)))
          (var unfilled (- (. o amount)
                           (. o contract_received)
@@ -985,17 +990,17 @@
                             :template price}
                            {:template (+ " (" (:? (== prediction "yes")
                                                   (:? (== (. o trade) "buy")
-                                                      (j/toFixed (* (- (. o rate) rate-lo-ask)
+                                                      (xts/to-fixed (* (- (. o rate) rate-lo-ask)
                                                                     fraction)
                                                                  decimal)
-                                                      (+ "+" (j/toFixed (* (- (. o rate) rate-hi-bid)
+                                                      (+ "+" (xts/to-fixed (* (- (. o rate) rate-hi-bid)
                                                                            fraction)
                                                                         decimal)))
                                                   (:? (== (. o trade) "buy")
-                                                      (j/toFixed (* (- rate-hi-bid (- allotment (. o rate)))
+                                                      (xts/to-fixed (* (- rate-hi-bid (- allotment (. o rate)))
                                                                     fraction)
                                                                  decimal)
-                                                      (+ "+" (j/toFixed (* (-  rate-lo-ask (- allotment (. o rate)))
+                                                      (+ "+" (xts/to-fixed (* (-  rate-lo-ask (- allotment (. o rate)))
                                                                            fraction)
                                                                         decimal))))
                                          ")")
@@ -1009,7 +1014,7 @@
    (slim/entry
     props
     {:type "v"
-     :body [(:? (k/not-empty?
+     :body [(:? (xtd/not-empty?
                  (. filtered ["sell"]))
                 
                 {:type "v"
@@ -1022,8 +1027,8 @@
                          :variant {:fg {:key "neutral"}}
                          :style {:marginHorizontal -5
                                  :marginVertical 3}}
-                        (:.. (j/map (. filtered ["sell"]) orderFn))]})
-            (:? (k/not-empty?
+                        (:.. (xtd/arr-map (. filtered ["sell"]) orderFn))]})
+            (:? (xtd/not-empty?
                  (. filtered ["buy"]))
                 {:type "v"
                  :body [{:type "h"
@@ -1034,7 +1039,7 @@
                          :variant {:fg {:key "neutral"}}
                          :style {:marginHorizontal -5
                                  :marginVertical 3}}
-                        (:.. (j/map (. filtered ["buy"])
+                        (:.. (xtd/arr-map (. filtered ["buy"])
                                     orderFn))]})]})))
 
 
@@ -1074,7 +1079,7 @@
                      ui-text/ButtonAccent))
   (var buttonDisabled
        (:? (== trade "sell")
-           (< (- (or (k/get-in balanceContracts [prediction "balance"])
+           (< (- (or (xtd/get-in balanceContracts [prediction "balance"])
                      0)
                  amount)
               0)
@@ -1094,7 +1099,7 @@
        :text (:? waiting
                  [:% ui-text/ActivityIndicator
                   #{design}]
-                 (j/toUpperCase
+                 (xts/to-uppercase
                   (+ trade
                      " "
                      (:? (== prediction "yes")
@@ -1145,4 +1150,3 @@
         :styleContainer {:flex 1}}}]]))
 
 (def.js MODULE (!:module))
-

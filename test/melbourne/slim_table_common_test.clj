@@ -20,8 +20,8 @@
              [melbourne.slim-entry :as slim-entry]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
-             [js.core :as j]
-             [xt.lang.base-lib :as k]
+             
+             [xt.lang.spec-base :as xt]
              [xt.event.base-route :as event-route]]
    :export [MODULE]})
 

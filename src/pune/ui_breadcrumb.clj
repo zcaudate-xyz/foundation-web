@@ -10,10 +10,11 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [melbourne.ui-static :as ui-static]
              [xt.lang.common-string :as base-text]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js Breadcrumb
@@ -29,19 +30,19 @@
       path
       text
       noBanner]}]
-  (var routePath (k/arr-append [(:.. (j/arrayify (:? branchOnly [] root)))]
-                               (j/arrayify (:? rootOnly
+  (var routePath (xtd/arr-assign [(:.. (xtd/arrayify (:? branchOnly [] root)))]
+                               (xtd/arrayify (:? rootOnly
                                                []
                                                path))))
-  (var routeString (j/map routePath
-                          (fn:> [s] s (j/toUpperCase (base-text/tag-string s)))))
+  (var routeString (xtd/arr-map routePath
+                          (fn:> [s] s (base-text/to-uppercase (base-text/tag-string s)))))
   (:= text (or text
-               (j/join routeString
-                       "   /   ")) )
+              (base-text/join "   /   "
+                              routeString)) )
   (return
    [:% ui-static/Text
     {:design design
-     :variant (j/assign
+     :variant (Object.assign
                {:font "h3"
                 :fg (:? noBanner
                         {:key "primary"
@@ -53,7 +54,7 @@
      :style [{:paddingVertical 5
               :fontWeight "900"
               #_#_:textAlign ""}
-             (j/arrayify style)]}
+             (xtd/arrayify style)]}
     text]))
 
 (def.js MODULE (!:module))

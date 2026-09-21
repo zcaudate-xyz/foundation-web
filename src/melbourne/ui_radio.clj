@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n]
              [js.react-native.ui-radio-box :as ui-radio-box]
@@ -18,7 +18,9 @@
              [melbourne.base-theme :as base-theme]
              [melbourne.base-font :as base-font]
              [melbourne.ui-static :as ui-static]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js RadioBox
@@ -29,7 +31,7 @@
       style
       theme
       (:.. rprops)]}]
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:fg   {:key "neutral"}
                    :bg   {:key "background"
                           :tone "darken"
@@ -44,7 +46,7 @@
                   variant))
   (var __style  (base-font/getFontStyle (or (. __variant font)
                                             "h6")))
-  (var __theme  (j/assign (base-theme/themeUiInput
+  (var __theme  (Object.assign (base-theme/themeUiInput
                            (base-palette/designPalette design)
                            __variant)
                           theme))
@@ -53,7 +55,7 @@
     #{[:theme __theme
        :style [{:padding 0}
                __style
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        (:.. rprops)]}]))
 
 (defn.js RadioGroupIndexed
@@ -70,7 +72,7 @@
        styleText
        styleContainer
        (:= itemProps [])
-       (:= format k/identity)]}]
+       (:= format xtl/identity)]}]
    (var itemFn
         (fn [value i]
           (return [:% n/View
@@ -92,14 +94,14 @@
                                 {}))]}]
                    [:% ui-static/Text
                     #{design
-                      {:variant (j/assign
+                      {:variant (Object.assign
                                  {:fg {:key "primary"}}
-                                 (k/get-in design ["variant" "text"]))
+                                 (xtd/get-in design ["variant" "text"]))
                        :style styleText}}
                     (format value i)]])))
    (return [:% n/View
             {:style styleContainer}
-            (j/map items itemFn)])))
+            (. items (map itemFn))])))
 
 (defn.js RadioGroup
   "creates a group of radio boxes"

@@ -9,14 +9,15 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-data :as xtd]
              [js.cell :as cl]
              [js.react :as r :include [:fn]]
              [js.react.ext-box :as ext-box]
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-text :as ui-text]
              [pune.ui-notify-base :as base]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-trace :as trace]
              [xt.lang.common-string :as text]]
    :export [MODULE]})
 
@@ -32,9 +33,9 @@
        op-level
        op-time
        message} body)
-  (var t (k/now-ms))
-  (var msg {:id (or msg-id (j/randomId 6))
-            :title  (j/toUpperCase (text/tag-string (or op-tag "")))
+  (var t (xt/x:now-ms))
+  (var msg {:id (or msg-id (text/str-rand 6))
+            :title  (text/to-uppercase (text/tag-string (or op-tag "")))
             :message (or message (+ "" (new Date t)))
             ;;:sticky (== op-level "N")
             :time t})
@@ -44,7 +45,7 @@
 (defn.js useUserEvents
   [handler event-key event-types]
   (r/init []
-    (var callbackKey (+ event-key "/" (j/randomId 4)))
+    (var callbackKey (+ event-key "/" (text/str-rand 4)))
     (cl/add-raw-callback event-key
                          event-types
                          handler)
@@ -60,14 +61,14 @@
         setEvents] (ext-box/useBox
                     (. notify source)
                     []
-                    (k/meta:info)))
+                    (trace/meta:info)))
   (var eventsRef (r/useFollowRef events))
   (-/useUserEvents (fn [e]
                      
                      (var [ok msg] (-/parseEvent e (. notify filter)))
                      (when ok
                        (var #{id} msg)
-                       (setEvents (j/assign {id msg} (r/curr eventsRef)))))
+                       (setEvents (Object.assign {id msg} (r/curr eventsRef)))))
                    (. notify key)
                    (. notify types))
   (base/useOutdated
@@ -76,7 +77,7 @@
   (return
    [:% base/TopNotify
     #{design mini
-      {:data    (j/values events)
+      {:data    (xtd/obj-vals events)
        :onClose (fn:> (setEvents {}))}}]))
 
 (def.js MODULE (!:module))

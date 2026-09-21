@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
@@ -18,7 +18,7 @@
              [pune.ui-breadcrumb :as ui-breadcrumb]
              [pune.ui-page :as ui-page]
              [melbourne.base-validators :as validators]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 ^{:refer pune.ui-breadcrumb/Breadcrumb :added "0.1"}

@@ -13,12 +13,14 @@
    :require [[js.react :as r]
              [js.react-native :as n :include [:fn]]
              [melbourne.slim-content :as slim-content]
-             [js.core :as j]
-             [xt.lang.base-lib :as k]]
+             
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]]
    :export [MODULE]})
 
 (def.js base64Icon
-  (k/join
+  (xts/join
    ""
    ["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAGXRFWHRTb2"
     "Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAwBQTFRF7c5J78kt+/Xm78lQ6stH5LI36bQh6rcf7s"
@@ -56,8 +58,8 @@
                  :first "Sarah"
                  :last "Conner"}
          :textField (fn [#{first last}]
-                   (return (+ (k/first first)
-                              (k/first last))))}]
+                   (return (+ (xtd/first first)
+                              (xtd/first last))))}]
        [:% slim-content/ContentTitle
         {:style {:margin 10}
          :entry {:picture {:uri -/base64Icon}
@@ -81,8 +83,8 @@
                  :first "Sarah"
                  :last "Conner"}
          :textField (fn [#{first last}]
-                   (return (+ (k/first first)
-                              (k/first last))))}]
+                   (return (+ (xtd/first first)
+                              (xtd/first last))))}]
        [:% slim-content/ContentAvatar
         {:style {:margin 10}
          :entry {:picture {:uri -/base64Icon}
@@ -118,8 +120,8 @@
         :rightProps
         (fn:>
           {:textField (fn [#{first last}]
-                   (return (+ (k/first first)
-                              (k/first last))))})}]))))
+                   (return (+ (xtd/first first)
+                              (xtd/first last))))})}]))))
 
 ^{:refer melbourne.slim-content/HeroCard :added "4.0"}
 (fact  "creates the hero card"
@@ -145,7 +147,7 @@
         :contentProps
         (fn:>
           {:textField (fn [#{first last}]
-                        (return (+ (k/first first)
-                                   (k/first last))))})}])))
+                        (return (+ (xtd/first first)
+                                   (xtd/first last))))})}])))
   
   (def.js MODULE (!:module)))

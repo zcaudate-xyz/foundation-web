@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :websearch :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react.ext-model :as ext-view]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.base-palette :as base-palette]
@@ -21,8 +22,9 @@
              [melbourne.ui-input :as ui-input]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
-             [js.core :as j]
-             [xt.lang.base-lib :as k]
+             [xt.lang.common-string :as xts]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [xt.event.base-route :as event-route]
              [xt.event.base-model :as event-view]]
    :export [MODULE]})
@@ -37,13 +39,13 @@
                                   {:handler
                                    (fn [args]
                                      (return
-                                      (j/future-delayed [100]
+                                      (promise/x:with-delay 100 (fn []
                                         (return
-                                         (-> (k/arr-range 40)
-                                             (k/arr-map (fn:> [i]
+                                         (-> (xtd/arr-range 40)
+                                             (xtd/arr-map (fn:> [i]
                                                           {:id (+ "id-" i)
-                                                           :balance (k/random)
-                                                           :escrow  args})))))))})}))
+                                                           :balance (xt/x:random)
+                                                           :escrow  args}))))))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"
@@ -54,7 +56,7 @@
                                                  :template "B"}
                                                 {:template ["balance"]
                                                  :style {:marginLeft 10}
-                                                 #_#_:format (fn:> [n] (j/toFixed n 2))}]}
+                                                 #_#_:format (fn:> [n] (xts/to-fixed n 2))}]}
                                         {:type "h"
                                          :body [{:type "title"
                                                  :template "E"}
@@ -67,16 +69,16 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   {:impl impl})))))
     (var [example setExample] (r/local "A"))
     (var components {:entry-brief  EntryBrief})
     (r/watch [example]
       (when example
-        (j/delayed [100]
+        (setTimeout (fn []
           (ext-view/refresh-args (. views list)
-                                 [example]))))
+                                 [example])) 100)))
     
     (return
      [:% n/Isolation

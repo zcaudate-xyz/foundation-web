@@ -9,7 +9,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react.ext-model :as ext-view]
              [js.react.ext-route :as ext-route]
@@ -25,7 +25,9 @@
              [melbourne.slim-table-common :as slim-table-common]
              [melbourne.slim-table-list :as slim-table-list]
              [melbourne.slim-sheet :as slim-sheet]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js TableListSearch
@@ -43,32 +45,32 @@
           control
           style
           (:= displayKey "list")]} rprops)
-  (var impl (or (k/get-in display ["list"])
+  (var impl (or (xtd/get-in display ["list"])
                 {}))
   (:= impl (:? (. impl props)
-               (j/assignNew impl ((. impl props) impl props))
+               (Object.assign {} impl ((. impl props) impl props))
                impl))
   (var #{[top
           bottom
-          (:= filterFn k/identity)
-          (:= sortFn k/identity)]} impl)
+          (:= filterFn xtl/identity)
+          (:= sortFn xtl/identity)]} impl)
   (:= entries (-> (or entries
                       (ext-view/listenView (. views [displayKey]) "success")
                       [])
                   (sortFn (. control orderBy))))
   (var topElem
        (:? top
-         (r/% slim-entry/Entry (j/assignNew props {:impl top}))))
+         (r/% slim-entry/Entry (Object.assign {} props {:impl top}))))
   (var bottomElem
        (:? bottom
-           (r/% slim-entry/Entry (j/assignNew props {:impl bottom}))))
+           (r/% slim-entry/Entry (Object.assign {} props {:impl bottom}))))
   (var centerElem
        (:? (== "row" (. impl type))
-           (r/% slim-sheet/Sheet (j/assignNew props #{impl entries}))
+           (r/% slim-sheet/Sheet (Object.assign {} props #{impl entries}))
 
            
            :else
-           (r/% slim-table-list/TableListView (j/assignNew props #{impl entries}))))
+           (r/% slim-table-list/TableListView (Object.assign {} props #{impl entries}))))
   (return
    [:% n/View
     topElem

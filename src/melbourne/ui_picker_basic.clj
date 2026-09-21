@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-data :as xtd]
              [js.react :as r :include [:fn]]
              [js.react-native.ui-picker-basic :as ui-picker-basic]
              [melbourne.ui-helper :as ui-helper]
@@ -43,7 +43,7 @@
       style
       styleText
       (:.. rprops)]}]
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:fg   {:key "primary"
                           :tone "flatten"}
                    :bg   {:key "background"
@@ -61,7 +61,7 @@
                   variant))
   (var __style (base-font/getFontStyle (or (. __variant font)
                                            "h6")))
-  (var __theme  (j/assign (base-theme/themeUiInput
+  (var __theme  (Object.assign (base-theme/themeUiInput
                            (base-palette/designPalette design)
                            __variant)
                           theme))
@@ -75,7 +75,7 @@
                 :height 24
                 :backgroundColor bgNormal}
                __style
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        index
        setIndex
        items
@@ -83,7 +83,7 @@
                     :padding 3
                     :paddingHorizontal 10
                     :fontSize 17}
-                   (:.. (j/arrayify styleText))]
+                   (:.. (xtd/arrayify styleText))]
        (:.. rprops)]}]))
 
 (defn.js PickerBasic

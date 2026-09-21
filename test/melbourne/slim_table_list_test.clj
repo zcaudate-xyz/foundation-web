@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react.ext-model :as ext-view]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.base-palette :as base-palette]
@@ -20,8 +21,10 @@
              [melbourne.slim-entry :as slim-entry]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-static :as ui-static]
-             [js.core :as j]
-             [xt.lang.base-lib :as k]
+             [xt.lang.common-string :as xts]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-sort-by :as xtsort]
              [xt.event.base-route :as event-route]]
    :export [MODULE]})
 
@@ -199,7 +202,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew props #{impl})))))
+                 (Object.assign {} props #{impl})))))
     (var components {:entry-detail EntryDetail})
     (return
      [:% n/Isolation
@@ -260,14 +263,14 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew props
+                 (Object.assign {} props
                               {:impl {:type "card"
                                       :body {:title {:template ["currency_id"]}}}})))))
     (var EntryDetail
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew  props #{impl})))))
+                 (Object.assign {}  props #{impl})))))
     (var components {:entry-brief  EntryBrief
                      :entry-detail EntryDetail})
     (var [type setType]   (r/local "fold"))
@@ -467,7 +470,7 @@
          {:design {:type "light"}
           :control {}
           :impl   {:page    {:display 5} 
-                   :header  {:format j/toUpperCase}}
+                   :header  {:format xts/to-uppercase}}
           :display {:brief  {:type "v"
                              :body [{:template ["name"]}
                                     {:template ["amount"]}]}}
@@ -487,9 +490,9 @@
     []
     (var views {:list (ext-view/makeView
                        {:handler (fn:> [showPage display]
-                                   (j/future-delayed [200]
+                                   (promise/x:with-delay 200 (fn []
                                      (return
-                                      (k/arr-map (k/arr-range display)
+                                      (xtd/arr-map (xtd/arr-range display)
                                                  (fn:> [i]
                                                    {:id   (+ "id-" (+ (* (- showPage 2) display)
                                                                       display
@@ -497,7 +500,7 @@
                                                     :name (+ "name-" (+ (* (- showPage 2) display)
                                                                         display
                                                                         i))
-                                                    :amount (k/random)})))))
+                                                    :amount (xt/x:random)}))))))
                         :options {:init false}})})
     (return
      (n/EnclosedCode 
@@ -513,7 +516,7 @@
           :views  views
           :impl   {:page    {:display 5
                              :total 100} 
-                   :header  {:format j/toUpperCase}}
+                   :header  {:format xts/to-uppercase}}
           :display {:brief  {:type "v"
                              :body [{:template ["name"]}
                                     {:template ["amount"]}]}}}]]]))))
@@ -573,8 +576,8 @@
         [:% slim-table-list/TableListView
          {:design {:type "light"}
           :impl   {:groups  {:split ["currency_id"]}
-                   :items   {:sort (fn:> [arr] (k/sort-by arr [["name" true] "balance"]))}
-                   :header  {:format j/toUpperCase}}
+                   :items   {:sort (fn:> [arr] (xtsort/sort-by arr [["name" true] "balance"]))}
+                   :header  {:format xts/to-uppercase}}
           :display {:brief  {:type "v"
                              :body [{:template ["name"]}
                                     {:template ["balance"]}
@@ -592,7 +595,7 @@
                                   {:defaultArgs []
                                    :handler
                                    (fn:>
-                                     (j/future-delayed [100]
+                                     (promise/x:with-delay 100 (fn []
                                        (return
                                         [{:id "id-0"
                                           :currency-id "STATS"
@@ -605,7 +608,7 @@
                                          {:id "id-2"
                                           :currency-id "XLM"
                                           :balance 50
-                                          :escrow 0.0}])))})}))
+                                          :escrow 0.0}]))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"
@@ -624,7 +627,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   {:impl {:type "card"
                           :body {:title {:template ["currency_id"]}}}})))))
@@ -632,7 +635,7 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew props #{impl})))))
+                 (Object.assign {} props #{impl})))))
     (var components {:entry-brief  EntryBrief
                      :entry-detail EntryDetail})
     (var [type setType]   (r/local "fold"))

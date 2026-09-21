@@ -10,13 +10,15 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react.ext-model :as ext-view]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.slim-link :as slim-link]
-             [js.core :as j]
-             [xt.lang.base-lib :as k]
+             [xt.lang.common-string :as xts]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [xt.event.base-model :as event-view]]
    :export [MODULE]})
 
@@ -38,13 +40,13 @@
                                      :handler
                                      (fn [args]
                                        (return
-                                        (j/future-delayed [100]
+                                        (promise/x:with-delay 100 (fn []
                                                           (return
-                                                           (-> (k/arr-range 5)
-                                                               (k/arr-map (fn:> [i]
+                                                           (-> (xtd/arr-range 5)
+                                                               (xtd/arr-map (fn:> [i]
                                                                             {:id   (+ "id-" i)
                                                                              :name (+ "name-" i)
-                                                                             :balance (k/random)})))))))})}))
+                                                                             :balance (xt/x:random)}))))))))})}))
     (return
      [:% n/Isolation
       (n/EnclosedCode 
@@ -52,7 +54,7 @@
         :style {:height 200}} 
        [:% n/Row
         (r/% slim-link/FormLinkDropdown
-             (j/assign #{form views}
+             (Object.assign #{form views}
                        {:design {:type "light"}
                         :label "Account",
                         :field "account_id",
@@ -77,20 +79,20 @@
                                      :handler
                                      (fn [args]
                                        (return
-                                        (j/future-delayed [100]
+                                        (promise/x:with-delay 100 (fn []
                                           (return
-                                           (-> (k/arr-range 5)
-                                               (k/arr-map (fn:> [i]
+                                           (-> (xtd/arr-range 5)
+                                               (xtd/arr-map (fn:> [i]
                                                             {:id   (+ "id-" i)
                                                              :name (+ "name-" i)
-                                                             :balance (k/random)})))))))})}))
+                                                             :balance (xt/x:random)}))))))))})}))
     (var entry {:account-id "id-3"})
     (return
      (n/EnclosedCode 
 {:label "melbourne.slim-link/FormLinkReadOnly"} 
 [:% n/Row
        (r/% slim-link/FormLinkReadOnly
-            (j/assign #{form views entry}
+            (Object.assign #{form views entry}
                       {:design {:type "light"}
                        :label "Account",
                        :field "account_id",
@@ -116,20 +118,20 @@
                                      :handler
                                      (fn [args]
                                        (return
-                                        (j/future-delayed [100]
+                                        (promise/x:with-delay 100 (fn []
                                           (return
-                                           (-> (k/arr-range 5)
-                                               (k/arr-map (fn:> [i]
+                                           (-> (xtd/arr-range 5)
+                                               (xtd/arr-map (fn:> [i]
                                                             {:id   (+ "id-" i)
                                                              :name (+ "name-" i)
-                                                             :balance (k/random)})))))))})}))
+                                                             :balance (xt/x:random)}))))))))})}))
     (var entry {:account-id "id-2"})
     (return
      (n/EnclosedCode 
 {:label "melbourne.slim-link/FormLinkEntryReadOnly"} 
 [:% n/Row
        (r/% slim-link/FormLinkEntryReadOnly
-            (j/assign #{form views entry}
+            (Object.assign #{form views entry}
                       {:design {:type "light"}
                        :label "Account",
                        :field "account_id",
@@ -165,13 +167,13 @@
                                   {:handler
                                    (fn [args]
                                      (return
-                                      (j/future-delayed [100]
+                                      (promise/x:with-delay 100 (fn []
                                         (return
-                                         (-> (k/arr-range 40)
-                                             (k/arr-map (fn:> [i]
+                                         (-> (xtd/arr-range 40)
+                                             (xtd/arr-map (fn:> [i]
                                                           {:id (+ "id-" i)
-                                                           :balance (k/random)
-                                                           :escrow  args})))))))})}))
+                                                           :balance (xt/x:random)
+                                                           :escrow  args}))))))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"
@@ -182,7 +184,7 @@
                                                  :template "B"}
                                                 {:template ["balance"]
                                                  :style {:marginLeft 10}
-                                                 #_#_:format (fn:> [n] (j/toFixed n 2))}]}
+                                                 #_#_:format (fn:> [n] (xts/to-fixed n 2))}]}
                                         {:type "h"
                                          :body [{:type "title"
                                                  :template "E"}
@@ -195,16 +197,16 @@
          (r/const
           (fn:> [props]
             (r/% slim-entry/Entry
-                 (j/assignNew
+                 (Object.assign {}
                   props
                   {:impl impl})))))
     (var [example setExample] (r/local "A"))
     (var components {:entry-brief  EntryBrief})
     (r/watch [example]
       (when example
-        (j/delayed [100]
+        (setTimeout (fn []
           (ext-view/refresh-args (. views list)
-                                 [example]))))
+                                 [example])) 100)))
     
     (return
      [:% n/Isolation
@@ -243,14 +245,14 @@
                    {:types types
                     :result output
                     :count (getCount)
-                    :view  (k/obj-pick view ["input" "output"])})}]))
+                    :view  (xtd/obj-pick view ["input" "output"])})}]))
     
     (defn.js ListenViewOutputDemo
       []
       (var view (ext-view/makeView
                  {:handler (fn:> [x y z]
-                             (j/future-delayed [500]
-                                               (return (+ x y z))))
+                             (promise/x:with-delay 500 (fn []
+                                               (return (+ x y z)))))
                   :defaultArgs [1 2 3]
                   :options {:init false}}))
       (var [types setTypes] (r/local ["pending" "disabled"]))
@@ -264,9 +266,9 @@
           {:title "R"
            :onPress (fn:> (ext-view/refresh-args
                            view
-                           [(j/random)
-                            (j/random)
-                            (j/random)]))}]
+                           [(xt/x:random)
+                            (xt/x:random)
+                            (xt/x:random)]))}]
          [:% n/Text " "]
          [:% n/Button
           {:title "D"
@@ -286,5 +288,5 @@
     (def +++
       (h/suppress
        (!.js
-        (j/assign test.web-00-rn.main/I09_RAW
+        (Object.assign test.web-00-rn.main/I09_RAW
                   (component.web-native/raw-controls)))))))

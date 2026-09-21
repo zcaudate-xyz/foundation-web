@@ -4,14 +4,14 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-util :as ui-util]
              [melbourne.ui-toolbar :as ui-toolbar]
              [melbourne.ui-text :as ui-text]
              [melbourne.ui-text-dialog :as ui-text-dialog]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js TableToolbar
@@ -69,7 +69,7 @@
             :data ["name" "time"]
             :value (. control orderBy)
             :setValue (. control setOrderBy)
-            :format j/toUpperCase]}]])
+            :format xts/to-uppercase]}]])
   (return
    [:% ui-toolbar/Toolbar
     #{design

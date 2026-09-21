@@ -16,7 +16,8 @@
                      [melbourne.ui-static :as ui-static]
                      [melbourne.slim-entry :as slim-entry]
                      [melbourne.base-validators :as validators]
-                     [xt.lang.base-lib :as k]
+                     [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
                      [xt.event.base-form :as event-form]
                      [xt.event.base-route :as event-route]]
            :export [MODULE]})
@@ -862,7 +863,7 @@
          {:design {:type "light"}
           :entry entry
           :impl {:text {:template ["currency_id"]}
-                 :format k/first}}]]
+                 :format xtd/first}}]]
        [:% ui-static/Div
         {:design {:type "dark"}
          :style {:flex 1}}
@@ -871,7 +872,7 @@
           :entry entry
           :impl {:type "image"
                  :text {:template ["currency_id"]}
-                 :format k/first}}]]]))))
+                 :format xtd/first}}]]]))))
 
 ^{:refer melbourne.slim-entry/EntryContentPair :added "4.0"}
 (fact "creates entry content pair"
@@ -1064,7 +1065,7 @@
          {:design {:type "light"}
           :entry entry
           :custom {:hello {:text "Hello"}}
-          :control {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
+          :control {:setShowDetail (fn:> [e] (alert (xt/x:json-encode e)))}
           :impl {:key "hello"
                  :submit "detail"}}]]
        [:% ui-static/Div
@@ -1074,7 +1075,7 @@
          {:design {:type "dark"}
           :entry entry
           :custom {:hello {:text "Hello"}}
-          :control {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
+          :control {:setShowDetail (fn:> [e] (alert (xt/x:json-encode e)))}
           :impl {:type "control"
                  :key "hello"
                  :submit "detail"}}]]]))))
@@ -1100,7 +1101,7 @@
          {:design {:type "light"}
           :entry entry
           :custom {:hello {:text "Hello"}}
-          :control {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
+          :control {:setShowDetail (fn:> [e] (alert (xt/x:json-encode e)))}
           :impl {:key "hello"
                  :submit "detail"
                  :body [[:% n/Text "PRESS"]]}}]]
@@ -1111,7 +1112,7 @@
          {:design {:type "dark"}
           :entry entry
           :custom {:hello {:text "Hello"}}
-          :control {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
+          :control {:setShowDetail (fn:> [e] (alert (xt/x:json-encode e)))}
           :impl {:type "control_layout"
                  :key "hello"
                  :submit "detail"
@@ -1206,7 +1207,7 @@
            {:design {:type "light"}
             :entry entry
             :custom {:hello {:text "Hello"}}
-            :route {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
+            :route {:setShowDetail (fn:> [e] (alert (xt/x:json-encode e)))}
             :impl {:key "hello"
                    :submit "detail"}}]]
        [:% ui-static/Div
@@ -1216,7 +1217,7 @@
            {:design {:type "dark"}
             :entry entry
             :custom {:hello {:text "Hello"}}
-            :route {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
+            :route {:setShowDetail (fn:> [e] (alert (xt/x:json-encode e)))}
             :impl {:type "route"
                    :key "hello"
                    :submit "detail"}}]]]))))
@@ -1242,7 +1243,7 @@
            {:design {:type "light"}
             :entry entry
             :custom {:hello {:text "Hello"}}
-            :route {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
+            :route {:setShowDetail (fn:> [e] (alert (xt/x:json-encode e)))}
             :impl {:key "hello"
                    :submit "detail"}}]]
        [:% ui-static/Div
@@ -1252,7 +1253,7 @@
            {:design {:type "dark"}
             :entry entry
             :custom {:hello {:text "Hello"}}
-            :route {:setShowDetail (fn:> [e] (alert (k/json-encode e)))}
+            :route {:setShowDetail (fn:> [e] (alert (xt/x:json-encode e)))}
             :impl {:type "route"
                    :key "hello"
                    :submit "detail"}}]]]))))
@@ -1277,7 +1278,7 @@
         [:% slim-entry/EntryContentAction
          {:design {:type "light"}
           :entry entry
-          :actions {:print (fn:> [e] (alert (k/json-encode e)))}
+          :actions {:print (fn:> [e] (alert (xt/x:json-encode e)))}
           :impl {:submit "print"
                  :text "HELLO"
                  :submitType "entry"}}]]
@@ -1287,7 +1288,7 @@
         [:% slim-entry/Entry
          {:design {:type "dark"}
           :entry entry
-          :actions {:print (fn:> [e] (alert (k/json-encode e)))}
+          :actions {:print (fn:> [e] (alert (xt/x:json-encode e)))}
           :impl {:type "action"
                  :text "HELLO"
                  :submit "print"
@@ -1314,7 +1315,7 @@
         {:design {:type "light"}
          :style {:flex 1}}
         [:% slim-entry/EntryContentSubmit
-         {:actions {:create (fn:> [data] (alert (k/json-encode data)))}
+         {:actions {:create (fn:> [data] (alert (xt/x:json-encode data)))}
           :form form
           :impl {:submit "create"}}]]
        [:% ui-static/Div
@@ -1322,7 +1323,7 @@
          :style {:flex 1}}
         [:% slim-entry/Entry
          {:design {:type "dark"}
-          :actions {:create (fn:> [data] (alert (k/json-encode data)))}
+          :actions {:create (fn:> [data] (alert (xt/x:json-encode data)))}
           :mini true
           :form form
           :impl {:type "submit"
@@ -1389,7 +1390,7 @@
         {:design {:type "light"}
          :style {:flex 1}}
         [:% slim-entry/EntryLayoutForm
-         {:actions {:create (fn:> [data] (alert (k/json-encode data)))}
+         {:actions {:create (fn:> [data] (alert (xt/x:json-encode data)))}
           :form form
           :impl {:submit "create"
                  :body [[:% slim-entry/EntryContentField
@@ -1413,7 +1414,7 @@
          :style {:flex 1}}
         [:% slim-entry/Entry
          {:design {:type "dark"}
-          :actions {:create (fn:> [data] (alert (k/json-encode data)))}
+          :actions {:create (fn:> [data] (alert (xt/x:json-encode data)))}
           :mini true
           :form form
           :impl {:type "form"
@@ -1465,7 +1466,7 @@
           :entry entry
           :impl {:type "image"
                  :text {:template ["currency_id"]
-                        :format k/first}}}]
+                        :format xtd/first}}}]
         [:% slim-entry/Entry
          {:design {:type "dark"}
           :entry entry
@@ -1531,7 +1532,7 @@
           :entry entry
           :impl {:type "image"
                  :text {:template ["currency_id"]
-                        :format k/first}}}]
+                        :format xtd/first}}}]
         [:% slim-entry/Entry
          {:design {:type "light"}
           :entry entry

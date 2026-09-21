@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.core.style :as css]
              [js.react-native.helper-color :as c]
              [js.react :as r]
@@ -18,7 +18,7 @@
              [js.react-native.animate :as a]
              [js.react-native.physical-base :as ui]
              [pune.ui-market-delta :as market-delta]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 ^{:refer pune.ui-market-delta/Delta :added "4.0"}
@@ -44,7 +44,7 @@
          {:title "+1"
           :onPress (fn [] (setValue (+ value 1)))}]]] 
 [:% n/Caption
-       {:text (k/json-encode #{value})
+       {:text (xt/x:json-encode #{value})
         :style {:marginTop 10
                 :zIndex -100}}])))
 

@@ -3,8 +3,10 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[xt.lang.base-lib :as k]
-             [js.core :as j]
+  {:require [[xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [melbourne.ui-toggle-button :as ui-toggle-button]]
@@ -27,30 +29,30 @@
        onChange
        styleContainer
        (:= itemProps [])
-       (:= format k/identity)]}]
+       (:= format xtl/identity)]}]
    (var itemFn
         (fn [value i]
           (return [:% ui-toggle-button/ToggleButton
                    #{[:key (+ value "-" i)
                       design variant theme
                       :style [{:marginHorizontal 5}
-                              (:.. (j/arrayify style))]
+                              (:.. (xtd/arrayify style))]
                       :text (format value i)
                       :selected (. indices [i])
                       :outlined (. indices [i])
                       :onPress (fn []
                                  (var changed
-                                      (j/map indices
-                                             (fn [e ei]
-                                               (return (:? (== ei i) (not e) e)))))
+                                      (. indices
+                                         (map (fn [e ei]
+                                                (return (:? (== ei i) (not e) e))))))
                                  (setIndices changed)
                                  (if onChange (onChange changed)))
                       (:.. (or (. itemProps [i])
                                {}))]}])))
    (return [:% n/Row
             {:style [{:margin 5}
-                     (:.. (j/arrayify styleContainer))]}
-            (j/map items itemFn)])))
+                     (:.. (xtd/arrayify styleContainer))]}
+            (. items (map itemFn))])))
 
 (defn.js EnumMulti
   "creates a multi-select horizontal tab bar"
@@ -90,14 +92,14 @@
        styleContainer
        outlined
        (:= itemProps [])
-       (:= format k/identity)]}]
+       (:= format xtl/identity)]}]
    (var itemFn
         (fn [value i]
           (return [:% ui-toggle-button/ToggleButton
                    #{[:key (+ value "-" i)
                       design variant theme
                       :style [{:marginHorizontal 5}
-                              (:.. (j/arrayify style))]
+                              (:.. (xtd/arrayify style))]
                       :text (format value i)
                       :selected (== i index)
                       :onPress (fn []
@@ -110,8 +112,8 @@
                                {}))]}])))
    (return [:% n/Row
             {:style [{:margin 5}
-                     (:.. (j/arrayify styleContainer))]}
-            (j/map items itemFn)])))
+                     (:.. (xtd/arrayify styleContainer))]}
+            (. items (map itemFn))])))
 
 (defn.js Tabs
   "creates a horizontal tab bar"
@@ -154,12 +156,12 @@
        styleContainer
        transformations
        (:= itemProps [])
-       (:= format k/identity)]}]
-   (var outlined (k/get-in design ["theme" "active" "outlined"]))
+       (:= format xtl/identity)]}]
+   (var outlined (xtd/get-in design ["theme" "active" "outlined"]))
    (var itemFn
         (fn [e]
           (var #{item} e)
-          (var i (k/get-key e "index"))
+          (var i (xt/x:get-key e "index"))
           (return [:% ui-toggle-button/ToggleButton
                    #{[:key i
                       design variant theme
@@ -167,7 +169,7 @@
                       :style [{:marginVertical 5
                                :alignItems "center"
                                :justifyContent "center"}
-                              (:.. (j/arrayify style))]
+                              (:.. (xtd/arrayify style))]
                       :selected (== i index)
                       :onPress (fn []
                                  (when (not= i index)
@@ -181,7 +183,7 @@
    (return [:% n/FlatList
             {:style styleContainer
              :data  items
-             :keyExtractor k/identity
+             :keyExtractor xtl/identity
              :renderItem itemFn}])))
 
 (defn.js List

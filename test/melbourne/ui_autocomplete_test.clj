@@ -10,14 +10,17 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react-native :as n :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react.ext-model :as ext-view]
-             [js.core :as j]
+             [xt.lang.common-string :as xts]
              [melbourne.ui-autocomplete :as ui-autocomplete]
              [melbourne.slim-sheet :as slim-sheet]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (def.js NAMES
@@ -28,10 +31,10 @@
 (defn.js get-names
   [filt]
   (var output [])
-  (k/for:array [n -/NAMES]
-    (when (j/startsWith n (j/toUpperCase filt))
-      (x:arr-push output {:name n}))
-    (when (< 15 (k/len output))
+  (xt/for:array [n -/NAMES]
+    (when (xts/starts-with? n (xts/to-uppercase filt))
+      (xt/x:arr-push output {:name n}))
+    (when (< 15 (xt/x:len output))
       (return output)))
   (return output))
   
@@ -53,8 +56,8 @@
     []
     (var view    (ext-view/makeView
                   {:handler (fn:> [filt]
-                              (j/future-delayed [300]
-                                (return (-/get-names filt))))
+                              (promise/x:with-delay 300 (fn []
+                                (return (-/get-names filt)))))
                    :defaultOutput []}))
     (var [selected
           setSelected] (r/local))
@@ -65,8 +68,8 @@
        [:% ui-autocomplete/SelectSingle
         #{selected
           setSelected
-          {:source {:key-fn k/id-fn
-                    :val-fn k/identity
+          {:source {:key-fn xtd/id-fn
+                    :val-fn xtl/identity
                     :view view}}}]])))
 
   (def.js MODULE (!:module)))

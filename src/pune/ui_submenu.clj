@@ -10,13 +10,13 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [[xt.lang.common-data :as xtd]
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.ui-toggle-button :as ui-toggle-button]
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-text :as ui-text]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js SubMenuToggle
@@ -39,7 +39,7 @@
      :setValue setValue}]
    #_[:% ui-toggle-button/ToggleButton
     #{[:design design
-       :variant (j/assign
+       :variant (Object.assign
                  {:bg {:key "background"
                        #_#_:tone (:? mini "sharpen" "diminish")}
                   :active  {:bg {:key "background"}}
@@ -58,7 +58,7 @@
                :name icon
                :size 15}]
        :tooltip {:text  label}
-       (:.. (j/assign rprops ritems))]}]))
+       (:.. (Object.assign rprops ritems))]}]))
 
 (defn.js SubMenuRoute
   "creates the main menu routes"
@@ -77,7 +77,7 @@
        {:design design
         :variant {:active  {:bg {:key "background"}
                             :fg {:key "neutral"}}}
-        :item (j/assign
+        :item (Object.assign
                {:selected (== routeKey key)
                 :onPress (fn []
                            (setRouteKey key)
@@ -113,7 +113,6 @@
      :variant {:bg {:key "background"}}
      :style [{:margin 4
               :overflow "hidden"}]}
-    (j/map items (itemFn mini))]))
+    (. items (map (itemFn mini)))]))
 
 (def.js MODULE (!:module))
-

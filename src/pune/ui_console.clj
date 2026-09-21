@@ -4,9 +4,10 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react-native :as n :include [:fn [:icon :entypo]]]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-text :as ui-text]]
    :export [MODULE]})
@@ -29,14 +30,14 @@
       setCurrent
       onClose
       (:.. rprops)]}]
-  (var data (k/sort (k/obj-keys screens)))
-  (var target (or (k/get-key screens current)
-                  (k/get-key screens (k/first data))))
+  (var data (. (xtd/obj-keys screens) (sort)))
+  (var target (or (xt/x:get-key screens current)
+                  (xt/x:get-key screens (xtd/first data))))
   (return
    [:% ui-static/Div
     {:design design
      :style [{:flex 1}
-             (:.. (j/arrayify style))]}
+             (:.. (xtd/arrayify style))]}
     [:% ui-static/Div
      {:design design
       :style {:flexDirection "row"}

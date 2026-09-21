@@ -3,7 +3,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-util :as ui-util]
@@ -13,7 +13,9 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.slim-common :as slim-common]
              [melbourne.slim-select :as slim-select]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js useViewLink
@@ -32,9 +34,9 @@
   (var args nil)
   (var link-id (ext-form/listenFieldValue form field))
   (r/watch [results]
-    (when (and (k/not-empty? results)
-               (k/nil? link-id))
-      (event-form/set-field form field (k/id-fn (k/first results)))))
+    (when (and (xtd/not-empty? results)
+               (xtl/nil? link-id))
+      (event-form/set-field form field (xtd/id-fn (xtd/first results)))))
 
   (when viewArgs
     (var data (ext-form/listenFormData form))
@@ -49,7 +51,7 @@
   "creates a Dropdown"
   {:added "0.1"}
   [props]
-  (var aprops (j/assignNew props (. props fieldProps)))
+  (var aprops (Object.assign {} props (. props fieldProps)))
   (var #{views viewKey viewArgs viewOpts
          viewTemplate viewValueFn
          form field} aprops)
@@ -58,16 +60,17 @@
          args} (-/useViewLink aprops))
   (return
    (r/% slim-select/FormDropdown
-        (j/assignNew {}
+        (Object.assign {} {}
                      props
-                     {:key (k/json-encode args)
+                     {:key (xt/x:json-encode args)
                       :data     (. links results)
                       :fieldProps
-                      {:valueFn  k/id-fn
+                      {:valueFn  xtd/id-fn
                        :format (fn [id]
-                                 (return (k/template-entry
-                                          (k/get-in links ["lookup" id])
-                                          viewTemplate)))}}))))
+                                 (return (xtd/template-entry
+                                          (xtd/get-in links ["lookup" id])
+                                         viewTemplate
+                                         props)))}}))))
 
 (defn.js FormLinkReadOnly
   "creates a Dropdown"
@@ -75,7 +78,7 @@
   [props]
   (var #{views viewKey viewArgs viewOpts
          viewTemplate
-         form field} (j/assignNew props (. props fieldProps)))
+         form field} (Object.assign {} props (. props fieldProps)))
   (var #{args
          links} (-/useViewLink #{views
                                   form
@@ -85,12 +88,13 @@
                                  viewOpts}))
   (return
    (r/% slim-common/FormReadOnly
-        (j/assignNew props
+        (Object.assign {} props
                      {:template (fn [e]
                                   (return
-                                   (k/template-entry
-                                    (k/get-in links ["lookup" (. e [field])])
-                                    viewTemplate)))}))))
+                                   (xtd/template-entry
+                                    (xtd/get-in links ["lookup" (. e [field])])
+                                    viewTemplate
+                                    props)))}))))
 
 (defn.js useViewLinkEntry
   [#{views
@@ -120,7 +124,7 @@
   [props]
   (var #{views viewKey viewArgs viewOpts
          viewTemplate
-         entry field} (j/assignNew props (. props fieldProps)))
+         entry field} (Object.assign {} props (. props fieldProps)))
   (var #{args
          links} (-/useViewLinkEntry #{views
                                        viewKey
@@ -129,11 +133,12 @@
                                      entry field))
   (return
    (r/% slim-common/FormReadOnly
-        (j/assignNew props
+        (Object.assign {} props
                      {:template (fn [e]
                                   (return
-                                   (k/template-entry
-                                    (k/get-in links ["lookup" (. e [field])])
-                                    viewTemplate)))}))))
+                                   (xtd/template-entry
+                                    (xtd/get-in links ["lookup" (. e [field])])
+                                    viewTemplate
+                                    props)))}))))
 
 (def.js MODULE (!:module))

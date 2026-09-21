@@ -4,14 +4,17 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-util :as ui-util]
              [melbourne.ui-input :as ui-input]
              [melbourne.ui-chip :as ui-chip]
              [melbourne.ui-button :as ui-button]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]]
    :export [MODULE]})
 
 (defn.js ChipInput
@@ -25,16 +28,16 @@
       values
       setValues
       (:.. rprops)]}]
-  (when (k/is-string? values)
-    (:= values (k/json-decode values)))
-  (when (k/is-empty? values)
+  (when (xtl/is-string? values)
+    (:= values (xt/x:json-decode values)))
+  (when (xtd/is-empty? values)
     (:= values []))
   (var [showInput setShowInput] (r/local false))
   (var [currentText setCurrentText] (r/local ""))
   (var refInput (r/ref))
   
   (var visibleInput (or showInput
-                        (k/is-empty? values)))
+                        (xtd/is-empty? values)))
   (return
    [:% n/Row
     {:style styleContainer}
@@ -49,18 +52,18 @@
         :onBlur  (fn:> (setShowInput false))
         :onSubmitEditing
         (fn []
-          (cond (k/not-empty? currentText)
+          (cond (xtd/not-empty? currentText)
                 (do (setValues [(:.. values) currentText])
                     (setCurrentText "")
                     (setShowInput false))
 
-                (k/not-empty? values)
+                (xtd/not-empty? values)
                 (setShowInput false)))
         :onChangeText
         (fn [text]
-          (cond (j/endsWith text ",")
-                (do (var out (k/trim (k/first (j/split text ","))))
-                    (when (k/not-empty? out)
+          (cond (xts/ends-with? text ",")
+                (do (var out (xts/trim (xtd/first (xts/split text ","))))
+                    (when (xtd/not-empty? out)
                       (setValues [(:.. values) out])
                       (setCurrentText "")))
 
@@ -71,21 +74,21 @@
       {:style {:flexWrap "wrap"
                :maxWidth 400
                :alignItems "center"}}
-      (j/map values
-             (fn:> [value i]
-               [:% ui-chip/Chip
-                #{design
-                  {:key i
-                   :text value
-                   :onClose (fn:> (setValues (k/arr-omit values i)))}}]))
-      (:? (k/not-empty? values)
+      (. values
+         (map (fn:> [value i]
+                [:% ui-chip/Chip
+                 #{design
+                   {:key i
+                    :text value
+                    :onClose (fn:> (setValues (xtd/arr-omit values i)))}}])))
+      (:? (xtd/not-empty? values)
           [:% ui-button/Button
            #{design
              {:variant {:fg {:key "primary"}
                         :bg {:key "background"}
                         :pressed {:bg {:key "background"}}}
               :outlined true
-              :onPress (fn:> (:? (k/not-empty? values)
+              :onPress (fn:> (:? (xtd/not-empty? values)
                                  (setShowInput (not showInput))))
               :style {:borderRadius 0
                       :margin 3

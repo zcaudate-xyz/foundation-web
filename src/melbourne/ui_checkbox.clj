@@ -10,16 +10,20 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n]
              [js.react-native.ui-check-box :as ui-check-box]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-theme :as base-theme]
              [melbourne.base-font :as base-font]
              [melbourne.ui-static :as ui-static]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js CheckBox
@@ -31,7 +35,7 @@
       theme
       (:.. rprops)]}]
   (var __variant
-       (k/obj-assign-nested
+       (xtd/obj-assign-nested
         {:fg   {:key "background"
                 :tone "diminish"}
          :bg   {:key "background"
@@ -46,7 +50,7 @@
         variant))
   (var __style (base-font/getFontStyle (or (. __variant font)
                                              "h6")))
-  (var __theme  (j/assign (base-theme/themeUiInput
+  (var __theme  (Object.assign (base-theme/themeUiInput
                            (base-palette/designPalette design)
                            __variant)
                           theme))
@@ -56,7 +60,7 @@
        :style [{:paddingHorizontal 3
                 }
                __style
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        (:.. rprops)]}]))
 
 (defn.js CheckGroupIndexed
@@ -73,7 +77,7 @@
        styleText
        styleContainer
        (:= itemProps [])
-       (:= format k/identity)]}]
+       (:= format xtl/identity)]}]
    (var itemFn
         (fn [value i]
           (return [:% n/View
@@ -89,16 +93,16 @@
                        :selected (. indices [i])
                        :onPress (fn []
                                   (var changed
-                                       (j/map indices
-                                              (fn [e ei]
-                                                (return (:? (== ei i) (not e) e)))))
+                                       (. indices
+                                          (map (fn [e ei]
+                                                 (return (:? (== ei i) (not e) e))))))
                                   (setIndices changed)
                                   (if onChange (onChange changed)))
                        (:.. (or (. itemProps [i])
                                 {}))]}]
                    [:% ui-static/Text
                     {:design design
-                     :variant (or (k/get-in design
+                     :variant (or (xtd/get-in design
                                             ["variant" "text"])
                                   {:fg {:key "neutral"
                                         :mix "primary"
@@ -107,7 +111,7 @@
                     (format value i)]])))
    (return [:% n/View
             {:style styleContainer}
-            (j/map items itemFn)])))
+            (. items (map itemFn))])))
 
 (defn.js CheckGroup
   "creates a group of check boxes"

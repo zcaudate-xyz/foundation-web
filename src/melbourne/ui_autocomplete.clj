@@ -4,7 +4,8 @@
             [std.string :as str]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.spec-promise :as promise]
+             
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [js.react.ext-model :as ext-view]
@@ -13,7 +14,7 @@
              [melbourne.ui-static :as ui-static]
              [melbourne.ui-input :as ui-input]
              [melbourne.base-font :as base-font]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js SelectComponentEmpty
@@ -40,7 +41,7 @@
    [:% ui-text/ButtonAccent
     #{design
       {:onPress (fn:> (setSelected entry))
-       :text (k/json-encode entry)}}]))
+       :text (xt/x:json-encode entry)}}]))
 
 (defn.js SelectSingle
   [#{[design
@@ -56,7 +57,7 @@
        [:% ui-text/ButtonAccent
         #{design
           {:onPress (fn:> (setSelected nil))
-           :text (k/json-encode selected)}}]
+           :text (xt/x:json-encode selected)}}]
        [:<>
         [:% ui-input/Input
          {:design {:type "dark"}
@@ -88,15 +89,15 @@
   (var [visible setVisible] (r/local true))
   (var view    (ext-view/makeView
                 {:handler (fn:> [filt]
-                            (j/future-delayed [300]
-                              (return (-/get-names filt))))
+                            (promise/x:with-delay 300 (fn []
+                              (return (-/get-names filt)))))
                  :defaultOutput []}))
   (var component (r/const
                     (fn [#{entry}]
                       (return
                        [:% n/Text
                         {:style {:padding 5}}
-                        (k/json-encode entry)]))))
+                        (xt/x:json-encode entry)]))))
     (return
      [:% n/Enclosed
       {:label "js.react-native.ui-autocomplete/Autocomplete"}

@@ -7,13 +7,16 @@
    :bundle {:onboarding   [["@metamask/onboarding" :as MetaMaskOnboarding]]
             :provider     [["@metamask/detect-provider" :as MetaMaskDetectProvider]]}
    :import  [["@metamask/onboarding" :as MetaMaskOnboarding]]
-   :require [[melbourne.ui-text :as ui-text]
+   :require [[xt.lang.spec-promise :as promise]
+             [melbourne.ui-text :as ui-text]
              [js.lib.eth-lib :as eth-lib :include [:fn]]
              [js.react-native.ui-util :as ui-util]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
-             [js.core :as j]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.common-string :as xts]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (h/template-entries [l/tmpl-entry {:type :fragment
@@ -83,7 +86,7 @@
 
 (defn.js format-address-string
   [s len]
-  (return (+ "0x" (j/substring s 2 (or len 20)) "...")))
+  (return (+ "0x" (xts/substring s 2 (or len 20)) "...")))
 
 (defn.js format-chain-id
   [n]
@@ -108,7 +111,7 @@
   (return [:% Consumer
            (fn [provider]
              (return
-              (r/% component (j/assign rprops
+              (r/% component (Object.assign rprops
                                        #{provider}))))]))
 
 (defn.js MetamaskEnsureInstall
@@ -150,16 +153,16 @@
   (var [accounts setAccounts] (r/local {}))
   (var setTable (r/const
                  (fn [arr]
-                   (var accounts (k/arr-juxt (or arr [])
+                   (var accounts (xtd/arr-juxt (or arr [])
                                              (fn [s]
-                                               (return (+ "0x" (j/toUpperCase (j/substring s 2)))))
-                                             k/T))
+                                               (return (+ "0x" (xts/to-uppercase (xts/substring s 2)))))
+                                             xtl/T))
                    (setAccounts accounts)
                    (when onChange (onChange accounts)))))
   (var requestFn
        (r/const (fn:>
                   (. (-/request {:method "eth_requestAccounts"} setTable)
-                     (catch k/identity)))))
+                     (catch xtl/identity)))))
   (r/init []
     (requestFn)
     (-/on "accountsChanged" setTable)
@@ -167,9 +170,9 @@
      (fn []
        (-/removeListener "accountsChanged" setTable))))
   (r/watch [accounts]
-    (when (k/nil? accounts)
-      (j/future-delayed [1000]
-        (requestFn))))
+    (when (xtl/nil? accounts)
+      (promise/x:with-delay 1000 (fn []
+        (requestFn)))))
   (return #{accounts
             setAccounts
             requestFn}))
@@ -184,7 +187,7 @@
          requestFn}
        (-/useEnsureConnected onChange))
   (return
-   (:? (k/is-empty? accounts)
+   (:? (xtd/is-empty? accounts)
        (or fallback
            [:% n/Row
             [:% ui-text/ButtonAccent
@@ -202,11 +205,11 @@
                      (. (-/request {:method "eth_chainId"} )
                         (then (fn [res]
                                 (setChainId res)))
-                        (catch k/identity))))
+                        (catch xtl/identity))))
                  1000))
   (r/init []
     (. (-/request {:method "eth_chainId"} setChainId)
-       (catch k/identity))
+       (catch xtl/identity))
     (-/on "chainChanged" setChainId)
     (return
      (fn []
@@ -226,14 +229,14 @@
   (var [visible setVisible] (r/local false))
   (r/init []
     (. (-/request {:method "eth_chainId"} setId)
-       (catch k/identity))
+       (catch xtl/identity))
     (-/on "chainChanged" setId)
     (setVisible true)
     (return
      (fn []
        (-/removeListener "chainChanged" setId))))
   (return
-   (:? (== chainId (j/toString id))
+   (:? (== chainId (xtl/to-string id))
        (or children [:% n/View])
        [:% ui-util/Fade
         {:visible visible}
@@ -258,23 +261,23 @@
          requestFn}
        (-/useEnsureConnected onChange))
   (return
-   (:? (k/is-empty? accounts)
+   (:? (xtd/is-empty? accounts)
        (:? fallbackLink
            (r/% fallbackLink
-                (j/assign #{design} fallbackProps))
+                (Object.assign #{design} fallbackProps))
            [:% n/Row
             [:% ui-text/ButtonAccent
              {:design design
               :text  "Link Site"
               :onPress requestFn}]])
        
-       (k/arr-some addresses (fn:> [addr] (. accounts [addr])))
+       (xtd/arr-some addresses (fn:> [addr] (. accounts [addr])))
        (or children [:% n/View])
        
        :else
        (:? fallback
            (r/% fallback
-                (j/assign #{design accounts} fallbackProps))
+                (Object.assign #{design accounts} fallbackProps))
            [:% ui-util/FadeIn
             [:% n/View
              {:style {:justifyContent "center"
@@ -286,7 +289,7 @@
               {:design design
                :style {:fontSize 8}
                :numberOfLines 1}
-              (k/first addresses)]]]))))
+              (xtd/first addresses)]]]))))
 
 (def.js MODULE (!:module))
 

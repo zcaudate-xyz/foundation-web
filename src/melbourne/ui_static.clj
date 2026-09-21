@@ -10,11 +10,12 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react-native :as n :include [:fn]]
              [js.react-native.ui-tooltip :as ui-tooltip]
              [js.react-native.ui-scrollview :as ui-scrollview]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [melbourne.base-palette :as base-palette]
              [melbourne.base-font :as base-font]]
    :export [MODULE]})
@@ -28,7 +29,7 @@
       style
       (:.. rprops)]}]
   (var palette  (base-palette/designPalette design))
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:fg {:key "neutral"}
                    :bg {:key "background"}}
                   variant))
@@ -45,7 +46,7 @@
                     (base-palette/getColor
                      palette
                      (. __variant fg)))}
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        (:.. rprops)]}]))
 
 (defn.js Text
@@ -57,7 +58,7 @@
       style
       (:.. rprops)]}]
   (var palette  (base-palette/designPalette design))
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:fg {:key "neutral"}}
                   variant))
   (var __style (base-font/getFontStyle
@@ -72,7 +73,7 @@
                         palette
                         (. __variant fg))}
                __style
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        (:.. rprops)]}]))
 
 (defn.js Separator
@@ -84,7 +85,7 @@
       style
       (:.. rprops)]}]
   (var palette  (base-palette/designPalette design))
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:fg {:key "neutral"}}
                   variant))
   (return
@@ -95,7 +96,7 @@
                  palette
                  (. __variant fg))
                 :height 1}
-               (:.. (j/arrayify style))]
+               (:.. (xtd/arrayify style))]
        #_(:.. rprops)]}]))
 
 (defn.js ScrollView
@@ -107,7 +108,7 @@
       styleIndicator
       (:.. rprops)]}]
   (var palette  (base-palette/designPalette design))
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:bg {:key "background"
                         :tone "augment"}
                    :fg {:key "primary"
@@ -120,12 +121,12 @@
        [{:backgroundColor (base-palette/getColor
                            palette
                            (. __variant bg))}
-        (:.. (j/arrayify styleBackground))]
+        (:.. (xtd/arrayify styleBackground))]
        :styleIndicator
        [{:backgroundColor (base-palette/getColor
                            palette
                            (. __variant fg))}
-        (:.. (j/arrayify styleIndicator))]
+        (:.. (xtd/arrayify styleIndicator))]
        (:.. rprops)]}]))
 
 (defn.js TextTooltip
@@ -139,7 +140,7 @@
       style
       (:.. rprops)]}]
   (var palette (base-palette/designPalette design))
-  (var __variant (j/assign {:fg {:key "background"}
+  (var __variant (Object.assign {:fg {:key "background"}
                             :bg {:key "neutral"}}
                            variant))
   (var __style  (base-font/getFontStyle
@@ -147,7 +148,7 @@
                      "h6")))
   (return
    [:% ui-tooltip/Tooltip
-    #{[:arrow (j/assign {:color (base-palette/getColor
+    #{[:arrow (Object.assign {:color (base-palette/getColor
                                  palette
                                  (. __variant bg))}
                         arrow)
@@ -159,7 +160,7 @@
                 {:position "absolute"
                  :borderRadius 5
                  :padding 10}
-                (:.. (j/arrayify style))]
+                (:.. (xtd/arrayify style))]
         (:.. textProps)]}
      text]]))
 
@@ -176,15 +177,15 @@
   (return
    [:% -/ScrollView
     #{[design
-       :variant (k/get-in design ["variant" "scrollview"])
+       :variant (xtd/get-in design ["variant" "scrollview"])
        (:.. rprops)]}
     [:% -/Text
      #{[design
-        :variant (k/get-in design ["variant" "text"])
+        :variant (xtd/get-in design ["variant" "text"])
         :style [(n/PlatformSelect {:ios {:fontFamily "Courier"}
                                    :default {:fontFamily "monospace"}})
                 {:fontSize 10}
-                (:.. (j/arrayify styleText))]]}
+                (:.. (xtd/arrayify styleText))]]}
      (or content children)]]))
 
 (def.js MODULE (!:module))

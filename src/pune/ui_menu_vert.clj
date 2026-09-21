@@ -10,7 +10,7 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
@@ -18,7 +18,9 @@
              [melbourne.ui-button :as ui-button]
              [melbourne.ui-toggle-button :as ui-toggle-button]
              [melbourne.ui-static :as ui-static]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-lib :as xtl]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js styleMenuButton
@@ -71,7 +73,7 @@
                :size 24}]
        :tooltip {:text  label
                  :position "top"}
-       (:.. (j/assign rprops ritems))]}]))
+       (:.. (Object.assign rprops ritems))]}]))
 
 (defn.js MainMenuToggle
   "creates the main menu toggle"
@@ -86,7 +88,7 @@
   (return
    [:% ui-toggle-button/ToggleButton
     #{[:design design
-       :variant (j/assign
+       :variant (Object.assign
                  {:bg {:key "background"
                        :tone (:? mini "sharpen" "diminish")}
                   :active  {:bg {:key "neutral"}}
@@ -102,7 +104,7 @@
                :size 24}]
        :tooltip {:text  label
                  :position "top"}
-       (:.. (j/assign rprops ritems))]}]))
+       (:.. (Object.assign rprops ritems))]}]))
 
 (defn.js MainMenuRoute
   "creates the main menu routes"
@@ -120,7 +122,7 @@
      #{theme mini
        {:design design
         :variant {:active  {:bg {:key "primary"}}}
-        :item (j/assign
+        :item (Object.assign
                {:selected (== routeKey key)
                 :onPress (fn []
                            (setRouteKey key)
@@ -174,7 +176,7 @@
       setRouteKey
       (:= design {})
       (:= items [])]}]
-  (:= items (j/filter items k/identity))
+  (:= items (xtd/arr-filter items xtl/identity))
   (var [visible setVisible] (r/local false))
   (var itemFn
        (fn [mini]
@@ -200,9 +202,8 @@
                     :overflow "hidden"
                     :flexDirection "row"
                     :justifyContent "space-between"}]}
-          (-> items
-              (j/filter (k/key-fn "mini"))
-              (j/map    (itemFn true)))
+          (. (xtd/arr-filter items (xtd/key-fn "mini"))
+             (map (itemFn true)))
           [:% -/MainMenuMiniContext
            #{design visible setVisible}
            [:% ui-static/Div
@@ -210,11 +211,11 @@
              :variant {:bg {:key "background"
                             :tone "sharpen"}}
              :style [{:padding 2}]}
-            (j/map (j/filter items
-                             (fn:> [e]
-                               (and (not (. e mini))
-                                    (. e key))))
-                   (itemFn true))]]])
+            (. (xtd/arr-filter items
+                               (fn:> [e]
+                                 (and (not (. e mini))
+                                      (. e key))))
+               (map (itemFn true)))]]])
         
 
         :else
@@ -226,7 +227,6 @@
            :style [{:padding 2
                     :flex 1
                     :overflow "hidden"}]}
-          (j/map items (itemFn mini))])))
+          (. items (map (itemFn mini)))])))
 
 (def.js MODULE (!:module))
-

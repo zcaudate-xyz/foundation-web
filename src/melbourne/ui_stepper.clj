@@ -3,8 +3,10 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[xt.lang.base-lib :as k]
-             [js.core :as j]
+  {:require [[xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-math :as xtm]
+             
              [js.react :as r]
              [js.react-native :as n]
              [js.react-native.animate :as a]
@@ -35,8 +37,8 @@
                 :borderRadius 10
                 :padding 2
                 :marginHorizontal 6}
-               (:.. (j/arrayify style))]
-       :items (k/arr-repeat "" total)
+               (:.. (xtd/arrayify style))]
+       :items (xtd/arr-repeat "" total)
        (:.. rprops)]}]))
 
 (defn.js stepperOffset
@@ -49,7 +51,7 @@
          visible} (modelFn v))
   (return
    {:style {:opacity (:? visible
-                         (k/mix 0 1 scale)
+                         (xtm/mix 0 1 scale)
                          0)
             :zIndex (:? visible (* 100 scale) -100)}}))
 
@@ -63,7 +65,7 @@
       (:= offsetFn -/stepperOffset)
       (:= pages [])
       (:.. rprops)]}]
-  (var total (j/max (k/len pages) 1))
+  (var total (xtm/max (xt/x:len pages) 1))
   (var iindicator   (a/useCircularIndicator
                      index
                      {:default {:type "timing"
@@ -81,7 +83,7 @@
           [:% physical-base/Box
            {:key (+ "page" i)
             :style [{:position "absolute"}
-                    (:.. (j/arrayify pageStyle))]
+                    (:.. (xtd/arrayify pageStyle))]
             :indicators {:offset iindicator}
             :children [[:% n/View
                         {:key "parent"}
@@ -91,9 +93,8 @@
   (return
    [:% n/View
     {:style [{:overflow "hidden"}
-             (:.. (j/arrayify style))]}
-    (j/map pages pageFn)]))
+             (:.. (xtd/arrayify style))]}
+    (. pages (map pageFn))]))
 
 (def.js MODULE (!:module))
-
 

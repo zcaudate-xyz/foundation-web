@@ -11,32 +11,34 @@
             :notify {:type :webpage :path "dev/notify"}}
    :require [[js.react-native :as n :include [:fn :svg]]
              [js.react :as r :include [:fn]]
-             [js.core :as j]
+             [xt.lang.common-math :as xtm]
              [melbourne.base-palette :as base-palette]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]]
    :export [MODULE]})
 
 (defn.js getPath
   [values width height maxValue minValue]
-  (when (k/is-empty? values)
+  (when (xtd/is-empty? values)
     (return ""))
   (var out [])
-  (var maxX (- (k/len values) 1))
+  (var maxX (- (xt/x:len values) 1))
   (var maxY (+ (or maxValue
-                   (k/max (:.. values)))
+                   (xtm/max (:.. values)))
                2))
   (var minY (- (or minValue
-                   (k/min (:.. values)))
+                   (xtm/min (:.. values)))
                2))
-  (k/for:array [[i v] values]
-    (x:arr-push out (k/cat (j/round (/ (* width i)
+  (xt/for:array [[i v] values]
+    (xt/x:arr-push out (xt/x:cat (xtm/round (/ (* width i)
                                        maxX))
                            ","
                            (- height
                               (* height
                                  (/ (- v minY)
                                     (- maxY minY)))))))
-  (return (+ "M " (j/join out " L "))))
+  (return (+ "M " (xts/join " L " out))))
 
 (defn.js Sparkline
   [#{design
@@ -52,21 +54,21 @@
                        maxValue
                        minValue))
   (var palette  (base-palette/designPalette design))
-  (var __variant (j/assign
+  (var __variant (Object.assign
                   {:fg {:key "primary"}}
                   variant))
   (return
    [:% n/Svg
     {:height height
      :width width
-     :style (j/assign
+     :style (Object.assign
              {:backgroundColor (:? (. __variant bg)
                                    (base-palette/getColor
                                     palette
                                     (. __variant bg)))}
              style)}
     (r/% n/Path
-         (j/assign
+         (Object.assign
           {:d path
            :fill "none"
            :stroke (base-palette/getColor
@@ -76,4 +78,3 @@
           pathStyle))]))
 
 (def.js MODULE (!:module))
-

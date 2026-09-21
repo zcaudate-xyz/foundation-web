@@ -10,11 +10,12 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.core :as j]
+   :require [
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [xt.lang.common-string :as base-text]
              [melbourne.ui-button :as ui-button]
              [melbourne.base-palette :as base-palette]
@@ -35,7 +36,7 @@
   (var [visible setVisible] (r/local (fn:> false)))
   
   (var buttonRef (r/ref))
-  (var buttonLabel (+ (j/toUpperCase (base-text/tag-string (or tag "")))
+  (var buttonLabel (+ (base-text/to-uppercase (base-text/tag-string (or tag "")))
                       (:? message (+ " - " message) "")))
   (var errorText (n/format-entry result))
   (var errorVariant {:bg {:key "error"}
@@ -48,7 +49,7 @@
               :opacity 0.9
               :alignItems "center"
               :paddingHorizontal 10}
-             (:.. (j/arrayify style))]}
+             (:.. (xtd/arrayify style))]}
     [:<>
      [:% ui-button/Button
       {:refLink buttonRef
@@ -59,7 +60,7 @@
                :fontSize 12}
        :onPressIn  (fn:> (setVisible true))
        :onPressOut (fn:> (setVisible false))
-       :text (:? (k/is-empty? buttonLabel)
+       :text (:? (xtd/is-empty? buttonLabel)
                  "UNKNOWN ERROR"
                  buttonLabel)
        :transformations {:bg nil}}]
@@ -78,7 +79,7 @@
         {:style [base-font/fontText
                  {:textAlign "left"
                   :color mainBackground}]}
-        (:? (k/is-empty? errorText)
+        (:? (xtd/is-empty? errorText)
             "tag: system/unknown_error"
             errorText)]]]]
     [:% n/Padding {:style {:flex 1}}]

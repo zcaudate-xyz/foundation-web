@@ -13,7 +13,8 @@
              [js.react-native :as n :include [:fn]]
              [js.react-native.helper-color :as c]
              [js.lib.lw-charts :as lw]
-             [xt.lang.base-lib :as k]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]
              [melbourne.base-palette :as base-palette]]
    :export [MODULE]})
 
@@ -31,16 +32,16 @@
 
   (var dataPriceYesNorm [])
   (var dataPriceNoNorm [])
-  (k/for:index [i [0 (k/len dataPriceYes)]]
-    (var t  (k/get-in dataPriceYes  [i "time"]))
-    (var ye (k/get-in dataPriceYes [i "value"]))
-    (var ne (k/get-in dataPriceNo  [i "value"]))
+  (xt/for:index [i [0 (xt/x:len dataPriceYes)]]
+    (var t  (xtd/get-in dataPriceYes  [i "time"]))
+    (var ye (xtd/get-in dataPriceYes [i "value"]))
+    (var ne (xtd/get-in dataPriceNo  [i "value"]))
     
     (var total (+ ye ne))
-    (x:arr-push dataPriceYesNorm
+    (xt/x:arr-push dataPriceYesNorm
                 {:value (/ ye total)
                  :time t})
-    (x:arr-push dataPriceNoNorm
+    (xt/x:arr-push dataPriceNoNorm
                 {:value (/ ne total)
                  :time t}))
   (r/watch [dataPriceYes

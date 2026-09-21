@@ -4,12 +4,12 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [[xt.lang.common-data :as xtd]
              [js.react :as r]
              [js.react-native :as n :include [[:icon :entypo]]]
              [melbourne.ui-button :as ui-button]
              [melbourne.ui-static :as ui-static]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]]
    :export [MODULE]})
 
 (defn.js Chip
@@ -21,7 +21,7 @@
       text
       style
       onClose]}]
-  (var __variant (j/assign {:bg {:key "primary"}
+  (var __variant (Object.assign {:bg {:key "primary"}
                             :fg {:key "background"}}
                            variant))
   (return
@@ -33,7 +33,7 @@
                 :opacity 0.9
                 :alignItems "center"
                 :overflow "hidden"}
-               (:.. (j/arrayify style))]}}
+               (:.. (xtd/arrayify style))]}}
     [:% ui-static/Text
      #{design
        {:variant __variant

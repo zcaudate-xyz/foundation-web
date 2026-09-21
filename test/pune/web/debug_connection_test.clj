@@ -14,7 +14,9 @@
              [js.react-native :as n :include [:fn]]
              [statslink.app.model-constant :as mc]
              [pune.web.debug-connection :as debug-connection]
-             [xt.lang.base-lib :as k]
+             
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-string :as xts]
              ]
    :export [MODULE]})
 
@@ -53,9 +55,10 @@
 [:% n/TextDisplay
               {:content [(n/format-obj summary)
                          "\n\n"
-                         (k/arr-join (or (k/split-long (or token ""))
-                                         [])
-                                     "\n")
+                         (xts/join "\n"
+                                   (or (xts/split-long (or token "")
+                                                       nil)
+                                       []))
                          "\n\n"
                          (n/format-obj dash)]}] 
 #_))))

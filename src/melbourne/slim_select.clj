@@ -4,7 +4,7 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[js.core :as j]
+  {:require [
              [js.react :as r]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react.ext-form :as ext-form]
@@ -13,7 +13,8 @@
              [melbourne.ui-picker :as ui-picker]
              [melbourne.ui-picker-basic :as ui-picker-basic]
              [melbourne.ui-dropdown :as ui-dropdown]
-             [xt.lang.base-lib :as k]]
+             [xt.lang.spec-base :as xt]
+             [xt.lang.common-data :as xtd]]
    :export [MODULE]})
 
 (defn.js FormPicker
@@ -32,7 +33,7 @@
       data
       minWidth]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "picker"
+                                          (Object.assign {:slim/type "picker"
                                                      :fn/type   "field"}
                                                     meta)))
   (var setValue (r/const (fn [v]
@@ -42,7 +43,7 @@
    [:% slim-common/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       labelHide labelNone
       label
@@ -79,7 +80,7 @@
       data
       minWidth]}]
   (var #{value result} (ext-form/listenField form field
-                                          (j/assign {:slim/type "picker"
+                                          (Object.assign {:slim/type "picker"
                                                      :fn/type   "field"}
                                                     meta)))
   (var setValue (r/const (fn [v]
@@ -89,7 +90,7 @@
    [:% slim-common/FormEnclosed
     #{design
       mini
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       styleLabel
       labelHide labelNone
       label
@@ -130,7 +131,7 @@
       setActive]}]
   (var #{value result} (ext-form/listenField
                         form field
-                        (j/assign {:slim/type "dropdown"
+                        (Object.assign {:slim/type "dropdown"
                                    :fn/type   "field"}
                                   meta)))
   (var setValue (r/const (fn [v]
@@ -142,7 +143,7 @@
       mini
       labelHide labelNone
       styleLabel
-      {:variant (k/get-in design ["variant" "label"])}
+      {:variant (xtd/get-in design ["variant" "label"])}
       label
       minWidth}
     [:% ui-dropdown/Dropdown
