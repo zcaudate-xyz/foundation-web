@@ -11,6 +11,7 @@
             :notify {:type :webpage :path "dev/notify"}}
    :require [[xt.lang.spec-base :as xt]
              [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]
              [xt.event.base-log :as event-log]
              
              [js.cell :as cl]
@@ -31,8 +32,8 @@
   "displays a brief info"
   {:added "0.1"}
   [v branch parents]
-  (var header (j/join [(:.. parents) branch]
-                          ", "))
+  (var header (xts/join ", "
+                        [(:.. parents) branch]))
   (return
    [:% n/View
     {:style {:flex 1

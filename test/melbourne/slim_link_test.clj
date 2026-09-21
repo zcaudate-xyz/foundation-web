@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react.ext-model :as ext-view]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
@@ -39,13 +40,13 @@
                                      :handler
                                      (fn [args]
                                        (return
-                                        (j/future-delayed [100]
+                                        (promise/x:with-delay 100 (fn []
                                                           (return
                                                            (-> (xtd/arr-range 5)
                                                                (xtd/arr-map (fn:> [i]
                                                                             {:id   (+ "id-" i)
                                                                              :name (+ "name-" i)
-                                                                             :balance (xt/x:random)})))))))})}))
+                                                                             :balance (xt/x:random)}))))))))})}))
     (return
      [:% n/Isolation
       (n/EnclosedCode 
@@ -78,13 +79,13 @@
                                      :handler
                                      (fn [args]
                                        (return
-                                        (j/future-delayed [100]
+                                        (promise/x:with-delay 100 (fn []
                                           (return
                                            (-> (xtd/arr-range 5)
                                                (xtd/arr-map (fn:> [i]
                                                             {:id   (+ "id-" i)
                                                              :name (+ "name-" i)
-                                                             :balance (xt/x:random)})))))))})}))
+                                                             :balance (xt/x:random)}))))))))})}))
     (var entry {:account-id "id-3"})
     (return
      (n/EnclosedCode 
@@ -117,13 +118,13 @@
                                      :handler
                                      (fn [args]
                                        (return
-                                        (j/future-delayed [100]
+                                        (promise/x:with-delay 100 (fn []
                                           (return
                                            (-> (xtd/arr-range 5)
                                                (xtd/arr-map (fn:> [i]
                                                             {:id   (+ "id-" i)
                                                              :name (+ "name-" i)
-                                                             :balance (xt/x:random)})))))))})}))
+                                                             :balance (xt/x:random)}))))))))})}))
     (var entry {:account-id "id-2"})
     (return
      (n/EnclosedCode 
@@ -166,13 +167,13 @@
                                   {:handler
                                    (fn [args]
                                      (return
-                                      (j/future-delayed [100]
+                                      (promise/x:with-delay 100 (fn []
                                         (return
                                          (-> (xtd/arr-range 40)
                                              (xtd/arr-map (fn:> [i]
                                                           {:id (+ "id-" i)
                                                            :balance (xt/x:random)
-                                                           :escrow  args})))))))})}))
+                                                           :escrow  args}))))))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"
@@ -203,9 +204,9 @@
     (var components {:entry-brief  EntryBrief})
     (r/watch [example]
       (when example
-        (j/delayed [100]
+        (setTimeout (fn []
           (ext-view/refresh-args (. views list)
-                                 [example]))))
+                                 [example])) 100)))
     
     (return
      [:% n/Isolation
@@ -250,8 +251,8 @@
       []
       (var view (ext-view/makeView
                  {:handler (fn:> [x y z]
-                             (j/future-delayed [500]
-                                               (return (+ x y z))))
+                             (promise/x:with-delay 500 (fn []
+                                               (return (+ x y z)))))
                   :defaultArgs [1 2 3]
                   :options {:init false}}))
       (var [types setTypes] (r/local ["pending" "disabled"]))

@@ -9,7 +9,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[xt.lang.common-string :as xts]
+   :require [[xt.lang.spec-promise :as promise]
+             [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [js.react-native.ui-notify :as ui-notify-events]
@@ -165,9 +166,9 @@
                         xtl/gt))
   (r/watch [inbox refresh]
     (when (xtd/not-empty? inbox)
-      (j/future-delayed [500]
+      (promise/x:with-delay 500 (fn []
         (when (isMounted)
-          (refresh))))
+          (refresh)))))
     (var outdated (-> inbox
                       (xtd/obj-vals)
                       (xtd/arr-filter (fn [e]
@@ -180,9 +181,9 @@
       (var out (xtd/obj-omit inbox outdated))
       (cond (xtd/is-empty? out)
             (do (setShowNotify false)
-                (j/future-delayed [500]
+                (promise/x:with-delay 500 (fn []
                     (when (isMounted)
-                      (setInbox out))))
+                      (setInbox out)))))
             
             :else
             (setInbox out))))
@@ -202,9 +203,9 @@
                                                     (. entry id))]))
                    (cond (xtd/is-empty? out)
                          (do (setShowNotify false)
-                             (j/future-delayed [200]
+                             (promise/x:with-delay 200 (fn []
                                (when (isMounted)
-                                 (setInbox out))))
+                                 (setInbox out)))))
                          
                          :else
                          (setInbox out)))
@@ -261,8 +262,8 @@
            :onPress (fn []
                      (setVisible false)
                      (setWaiting true)
-                     (j/delayed [500]
-                       (setWaiting false)))]}]
+                     (setTimeout (fn []
+                       (setWaiting false)) 500))]}]
        #_[:% slim-submit/SubmitLineHelpers
         #{[design
            :cancelShow true

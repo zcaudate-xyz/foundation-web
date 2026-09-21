@@ -10,7 +10,8 @@
             :emit   {:native {:suppress true}
                      :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[xt.lang.common-string :as xts]
+   :require [[xt.lang.spec-promise :as promise]
+             [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [js.lib.datetime :as dt]
@@ -66,7 +67,7 @@
           (:= label "PRICE")]} props)
   (var [init setInit] (r/local))
   (r/init []
-    (j/future-delayed [500] (setInit true)))
+    (promise/x:with-delay 500 (fn [] (setInit true))))
   (var #{decimal
          trade
          prediction
@@ -147,7 +148,7 @@
       (:= label "AMOUNT")]}]
   (var [init setInit] (r/local))
   (r/init []
-    (j/future-delayed [500] (setInit true)))
+    (promise/x:with-delay 500 (fn [] (setInit true))))
   (var #{setAmount
          amount
          trade
@@ -787,7 +788,7 @@
   (when (not currentOrder)
     (return (slim/entry {:type "v"})))
   (var filtered (xtd/arr-filter orders (fn:> [o] (== prediction (. o ["prediction"])))))
-  (var order    (j/find filtered (fn:> [o] (== currentOrder (. o  id)))))
+  (var order    (. filtered (find (fn:> [o] (== currentOrder (. o  id))))))
   (when (not order)
     (return (slim/entry {:type "v"})))
 
@@ -1149,4 +1150,3 @@
         :styleContainer {:flex 1}}}]]))
 
 (def.js MODULE (!:module))
-

@@ -14,7 +14,8 @@
              [xt.lang.common-math :as xtm]
              [melbourne.base-palette :as base-palette]
              [xt.lang.spec-base :as xt]
-             [xt.lang.common-data :as xtd]]
+             [xt.lang.common-data :as xtd]
+             [xt.lang.common-string :as xts]]
    :export [MODULE]})
 
 (defn.js getPath
@@ -37,7 +38,7 @@
                               (* height
                                  (/ (- v minY)
                                     (- maxY minY)))))))
-  (return (+ "M " (j/join out " L "))))
+  (return (+ "M " (xts/join " L " out))))
 
 (defn.js Sparkline
   [#{design
@@ -77,4 +78,3 @@
           pathStyle))]))
 
 (def.js MODULE (!:module))
-

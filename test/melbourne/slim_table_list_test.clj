@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react.ext-model :as ext-view]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.base-palette :as base-palette]
@@ -489,7 +490,7 @@
     []
     (var views {:list (ext-view/makeView
                        {:handler (fn:> [showPage display]
-                                   (j/future-delayed [200]
+                                   (promise/x:with-delay 200 (fn []
                                      (return
                                       (xtd/arr-map (xtd/arr-range display)
                                                  (fn:> [i]
@@ -499,7 +500,7 @@
                                                     :name (+ "name-" (+ (* (- showPage 2) display)
                                                                         display
                                                                         i))
-                                                    :amount (xt/x:random)})))))
+                                                    :amount (xt/x:random)}))))))
                         :options {:init false}})})
     (return
      (n/EnclosedCode 
@@ -594,7 +595,7 @@
                                   {:defaultArgs []
                                    :handler
                                    (fn:>
-                                     (j/future-delayed [100]
+                                     (promise/x:with-delay 100 (fn []
                                        (return
                                         [{:id "id-0"
                                           :currency-id "STATS"
@@ -607,7 +608,7 @@
                                          {:id "id-2"
                                           :currency-id "XLM"
                                           :balance 50
-                                          :escrow 0.0}])))})}))
+                                          :escrow 0.0}]))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"

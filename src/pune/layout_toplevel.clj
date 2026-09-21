@@ -4,7 +4,8 @@
 
 (l/script :js
   {:runtime :websocket
-   :require [
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.react :as r]
              [js.react-native :as n :include [:fn]]
              [js.react-native.ui-frame :as ui-frame]
@@ -92,12 +93,12 @@
   (var [leftVisible setLeftVisible] (r/local (not showGuest)))
   (r/watch [showGuest]
     (when showGuest
-      (j/future-delayed [100]
-        (setLeftVisible (not showGuest)))
-      (j/future-delayed [300]
-        (setTopVisible showGuest)))
+      (promise/x:with-delay 100 (fn []
+        (setLeftVisible (not showGuest))))
+      (promise/x:with-delay 300 (fn []
+        (setTopVisible showGuest))))
     (when (not showGuest)
-      (j/future-delayed [100]
-          (setTopVisible showGuest))
-      (j/future-delayed [300]
-        (setLeftVisible (not showGuest))))))
+      (promise/x:with-delay 100 (fn []
+          (setTopVisible showGuest)))
+      (promise/x:with-delay 300 (fn []
+        (setLeftVisible (not showGuest)))))))

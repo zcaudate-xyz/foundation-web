@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[xt.lang.common-string :as xts]
+   :require [[xt.lang.spec-promise :as promise]
+             [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-tooltip :as ui-tooltip]
@@ -671,7 +672,7 @@
                                :marginVertical 0}
                        :text (or confirmText "CONFIRM")
                        :onPress (fn []
-                                  (. (j/future (return (onPress)))
+                                  (. (promise/x:promise (fn [](return (onPress))))
                                      (then (fn:> (setVisible false)))))]}]))))
   (return
    (r/% -/ButtonTooltip

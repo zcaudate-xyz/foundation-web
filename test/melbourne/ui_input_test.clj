@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.react-native :as n :include [:fn]]
              [melbourne.base-palette :as base-palette]
              [melbourne.ui-button :as ui-button]
@@ -34,9 +35,9 @@
                                                                 (< 0 (xt/x:len v))))}]]
      :last-name     [["is-not-empty" {:message "Must not be empty"
                                       :check (fn:> [v rec]
-                                               (j/future-delayed [100]
+                                               (promise/x:with-delay 100 (fn []
                                                  (return (and (xtl/not-nil? v)
-                                                              (< 0 (xt/x:len v))))))}]]})
+                                                              (< 0 (xt/x:len v)))))))}]]})
   
   (defn.js inputAsterix
     [design]

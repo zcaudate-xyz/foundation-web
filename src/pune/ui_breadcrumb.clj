@@ -37,8 +37,8 @@
   (var routeString (xtd/arr-map routePath
                           (fn:> [s] s (base-text/to-uppercase (base-text/tag-string s)))))
   (:= text (or text
-               (j/join routeString
-                       "   /   ")) )
+              (base-text/join "   /   "
+                              routeString)) )
   (return
    [:% ui-static/Text
     {:design design

@@ -4,7 +4,8 @@
             [std.string :as str]))
 
 (l/script :js
-  {:require [
+  {:require [[xt.lang.spec-promise :as promise]
+             
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [js.react.ext-model :as ext-view]
@@ -88,8 +89,8 @@
   (var [visible setVisible] (r/local true))
   (var view    (ext-view/makeView
                 {:handler (fn:> [filt]
-                            (j/future-delayed [300]
-                              (return (-/get-names filt))))
+                            (promise/x:with-delay 300 (fn []
+                              (return (-/get-names filt)))))
                  :defaultOutput []}))
   (var component (r/const
                     (fn [#{entry}]

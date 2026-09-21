@@ -4,7 +4,8 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[xt.lang.common-math :as xtm]
+  {:require [[xt.lang.spec-promise :as promise]
+             [xt.lang.common-math :as xtm]
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn]]
              [melbourne.slim :as slim]
@@ -34,9 +35,9 @@
   (var [prevAmount setPrevAmount] (r/local amount))
   (var isMounted (r/useIsMounted))
   (r/watch [amount]
-    (j/delayed [1000]
+    (setTimeout (fn []
       (when (isMounted)
-        (setPrevAmount amount))))
+        (setPrevAmount amount))) 1000))
   (var price (base-swap/position-to-fstr position))  
   (return
    (slim/entry

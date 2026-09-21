@@ -9,7 +9,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.react :as r]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [xt.lang.spec-base :as xt]
@@ -31,10 +32,10 @@
      form}]
   (var closeFn
        (fn:>
-         (j/future-delayed [100]
+         (promise/x:with-delay 100 (fn []
            (. control (setRouteKey nil))
            (when form
-             (event-form/reset-all form)))))
+             (event-form/reset-all form))))))
   (var enabled (xt/x:get-key routeEnabled (. control routeKey)))
   (var showButton
        (:? enabled

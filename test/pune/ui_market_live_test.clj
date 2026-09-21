@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.core.style :as css]
              [js.react-native.helper-color :as c]
              [js.react :as r]
@@ -64,8 +65,8 @@
             (Object.assign {:orderFn
                        (fn [orderId orderLookup]
                          (return
-                          (. (j/future-delayed [200]
-                               (return (. orderLookup [orderId])))
+                          (. (promise/x:with-delay 200 (fn []
+                               (return (. orderLookup [orderId]))))
                              (then (fn [data]
                                      (alert (xt/x:json-encode data)))))))}
                       -/CHART))] 

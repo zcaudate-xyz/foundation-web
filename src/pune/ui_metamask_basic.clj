@@ -7,7 +7,8 @@
    :bundle {:onboarding   [["@metamask/onboarding" :as MetaMaskOnboarding]]
             :provider     [["@metamask/detect-provider" :as MetaMaskDetectProvider]]}
    :import  [["@metamask/onboarding" :as MetaMaskOnboarding]]
-   :require [[melbourne.ui-text :as ui-text]
+   :require [[xt.lang.spec-promise :as promise]
+             [melbourne.ui-text :as ui-text]
              [js.lib.eth-lib :as eth-lib :include [:fn]]
              [js.react-native.ui-util :as ui-util]
              [js.react :as r :include [:fn]]
@@ -170,8 +171,8 @@
        (-/removeListener "accountsChanged" setTable))))
   (r/watch [accounts]
     (when (xtl/nil? accounts)
-      (j/future-delayed [1000]
-        (requestFn))))
+      (promise/x:with-delay 1000 (fn []
+        (requestFn)))))
   (return #{accounts
             setAccounts
             requestFn}))

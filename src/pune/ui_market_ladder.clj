@@ -4,7 +4,8 @@
             [std.lib :as h]))
 
 (l/script :js
-  {:require [[xt.lang.common-data :as xtd]
+  {:require [[xt.lang.spec-promise :as promise]
+             [xt.lang.common-data :as xtd]
              [xt.lang.common-math :as xtm]
              [xt.lang.common-string :as xts]
              [js.react :as r :include [:fn]]
@@ -46,9 +47,9 @@
   (var [prevAmount setPrevAmount] (r/local amount))
   (var isMounted (r/useIsMounted))
   (r/watch [amount]
-    (j/delayed [1000]
+    (setTimeout (fn []
       (when (isMounted)
-        (setPrevAmount amount))))
+        (setPrevAmount amount))) 1000))
   
   (return
    [:% n/Row

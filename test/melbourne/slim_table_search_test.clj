@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :websearch :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react.ext-model :as ext-view]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.base-palette :as base-palette]
@@ -38,13 +39,13 @@
                                   {:handler
                                    (fn [args]
                                      (return
-                                      (j/future-delayed [100]
+                                      (promise/x:with-delay 100 (fn []
                                         (return
                                          (-> (xtd/arr-range 40)
                                              (xtd/arr-map (fn:> [i]
                                                           {:id (+ "id-" i)
                                                            :balance (xt/x:random)
-                                                           :escrow  args})))))))})}))
+                                                           :escrow  args}))))))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"
@@ -75,9 +76,9 @@
     (var components {:entry-brief  EntryBrief})
     (r/watch [example]
       (when example
-        (j/delayed [100]
+        (setTimeout (fn []
           (ext-view/refresh-args (. views list)
-                                 [example]))))
+                                 [example])) 100)))
     
     (return
      [:% n/Isolation

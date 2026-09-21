@@ -46,8 +46,8 @@
                           []))
   (when (xtl/is-object? remote-entries)
     (:= remote-entries []))
-  (var entry   (or (j/find entries (fn:> [e] (== entryId (. e id))))
-                   (j/find remote-entries (fn:> [e] (== entryId (. e id))))
+  (var entry   (or (. entries (find (fn:> [e] (== entryId (. e id)))))
+                   (. remote-entries (find (fn:> [e] (== entryId (. e id)))))
                    {}))
   (return entry))
 

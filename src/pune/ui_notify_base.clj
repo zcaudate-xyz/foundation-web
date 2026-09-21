@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [js.react-native.ui-notify :as ui-notify-events]
@@ -49,9 +50,9 @@
   (r/watch [duration events refresh]
     (when (< 0 duration)
       (when (and (xtd/not-empty? events))
-        (j/future-delayed [500]
+        (promise/x:with-delay 500 (fn []
           (when (isMounted)
-            (refresh))))
+            (refresh)))))
       (var outdated (-/getOutdated events duration))
       (when (xtd/not-empty? outdated)
         (evictFn outdated))))

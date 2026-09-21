@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react.ext-model :as ext-view]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.base-palette :as base-palette]
@@ -37,13 +38,13 @@
                                   {:defaultArgs []
                                    :handler
                                    (fn:>
-                                     (j/future-delayed [100]
+                                     (promise/x:with-delay 100 (fn []
                                        (return
                                         (-> (xtd/arr-range 200)
                                             (xtd/arr-map (fn:> [i]
                                                          {:id (+ "id-" i)
                                                           :balance (xt/x:random)
-                                                          :escrow  (xt/x:random)}))))))})}))
+                                                          :escrow  (xt/x:random)})))))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"
@@ -98,7 +99,7 @@
                           {:defaultArgs []
                            :handler
                            (fn:> [showPage display]
-                             (j/future-delayed [200]
+                             (promise/x:with-delay 200 (fn []
                                                (return
                                                 (xtd/arr-map (xtd/arr-range display)
                                                            (fn:> [i]
@@ -106,7 +107,7 @@
                                                                                 display
                                                                                 i))
                                                               :balance (xt/x:random)
-                                                              :escrow  (xt/x:random)})))))})}))
+                                                              :escrow  (xt/x:random)}))))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"

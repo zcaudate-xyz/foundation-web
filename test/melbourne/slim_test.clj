@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react.ext-model :as ext-view]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [melbourne.base-palette :as base-palette]
@@ -33,7 +34,7 @@
                                   {:defaultArgs []
                                    :handler
                                    (fn:>
-                                     (j/future-delayed [100]
+                                     (promise/x:with-delay 100 (fn []
                                        (return
                                         [{:id "id-0"
                                           :currency-id "STATS"
@@ -46,7 +47,7 @@
                                          {:id "id-2"
                                           :currency-id "XLM"
                                           :balance 50
-                                          :escrow 0.0}])))})}))
+                                          :escrow 0.0}]))))})}))
     (var control (slim/useLocalControl))
     (var EntryBrief
          (r/const

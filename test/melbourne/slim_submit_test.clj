@@ -10,7 +10,8 @@
                     :emit {:native {:suppress true}
                            :lang/jsx false}
                     :notify {:type :webpage :path "dev/notify"}}
-           :require [
+           :require [[xt.lang.spec-promise :as promise]
+                     
                      [js.react :as r :include [:fn]]
                      [js.react-native :as n :include [:fn]]
                      [js.react.ext-form :as ext-form]
@@ -26,10 +27,10 @@
   (defn.js UseSubmitDemo
     []
     (var onSubmit (fn:>
-                    (j/future-delayed [200]
+                    (promise/x:with-delay 200 (fn []
                                       (return
                                        {:status "error"
-                                        :body {:tag "user.account/incorrect_password"}}))))
+                                        :body {:tag "user.account/incorrect_password"}})))))
     (var [result setResult] (r/local (fn:>)))
     (var #{waiting setWaiting
            onAction} (r/useSubmit #{setResult
@@ -170,9 +171,9 @@
           #{form
             {:field "email"
              :onSubmit (fn:>
-                         (j/future-delayed [500]
+                         (promise/x:with-delay 500 (fn []
                                            (return {:status "error"
-                                                    :tag "user.account/incorrect_password"})))
+                                                    :tag "user.account/incorrect_password"}))))
              :explicit false}}))
     (return
      [:% n/Isolation
@@ -230,9 +231,9 @@
            setResult} (slim-submit/useSubmitForm
                        #{form
                          {:onSubmit (fn:>
-                                      (j/future-delayed [500]
+                                      (promise/x:with-delay 500 (fn []
                                                         (return {:status "error"
-                                                                 :tag "user.account/incorrect_password"})))
+                                                                 :tag "user.account/incorrect_password"}))))
                           :explicit false}}))
     (return
      [:% n/Isolation

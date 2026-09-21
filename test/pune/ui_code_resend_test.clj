@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [
+   :require [[xt.lang.spec-promise :as promise]
+             
              [js.react :as r :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
@@ -52,10 +53,10 @@
             :sinkId sink0Id
             :submitProps {:onResult setResult0
                           :onSubmit (fn []
-                                      (return (j/future-delayed [300]
+                                      (return (promise/x:with-delay 300 (fn []
                                                (return
                                                 {:status "ok"
-                                                 :updated (xt/x:now-ms)}))))}}}]
+                                                 :updated (xt/x:now-ms)})))))}}}]
         [:% n/PortalSink
          {:name sink0Id
           :style {:height 80}}]]
@@ -69,9 +70,9 @@
             :sinkId sink1Id
             :submitProps {:onResult setResult1
                           :onSubmit (fn []
-                                      (return (j/future-delayed [300]
+                                      (return (promise/x:with-delay 300 (fn []
                                                (return
-                                                {:status "error"}))))}}}]
+                                                {:status "error"})))))}}}]
         [:% n/PortalSink
          {:name sink1Id
           :style {:height 80}}]]] 

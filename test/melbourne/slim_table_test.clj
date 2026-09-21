@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react.ext-model :as ext-view]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
@@ -34,8 +35,8 @@
   (defn.js TableModifyViewDemo
     []
     (var control (slim/useLocalControl))
-    (var actions {:modify (fn:> [e] (j/delayed [100]
-                                      (alert (xt/x:json-encode e))))})
+    (var actions {:modify (fn:> [e] (setTimeout (fn []
+                                      (alert (xt/x:json-encode e))) 100))})
     (var entry {:id "id-0"})
     (var form (ext-form/makeForm
                (fn:> {:currency "STATS"
@@ -138,8 +139,8 @@
   (defn.js TableCreateViewDemo
     []
     (var control (slim/useLocalControl))
-    (var actions {:create (fn:> [e] (j/delayed [100]
-                                      (alert (xt/x:json-encode e))))})
+    (var actions {:create (fn:> [e] (setTimeout (fn []
+                                      (alert (xt/x:json-encode e))) 100))})
     (var form (ext-form/makeForm
                (fn:> {:currency "STATS"
                       :name ""
@@ -196,7 +197,7 @@
                                   {:defaultArgs []
                                    :handler
                                    (fn:>
-                                     (j/future-delayed [100]
+                                     (promise/x:with-delay 100 (fn []
                                        (return
                                         [{:id "id-0"
                                           :currency-id "STATS"
@@ -209,7 +210,7 @@
                                          {:id "id-2"
                                           :currency-id "XLM"
                                           :balance 50
-                                          :escrow 0.0}])))})}))
+                                          :escrow 0.0}]))))})}))
     (var control (slim/useLocalControl))
     (var display  {:brief  {:type "card"
                             :body {:title {:template ["currency_id"]}}}
@@ -257,7 +258,7 @@
                                      :label "Title"
                                      :field "title"}]}})
     (var actions {:modify (fn [id e]
-                            (return (j/future (return "hello"))))})
+                            (return (promise/x:promise (fn [](return "hello")))))})
     (var components {})
     (return
      [:% n/Isolation
@@ -293,7 +294,7 @@
                                   {:defaultArgs []
                                    :handler
                                    (fn:>
-                                     (j/future-delayed [100]
+                                     (promise/x:with-delay 100 (fn []
                                        (return
                                         [{:id "id-0"
                                           :currency-id "STATS"
@@ -306,7 +307,7 @@
                                          {:id "id-2"
                                           :currency-id "XLM"
                                           :balance 50
-                                          :escrow 0.0}])))})}))
+                                          :escrow 0.0}]))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :body {:title  {:type "title"
@@ -412,7 +413,7 @@
                                   {:defaultArgs []
                                    :handler
                                    (fn:>
-                                     (j/future-delayed [100]
+                                     (promise/x:with-delay 100 (fn []
                                        (return
                                         [{:id "id-0"
                                           :currency-id "STATS"
@@ -425,7 +426,7 @@
                                          {:id "id-2"
                                           :currency-id "XLM"
                                           :balance 50
-                                          :escrow 0.0}])))})}))
+                                          :escrow 0.0}]))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :sections {:body    [{:columns [{:name "B"
@@ -487,7 +488,7 @@
                                   {:defaultArgs []
                                    :handler
                                    (fn:>
-                                     (j/future-delayed [100]
+                                     (promise/x:with-delay 100 (fn []
                                        (return
                                         [{:id "id-0"
                                           :currency-id "STATS"
@@ -500,7 +501,7 @@
                                          {:id "id-2"
                                           :currency-id "XLM"
                                           :balance 50
-                                          :escrow 0.0}])))})}))
+                                          :escrow 0.0}]))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :sections {:body    [{:columns [{:name "B"
@@ -562,7 +563,7 @@
                                   {:defaultArgs []
                                    :handler
                                    (fn:>
-                                     (j/future-delayed [100]
+                                     (promise/x:with-delay 100 (fn []
                                        (return
                                         [{:id "id-0"
                                           :currency-id "STATS"
@@ -575,7 +576,7 @@
                                          {:id "id-2"
                                           :currency-id "XLM"
                                           :balance 50
-                                          :escrow 0.0}])))})}))
+                                          :escrow 0.0}]))))})}))
     (var control (slim/useLocalControl))
     (var impl   {:type "card"
                  :sections {:body    [{:columns [{:name "B"

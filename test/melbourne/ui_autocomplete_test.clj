@@ -10,7 +10,8 @@
             :emit {:native {:suppress true}
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
-   :require [[js.react :as r]
+   :require [[xt.lang.spec-promise :as promise]
+             [js.react :as r]
              [js.react-native :as n :include [:fn]]
              [js.react.ext-form :as ext-form]
              [js.react.ext-model :as ext-view]
@@ -55,8 +56,8 @@
     []
     (var view    (ext-view/makeView
                   {:handler (fn:> [filt]
-                              (j/future-delayed [300]
-                                (return (-/get-names filt))))
+                              (promise/x:with-delay 300 (fn []
+                                (return (-/get-names filt)))))
                    :defaultOutput []}))
     (var [selected
           setSelected] (r/local))
