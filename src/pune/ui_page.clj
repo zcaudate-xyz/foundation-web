@@ -96,7 +96,7 @@
                     actions
                     routeKey
                     setRouteKey
-                    {:miniTitle (and routeRoot (j/toUpperCase (or (xtd/first routeRoot) ""))) 
+                    {:miniTitle (and routeRoot (j/toUpperCase (or (xtd/first routeRoot) "")))
                      :data sections
                      :narrowed (< (. dimensions width)
                                   720)}}

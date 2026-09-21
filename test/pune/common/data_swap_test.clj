@@ -90,4 +90,3 @@
 
 ^{:refer pune.common.data-swap/position-to-fprice :added "0.1"}
 (fact "trade position to float price")
-

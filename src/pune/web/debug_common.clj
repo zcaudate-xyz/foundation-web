@@ -64,7 +64,7 @@
                  :listWidth 150}
                 {:type "list"
                  :branchesFn (fn:> [_tree parents schema]
-                               (model-system/schema-columns-fn schema (xtd/first parents))) 
+                               (model-system/schema-columns-fn schema (xtd/first parents)))
                  :initial column
                  :setInitial setColumn
                  :width 150
@@ -89,7 +89,7 @@
                  :setInitial setTable}
                 {:type "list"
                  :branchesFn (fn:> [_tree parents view]
-                               (model-system/view-entries-fn view (xtd/first parents))) 
+                               (model-system/view-entries-fn view (xtd/first parents)))
                  :initial view
                  :setInitial setView
                  :targetFn
