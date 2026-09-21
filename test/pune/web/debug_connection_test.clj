@@ -55,7 +55,8 @@
 [:% n/TextDisplay
               {:content [(n/format-obj summary)
                          "\n\n"
-                         (j/join (or (xts/split-long (or token ""))
+                         (j/join (or (xts/split-long (or token "")
+                                                     nil)
                                          [])
                                      "\n")
                          "\n\n"

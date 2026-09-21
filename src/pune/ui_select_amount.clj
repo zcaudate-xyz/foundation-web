@@ -60,7 +60,7 @@
                                     [])))
          (var hasDot (== "." (xtd/last v)))
          (var isZero (or (xtl/nil? v)
-                         (xtd/not-empty? )))
+                         (xtd/not-empty? v)))
          (var num (j/parseFloat v))
          (cond (xtd/is-empty? v)
                (setEditText "0")

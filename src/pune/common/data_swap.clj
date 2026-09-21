@@ -17,7 +17,7 @@
   (var decimal-floor
        (j/floor (j/log10 fprice)))
   (when (< decimal-floor -8)
-    (xt/x:err "floor too small" {:input fprice}))
+    (xt/x:throw (xt/x:ex "floor too small" {:input fprice})))
   (cond (>= decimal-floor -4)
         (do (var units (xtm/round
                           (/ fprice
@@ -39,12 +39,12 @@
   [vprice]
   (var [power units] vprice)
   (when (< power 0)
-    (xt/x:err "power negative" {:input vprice}))
+    (xt/x:throw (xt/x:ex "power negative" {:input vprice})))
   (when (> power 99999)
-    (xt/x:err "units too high" {:input vprice}))
+    (xt/x:throw (xt/x:ex "units too high" {:input vprice})))
   (when (not (or (== power 0)
                  (>= units 10000)))
-    (xt/x:err "units too low" {:input vprice}))
+    (xt/x:throw (xt/x:ex "units too low" {:input vprice})))
   (return (* (j/pow 10 (- power 8))
              units)))
 
@@ -54,12 +54,12 @@
   [vprice]
   (var [power units] vprice)
   (when (< power 0)
-    (xt/x:err "power negative" {:input vprice}))
+    (xt/x:throw (xt/x:ex "power negative" {:input vprice})))
   (when (> power 99999)
-    (xt/x:err "units too high" {:input vprice}))
+    (xt/x:throw (xt/x:ex "units too high" {:input vprice})))
   (when (not (or (== power 0)
                  (>= units 10000)))
-    (xt/x:err "units too low" {:input vprice}))
+    (xt/x:throw (xt/x:ex "units too low" {:input vprice})))
   (return (+ (* 100000 power)
              units)))
 

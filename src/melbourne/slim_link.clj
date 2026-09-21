@@ -69,7 +69,8 @@
                        :format (fn [id]
                                  (return (xtd/template-entry
                                           (xtd/get-in links ["lookup" id])
-                                          viewTemplate)))}}))))
+                                         viewTemplate
+                                         props)))}}))))
 
 (defn.js FormLinkReadOnly
   "creates a Dropdown"
@@ -92,7 +93,8 @@
                                   (return
                                    (xtd/template-entry
                                     (xtd/get-in links ["lookup" (. e [field])])
-                                    viewTemplate)))}))))
+                                    viewTemplate
+                                    props)))}))))
 
 (defn.js useViewLinkEntry
   [#{views
@@ -136,6 +138,7 @@
                                   (return
                                    (xtd/template-entry
                                     (xtd/get-in links ["lookup" (. e [field])])
-                                    viewTemplate)))}))))
+                                    viewTemplate
+                                    props)))}))))
 
 (def.js MODULE (!:module))
