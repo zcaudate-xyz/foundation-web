@@ -1,7 +1,7 @@
 ^{:no-test true}
 (ns pune.project-web
   (:require [std.lib :as h]
-            [std.lang :as l]
+            [lang.core :as l]
             [std.string :as str]))
 
 (def expo-babel-preset
@@ -47,6 +47,7 @@
              "backgroundColor" "#ffffff"}
             "updates" {"fallbackToCacheTimeout" 0},
             "assetBundlePatterns" ["**/*"]
+            "experiments" {"baseUrl" (clojure.core/str "/" slug)}
             "ios" {"supportsTablet" true},
             "android" {"adaptiveIcon" {"foregroundImage" "./assets/adaptive-icon.png",
                                        "backgroundColor" "#FFFFFF"}},
@@ -68,10 +69,10 @@
              [yarn install]]
             [:build-web
              [yarn install]
-             [npx expo build:web]]
+             [npx expo export --platform web]]
             [:dev
              [yarn install]
-             [npx expo start --web]]
+             [npx expo start --web --port 19007]]
             [:ios
              [yarn install]
              [npx expo start --ios]]
@@ -91,7 +92,7 @@
            "*.key"
            "*.mobileprovision"
            "*.orig.*"
-           "web-build/"
+           "dist/"
            ".DS_Store"
            "yarn.lock"
            "yarn-error.log"]})
@@ -102,7 +103,7 @@
   ([name & [m]]
    {:type :package.json
     :main (h/merge-nested
-           {"main" "node_modules/expo/AppEntry.js"
+           {"main" "./src/App.js"
             "name" name
             "scripts"
             {"start" "expo start"
@@ -112,33 +113,60 @@
              "eject" "expo eject"}
             
             "dependencies"
-            {"react" "17.0.2"
-             "react-dom" "17.0.2"
-             "react-native" "0.63.4"
-             "react-native-web" "0.16.1"
-             "react-native-error-boundary" "1.1.10"
-             "react-native-get-random-values" "1.7.0"
-             "react-native-base64" "0.1.0"
-             "react-native-svg" "12.1.1"
-             "react-native-vector-icons" "8.1.0"
-             "dateformat"  "^4"
-             "@csstools/convert-colors" "2.0.0"
+            {"@expo/vector-icons" "^14.1.0"
+             "@react-navigation/bottom-tabs" "^7.3.10"
+             "@react-navigation/elements" "^2.3.8"
+             "@react-navigation/native" "^7.1.6"
+             "ethers" "^6.15.0"
+             "expo" "~53.0.17"
+             "expo-auth-session" "^6.2.1"
+             "expo-asset" "~11.1.3"
+             "expo-blur" "~14.1.5"
+             "expo-constants" "~17.1.7"
+             "expo-crypto" "^14.1.5"
+             "expo-font" "~13.3.2"
+             "expo-haptics" "~14.1.4"
+             "expo-image" "~2.3.2"
+             "expo-image-picker" "^16.1.4"
+             "expo-linking" "~7.1.7"
+             "expo-router" "~5.1.3"
+             "expo-splash-screen" "~0.30.10"
+             "expo-status-bar" "~2.2.3"
+             "expo-symbols" "~0.4.5"
+             "expo-system-ui" "~5.0.10"
+             "expo-web-browser" "~14.2.0"
+             "react" "19.0.0"
+             "react-dom" "19.0.0"
+             "react-native" "0.79.5"
+             "react-native-base64" "^0.2.1"
+             "react-native-gesture-handler" "~2.24.0"
+             "react-native-get-random-values" "^1.11.0"
+             "react-native-reanimated" "~3.17.4"
+             "react-native-safe-area-context" "5.4.0"
+             "react-native-screens" "~4.11.1"
+             "react-native-svg" "~15.11.2"
+             "react-native-vector-icons" "^10.2.0"
+             "react-native-web" "~0.20.0"
+             "react-native-webview" "13.13.5"
+             "ua-parser-js" "^2.0.4"
+             "url" "^0.11.4"
+             "uuid" "^11.1.0"
+             "react-color" "2.19.3"
+             "base-64" "1.0.0"
+             "dateformat" "^4"
              "javascript-time-ago" "2.3.11"
              "mustache" "4.2.0"
-             "fuse.js"  "6.4.6"
-             "uuid"     "8.3.2"}
+             "fuse.js" "6.4.6"
+             "lightweight-charts" "3.8.0"
+             "@metamask/onboarding" "1.0.1"
+             "@metamask/detect-provider" "1.2.0"}
             "devDependencies"
-            {"@babel/core" "7.9.0"
-             "@babel/preset-env" "7.13.15"
-             "@types/react" "16.9.35",
-             "@types/react-native" "0.63.2",
-             "expo" "42.0.0",
-             "expo-cli" "6.0.8",
-             "typescript" "4.3.5"}
+            {"@babel/core" "^7.25.2"
+             "@types/react" "~19.0.10"
+             "eslint" "^9.25.0"
+             "eslint-config-expo" "~9.2.0"
+             "typescript" "~5.8.3"
+             "@expo/metro-runtime" "^5.0.4"}
             "private" true}
            m)}))
-
-
-
-
 

@@ -1,5 +1,5 @@
 (ns pune.web.debug-common
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -10,7 +10,7 @@
                    :lang/jsx false}
             :notify {:type :webpage :path "dev/notify"}}
    :require [[xt.lang.base-lib :as k]
-             [xt.lang.event-log :as event-log]
+             [xt.event.base-log :as event-log]
              [js.core :as j]
              [js.cell :as cl]
              [js.react.ext-box :as ext-box]

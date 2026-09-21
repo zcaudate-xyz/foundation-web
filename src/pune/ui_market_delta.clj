@@ -1,5 +1,5 @@
 (ns pune.ui-market-delta
-  (:require [std.lang :as  lang]
+  (:require [lang.core :as  lang]
             [std.lib :as h]))
 
 (lang/script :js

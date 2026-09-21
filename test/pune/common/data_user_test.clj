@@ -1,20 +1,19 @@
 (ns pune.common.data-user-test
   (:use code.test)
-  (:require [std.lang :as  l]
+  (:require [lang.core :as  l]
             [std.lib :as h]
-            [xt.lang.base-notify :as notify]
+            [xt.lang.common-notify :as notify]
             [statslink.test.base-scaffold :as scaffold]))
 
 (l/script- :js
   {:runtime :basic
    :require [[pune.common.data-user :as data-user]
-             [js.cell :as cl]
              [js.core :as j]
              [statslink.full.link-local :as link-local]
              [statslink.full.link-remote :as link-remote]
              [statslink.test.setup-node-debug :as setup-debug]
              [xt.lang.base-lib :as k]
-             [xt.lang.base-repl :as repl]]
+             [xt.lang.common-repl :as repl]]
    :export [MODULE]})
 
 (fact:global

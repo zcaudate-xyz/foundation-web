@@ -1,6 +1,6 @@
 (ns melbourne.slim-number-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js

@@ -1,6 +1,6 @@
 (ns melbourne.slim-common-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -13,7 +13,7 @@
    :require [[js.react :as r]
              [js.react-native :as n :include [:fn]]
              [js.react.ext-form :as ext-form]
-             [xt.lang.event-form :as event-form]
+             [xt.event.base-form :as event-form]
              [melbourne.slim-common :as slim-common]
              [melbourne.base-validators :as validators]]
    :export [MODULE]})

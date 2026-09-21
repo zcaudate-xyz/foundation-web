@@ -1,5 +1,5 @@
 (ns pune.ui-metamask-basic
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js

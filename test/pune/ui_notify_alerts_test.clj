@@ -1,6 +1,6 @@
 (ns pune.ui-notify-alerts-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -14,7 +14,7 @@
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [pune.ui-notify-alerts :as ui-notify-alerts]
              [melbourne.ui-text :as ui-text]
-             [xt.lang.event-box :as event-box]
+             [xt.event.base-box :as event-box]
              [xt.lang.base-lib :as k]]
    :export [MODULE]})
 

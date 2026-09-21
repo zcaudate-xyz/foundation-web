@@ -1,13 +1,13 @@
 (ns melbourne.slim-number
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
   {:require [[js.core :as j]
              [js.react.ext-form :as ext-form]
              [js.react-native :as n :include [:fn]]
-             [xt.lang.event-form :as event-form]
+             [xt.event.base-form :as event-form]
              [melbourne.slim-common :as slim-common]
              [melbourne.ui-spinner :as ui-spinner]
              [melbourne.ui-spinner-basic :as ui-spinner-basic]

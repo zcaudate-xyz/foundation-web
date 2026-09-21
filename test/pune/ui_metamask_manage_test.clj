@@ -1,8 +1,7 @@
 (ns pune.ui-metamask-manage-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]
-            [rt.basic :as basic]
             [rt.solidity :as s]
             [rt.solidity.compile-solc :as solc]
             [rt.solidity.compile-deploy :as deploy]
@@ -16,7 +15,7 @@
 (l/script :js
   {:runtime :basic
    :require [[xt.lang.base-lib :as k]
-             [xt.lang.base-repl :as repl]
+             [xt.lang.common-repl :as repl]
              [js.lib.eth-lib :as eth-lib :include [:fn]]
              [js.lib.eth-bench :as eth-bench]
              [js.core :as j]]})

@@ -1,7 +1,7 @@
 ^{:no-test true}
 (ns component.task-web-index
   (:require
-   [std.lang :as l]
+   [lang.core :as l]
    [std.lib :as h]
    [std.string :as str]
    [std.make :as make]

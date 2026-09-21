@@ -1,6 +1,6 @@
 (ns pune.web.debug-common-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -71,7 +71,7 @@
           route setRoute]}]))))
 
 ^{:refer pune.web.debug-common/EventsPanelLog :added "0.1"}
-(fact "log view for the `xt.lang.event-log` object")
+(fact "log view for the `xt.event.base-log` object")
 
 ^{:refer pune.web.debug-common/EventsPanel :added "0.1"}
 (fact "Constructs an events panel"

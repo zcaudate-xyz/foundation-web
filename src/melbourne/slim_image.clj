@@ -1,6 +1,6 @@
 (ns melbourne.slim-image
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -18,7 +18,7 @@
              [melbourne.ui-image :as ui-image]
              [melbourne.base-palette :as base-palette]
              [xt.lang.base-lib :as k]
-             [xt.lang.event-form :as event-form]]
+             [xt.event.base-form :as event-form]]
    :export [MODULE]})
 
 (defn.js FormImage

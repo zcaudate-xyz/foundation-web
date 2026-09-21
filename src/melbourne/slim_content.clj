@@ -1,6 +1,6 @@
 (ns melbourne.slim-content
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -9,7 +9,7 @@
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.helper-color :as c]
              [xt.lang.base-lib :as k]
-             [xt.lang.base-text :as text]
+             [xt.lang.common-string :as text]
              [melbourne.ui-static :as ui-static]
              [melbourne.base-palette :as base-palette]]
    :export [MODULE]})

@@ -1,5 +1,5 @@
 (ns melbourne.slim-link
-  (:require [std.lang :as  l]
+  (:require [lang.core :as  l]
             [std.lib :as h]))
 
 (l/script :js
@@ -7,9 +7,9 @@
              [js.react :as r :include [:fn]]
              [js.react-native :as n :include [:fn [:icon :entypo]]]
              [js.react-native.ui-util :as ui-util]
-             [js.react.ext-view :as ext-view]
+             [js.react.ext-model :as ext-view]
              [js.react.ext-form :as ext-form]
-             [xt.lang.event-form :as event-form]
+             [xt.event.base-form :as event-form]
              [melbourne.ui-static :as ui-static]
              [melbourne.slim-common :as slim-common]
              [melbourne.slim-select :as slim-select]

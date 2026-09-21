@@ -1,6 +1,6 @@
 (ns melbourne.slim-submit-test
   (:use code.test)
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -16,7 +16,7 @@
                      [js.react.ext-form :as ext-form]
                      [melbourne.slim-submit :as slim-submit]
                      [melbourne.base-validators :as validators]
-                     [xt.lang.event-form :as event-form]]
+                     [xt.event.base-form :as event-form]]
            :export [MODULE]})
 
 ^{:refer melbourne.slim-submit/useSubmit :adopt true :added "0.1"}

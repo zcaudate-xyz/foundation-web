@@ -1,5 +1,5 @@
 (ns pune.ui-section-show
-  (:require [std.lang :as l]
+  (:require [lang.core :as l]
             [std.lib :as h]))
 
 (l/script :js
@@ -13,7 +13,7 @@
              [js.react :as r]
              [js.react-native :as n :include [:fn [:entypo :icon]]]
              [xt.lang.base-lib :as k]
-             [xt.lang.event-form :as event-form]
+             [xt.event.base-form :as event-form]
              [melbourne.ui-button :as ui-button]
              [melbourne.ui-section :as ui-section]
              [melbourne.slim :as slim]]
